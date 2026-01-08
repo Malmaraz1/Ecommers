@@ -4,8 +4,9 @@ import com.example.ecommerce.Model.Dto.UsuarioResponseDto;
 
 public interface ServicioUsuarioImp {
   
-    UsuarioResponseDto crear();
-    
+ 
+    UsuarioResponseDto inciarSesion();
+    UsuarioResponseDto registrarse();
 
     
 }

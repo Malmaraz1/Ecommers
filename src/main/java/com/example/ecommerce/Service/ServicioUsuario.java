@@ -1,6 +1,7 @@
 package com.example.ecommerce.Service;
 
 import com.example.ecommerce.Model.Dto.UsuarioResponseDto;
+import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
 
 public class ServicioUsuario implements ServicioUsuarioImp {
 

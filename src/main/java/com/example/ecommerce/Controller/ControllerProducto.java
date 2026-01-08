@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.Model.Dto.ProductoResponseDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
-import com.example.ecommerce.Service.ServicioProductoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
 
 @RestController
 @RequestMapping("/")

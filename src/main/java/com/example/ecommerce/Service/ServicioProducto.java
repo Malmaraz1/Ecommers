@@ -7,6 +7,7 @@ import com.example.ecommerce.Model.Categoria;
 
 import com.example.ecommerce.Model.Dto.ProductoResponseDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
+import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
 
 public class ServicioProducto implements ServicioProductoImp{
 

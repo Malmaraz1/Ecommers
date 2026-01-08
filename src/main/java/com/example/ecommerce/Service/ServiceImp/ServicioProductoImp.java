@@ -1,4 +1,4 @@
-package com.example.ecommerce.Service;
+package com.example.ecommerce.Service.ServiceImp;
 
 import java.util.List;
 import java.util.Optional;

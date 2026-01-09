@@ -1,4 +1,4 @@
-package com.example.ecommerce.Model.Dto;
+package com.example.ecommerce.Model.Dto.Response;
 
 import com.example.ecommerce.Model.Categoria;
 

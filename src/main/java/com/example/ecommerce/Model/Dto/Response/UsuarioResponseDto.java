@@ -1,4 +1,4 @@
-package com.example.ecommerce.Model.Dto;
+package com.example.ecommerce.Model.Dto.Response;
 
 public class UsuarioResponseDto {
     private String nombre;

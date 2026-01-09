@@ -13,23 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecommerce.Model.Dto.ProductoResponseDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
+import com.example.ecommerce.Model.Dto.Response.ProductoResponseDto;
 import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/productos")
 public class ControllerProducto {
     @Autowired
     ServicioProductoImp servicioProducto;
 
-    @PostMapping("producto")
-
+    @PostMapping()
     public ResponseEntity<ProductoResponseDto> create(@RequestBody ProductoRequestDto producto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.save(producto));
     }
 
-    @GetMapping("productos/{idProducto}")
+    @GetMapping("/{idProducto}")
     public ResponseEntity<ProductoResponseDto> findByEntity(@PathVariable Long idProducto) {
         Optional<ProductoResponseDto> producto = servicioProducto.findById(idProducto);
         if (producto.isPresent()) {
@@ -39,7 +38,7 @@ public class ControllerProducto {
 
     }
 
-    @GetMapping("/productos")
+    @GetMapping()
     public ResponseEntity<List<ProductoResponseDto>> findAllProduct() {
         List<ProductoResponseDto> productosDto = servicioProducto.findAll();
         if (productosDto.isEmpty()) {

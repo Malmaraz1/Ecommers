@@ -1,4 +1,4 @@
-package com.example.ecommerce.Model.Dto;
+package com.example.ecommerce.Model.Dto.Response;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

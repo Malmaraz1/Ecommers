@@ -12,32 +12,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.ecommerce.Model.Dto.CarritoResponseDto;
+
 import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
-import com.example.ecommerce.Service.ServiceImp.ServidorCarritoImp;
+import com.example.ecommerce.Model.Dto.Response.CarritoResponseDto;
+import com.example.ecommerce.Service.ServiceImp.ServicioCarritoImp;
+
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/carritos")
 public class ControllerCarrito {
 
   @Autowired
-  ServidorCarritoImp servicioCarrito;
+  ServicioCarritoImp servicioCarrito;
 
-  @PostMapping("/carrito")
+  @PostMapping
   public ResponseEntity<CarritoResponseDto> create(@RequestBody CarritoRequestDto carrito) {
     return ResponseEntity.status(HttpStatus.CREATED).body(servicioCarrito.guardar(carrito));
 
   }
 
-  @PatchMapping("carrito/productos/{idproducto}")
-  public ResponseEntity<CarritoResponseDto> agregarproducto(@PathVariable Long idProducto) {
-    CarritoResponseDto actualizado = servicioCarrito.agregar(idProducto);
+  @PatchMapping("/productos/{idProducto}")
+  public ResponseEntity<CarritoResponseDto> agregarproducto(@PathVariable Long idProducto ,@PathVariable Long idcarrito) {
+    CarritoResponseDto actualizado = servicioCarrito.agregar(idcarrito , idProducto);
     return ResponseEntity.ok(actualizado);
   }
 
-  @DeleteMapping("carrito/productos/{idproducto}")
-  public ResponseEntity<?> quitarProducto(@PathVariable Long idProducto) {
-    Optional<CarritoResponseDto> carritoOptional = servicioCarrito.eliminar(idProducto);
+  @DeleteMapping("{idCarrito}/productos/{idproducto}")
+  public ResponseEntity<?> quitarProducto(@PathVariable Long idproducto , @PathVariable Long idcarrito) {
+    Optional<CarritoResponseDto> carritoOptional = servicioCarrito.eliminar(idcarrito,idproducto);
     if (carritoOptional.isPresent()) {
       return ResponseEntity.status(HttpStatus.OK).build();
     }

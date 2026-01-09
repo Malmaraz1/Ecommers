@@ -17,11 +17,10 @@ public class Pedido {
 
   public Pedido(Carrito carrito) {
     this.estadoPedido = new Pendiente();
-    this.ordenCompra =  new OrdenCompra(GeneradorCodigo.generar(),
+    this.ordenCompra  =  new OrdenCompra(GeneradorCodigo.generar(),
         carrito.getItemsCarrito());
   }
  
-
   public boolean SolicitarCancelacion() {
     LocalDate limite = LocalDate.now().minusDays(5);
     return this.ordenCompra.getFechaCreacion().isAfter(limite);

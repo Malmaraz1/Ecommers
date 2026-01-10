@@ -14,18 +14,18 @@ import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
 
 import com.example.ecommerce.Model.Dto.Response.PedidoResponse;
 import com.example.ecommerce.Service.ServiceImp.ServicioPedidoImp;
+
 @RestController
 @RequestMapping("/pedidos")
 public class ControllerPedido {
-    
+
    @Autowired
    ServicioPedidoImp servicioPedidoImp;
-   
+
    @PostMapping
-   public ResponseEntity <PedidoResponse> generarPedido(@RequestBody CarritoRequestDto carritoRequestDto){
+   public ResponseEntity<PedidoResponse> generarPedido(@RequestBody CarritoRequestDto carritoRequestDto) {
       return ResponseEntity.status(HttpStatus.CREATED).body(servicioPedidoImp.generarPedido(carritoRequestDto));
-      
+
    }
-    
 
 }

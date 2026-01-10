@@ -2,15 +2,15 @@ package com.example.ecommerce.Service;
 
 import java.util.Optional;
 
-import com.example.ecommerce.Model.Carrito;
-import com.example.ecommerce.Model.Producto;
+import org.springframework.stereotype.Service;
+
 import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Dto.Response.CarritoResponseDto;
 import com.example.ecommerce.Service.ServiceImp.ServicioCarritoImp;
 
-
+@Service
 public class ServicioCarrito implements ServicioCarritoImp {
-
+ 
     @Override
     public CarritoResponseDto guardar(CarritoRequestDto carrito) {
         // TODO Auto-generated method stub

@@ -3,11 +3,13 @@ package com.example.ecommerce.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.example.ecommerce.Model.Categoria;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Model.Dto.Response.ProductoResponseDto;
 import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
-
+@Service
 public class ServicioProducto implements ServicioProductoImp{
 
     @Override

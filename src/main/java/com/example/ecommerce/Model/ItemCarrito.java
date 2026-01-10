@@ -1,20 +1,37 @@
 package com.example.ecommerce.Model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity(name="item_carrito")
 public class ItemCarrito {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="cantidad")
     private Integer cantidad;
-    private float precioUnitario;
-    private Producto producto;
+    @Column(name="precio_unitario")
+    private Double precioUnitario;
+    @ManyToOne
+    @JoinColumn(name = "carrito_id")
+    private Carrito carrito;
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Producto producto; 
 
-    public float calcularSubTotal() {
-        return cantidad * precioUnitario;
-    }
+   
 
-    public ItemCarrito(Integer cantidad, float precioUnitario, Producto producto) {
+    public ItemCarrito(Integer cantidad, Double precioUnitario, Producto producto) {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.producto = producto;

@@ -11,14 +11,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity(name = "producto")
 public class Producto
 {
    @Id
- @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id; 
    @Column(name ="nombre")
    private String nombre;
@@ -38,9 +40,9 @@ public class Producto
    private LocalDate fechaCreacion;
    @Embedded
    private Garantia meses_garantia;
-   @Column(name ="descripcion_producto")
    private String descripcion;
-   private String img;
+   @Column(name="imagen")
+   private String imagen;
 
 
 }

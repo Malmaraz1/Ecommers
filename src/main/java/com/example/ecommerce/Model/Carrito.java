@@ -12,14 +12,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
+
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity(name="carrito")
 public class Carrito {
    @Id
@@ -32,12 +34,11 @@ public class Carrito {
    private List<ItemCarrito> itemsCarrito = new ArrayList<>();
    @Column(name="ultima_actualizacion")
    private LocalDate ultimaActualizacion;
-   @ManyToOne
-   @JoinColumn(name="pedido_id")
-   private Pedido pedido;
+   
+
+
 
    public void agregarItem(Producto producto, int Cantidad) {
-
       Optional<ItemCarrito> existente = itemsCarrito.stream().filter(i -> i.getProducto().equals(producto)).findFirst();
       if (existente.isPresent()) {
          existente.get().setCantidad(Cantidad);
@@ -46,10 +47,5 @@ public class Carrito {
       }
    }
 
-   public Pedido ConfirmarPedido() {
-      if (itemsCarrito.isEmpty())
-         throw new RuntimeException("Carrito vacio");
-      return new Pedido(this);
-   }
-
+ 
 }

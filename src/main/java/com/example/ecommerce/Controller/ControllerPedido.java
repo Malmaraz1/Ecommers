@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
+import com.example.ecommerce.Model.Pedido;
 
-import com.example.ecommerce.Model.Dto.Response.PedidoResponse;
 import com.example.ecommerce.Service.ServiceImp.ServicioPedidoImp;
 
 @RestController
@@ -23,7 +23,7 @@ public class ControllerPedido {
    ServicioPedidoImp servicioPedidoImp;
 
    @PostMapping
-   public ResponseEntity<PedidoResponse> generarPedido(@RequestBody CarritoRequestDto carritoRequestDto) {
+   public ResponseEntity<Pedido> generarPedido(@RequestBody CarritoRequestDto carritoRequestDto) {
       return ResponseEntity.status(HttpStatus.CREATED).body(servicioPedidoImp.generarPedido(carritoRequestDto));
 
    }

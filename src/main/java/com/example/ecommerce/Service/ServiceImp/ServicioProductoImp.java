@@ -5,16 +5,18 @@ import java.util.Optional;
 
 
 import com.example.ecommerce.Model.Categoria;
+import com.example.ecommerce.Model.Producto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
-import com.example.ecommerce.Model.Dto.Response.ProductoResponseDto;
+
 
 public interface ServicioProductoImp {
-List<ProductoResponseDto> findAll();    
-ProductoResponseDto save(ProductoRequestDto productoDto);
-Optional<ProductoResponseDto> delete(ProductoRequestDto producto);
-Optional<ProductoResponseDto> findById(Long id);
-List<ProductoResponseDto> findByCategoria(Categoria categoria);
-List<ProductoResponseDto> findBySubCategoria(Categoria categoria);
-List<ProductoResponseDto> findByPrecioMax();
-List<ProductoResponseDto> findByPrecioMin();
+List<Producto> findAll();    
+Producto save(ProductoRequestDto productoDto);
+Optional<Producto> findById(Long id);
+List<Producto> findByCategoria(Categoria categoria);
+List<Producto> findBySubCategoria(Categoria categoria);
+List<Producto> findByPrecioMax();
+List<Producto> findByPrecioMin();
+Optional<Producto> delete(Long id);
+
 }

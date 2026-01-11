@@ -8,12 +8,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity(name="pedido")
 public class Pedido {
   @Id
@@ -21,15 +26,17 @@ public class Pedido {
   private Long id;
   @Transient
   private OrdenCompra ordenCompra;
-   @Transient
+  @Transient
   private EstadoPedido estadoPedido;
-   @Transient
+  @OneToOne
   private Factura factura;
+  @ManyToOne
+  @JoinColumn(name = "usuario_id")
+  private Usuario comprador;
 
   public Pedido(Carrito carrito) {
     this.estadoPedido = new Pendiente();
-    this.ordenCompra = new OrdenCompra(GeneradorCodigo.generar(),
-        carrito.getItemsCarrito());
+    
   }
 
   public boolean SolicitarCancelacion() {

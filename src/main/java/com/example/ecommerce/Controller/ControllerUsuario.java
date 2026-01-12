@@ -21,7 +21,7 @@ import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
 public class ControllerUsuario {
     @Autowired
     ServicioUsuarioImp servicioUsuario;
-
+   
     @PostMapping("/registro")
     public ResponseEntity<Usuario> registrarse(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.registrarse(usuarioRequestDto));

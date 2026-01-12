@@ -27,6 +27,7 @@ public class ServicioProducto implements ServicioProductoImp {
 
     @Autowired
     RepositorioProducto repositorioProducto;
+    @Autowired
     RepositorioCategoria repositorioCategoria;
 
     @Override

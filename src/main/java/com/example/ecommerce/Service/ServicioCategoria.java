@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Model.Categoria;
 import com.example.ecommerce.Model.Dto.Request.CategoriaRequestDto;
@@ -19,6 +20,7 @@ public class ServicioCategoria implements ServicioCategoriaImp {
     RepositorioCategoria repositorioCategoria;
 
     @Override
+    @Transactional
     public Categoria categoriaNueva(@Valid CategoriaRequestDto categoriaRequestDto) {
 
         Categoria categoria = new Categoria();

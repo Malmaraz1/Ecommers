@@ -28,8 +28,8 @@ public class ControllerCarrito {
   ServicioCarritoImp servicioCarrito;
 
   @PostMapping
-  public ResponseEntity<Carrito> create(@RequestBody CarritoRequestDto carrito) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(servicioCarrito.guardar(carrito));
+  public ResponseEntity<Carrito> nuevoCarrito(@RequestBody CarritoRequestDto carrito) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(servicioCarrito.crear(carrito));
 
   }
 

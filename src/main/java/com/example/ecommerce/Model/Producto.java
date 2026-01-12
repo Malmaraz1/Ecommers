@@ -1,6 +1,7 @@
 package com.example.ecommerce.Model;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -40,7 +41,7 @@ public class Producto
    private LocalDate fechaCreacion;
    @Embedded
    private Garantia meses_garantia;
-   private String descripcion;
+   private String descripcion_productro;
    @Column(name="imagen")
    private String imagen;
 

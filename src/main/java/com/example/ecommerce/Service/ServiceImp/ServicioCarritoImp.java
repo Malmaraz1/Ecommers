@@ -9,7 +9,7 @@ import com.example.ecommerce.Model.Carrito;
 
 public interface ServicioCarritoImp {
 
-    Carrito guardar(CarritoRequestDto carrito); 
+    Carrito crear(CarritoRequestDto carrito); 
     Optional <Carrito> eliminar(Long idCarrito , Long idProducto);
     Carrito agregar(Long idCarrito  , Long idProducto);
     

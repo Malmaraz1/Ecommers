@@ -3,6 +3,7 @@ package com.example.ecommerce.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,22 +30,21 @@ public class Categoria {
     private String slug;
     @Column(name="descripcion")
     private String descripcion;
-    @OneToMany
-    @JoinColumn(name = "categoria_id")
+    @OneToMany(mappedBy = "categoriaPadre", cascade = CascadeType.ALL)
     private List<Categoria> subCategorias = new ArrayList<>();
     @Column(name="nivel")
     private Integer nivel;
     @ManyToOne(fetch = FetchType.LAZY)
-    @OneToMany
-    @JoinColumn(name = "producto_id")
-    private List<Producto> productos = new ArrayList<>();
+    @JoinColumn(name = "categoria_padre_id") 
+    private Categoria categoriaPadre;
+  
+   
     
     
-    public Categoria(String nombre, String slug, String descripcion, List<Categoria> subCategorias, Integer nivel) {
+    public Categoria(String nombre, String slug, String descripcion , Integer nivel) {
         this.nombre = nombre;
         this.slug = slug;
         this.descripcion = descripcion;
-        this.subCategorias = subCategorias;
         this.nivel = nivel;
     }
     public boolean esHojaPadre() {
@@ -56,6 +56,7 @@ public void agregarSubcategoria(Categoria sub) {
         subCategorias.add(sub);
         
     }
+}
 
 
 
@@ -63,4 +64,3 @@ public void agregarSubcategoria(Categoria sub) {
 
     
 
-};

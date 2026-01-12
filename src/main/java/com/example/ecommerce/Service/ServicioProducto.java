@@ -13,12 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ecommerce.Controller.ControllerProducto;
 import com.example.ecommerce.Model.Categoria;
 import com.example.ecommerce.Model.Producto;
+import com.example.ecommerce.Model.Dto.Request.CategoriaRequestDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
-
+import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;
 import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
 
-
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @Service
@@ -26,6 +27,7 @@ public class ServicioProducto implements ServicioProductoImp {
 
     @Autowired
     RepositorioProducto repositorioProducto;
+    RepositorioCategoria repositorioCategoria;
 
     @Override
     public List<Producto> findAll() {
@@ -36,14 +38,23 @@ public class ServicioProducto implements ServicioProductoImp {
     @Override
     @Transactional
     public Producto save(@Valid ProductoRequestDto productoDto) {
+
+        Categoria categoria = repositorioCategoria.findById(productoDto.getCategoria_id())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "La categoría con ID " + productoDto.getCategoria_id() + " no existe"));
+
         Producto producto = new Producto();
-        producto.setCategoria(productoDto.getCategoria());
+
         producto.setNombre(productoDto.getNombre());
         producto.setFechaCreacion(LocalDate.now());
         producto.setModelo(productoDto.getModelo());
+        producto.setCategoria(categoria);
+        producto.setPrecio(productoDto.getPrecio());
+        producto.setDescripcion_productro(productoDto.getDescripcion());
+        producto.setImagen(null);
 
         Producto productoBd = repositorioProducto.save(producto);
-        
+
         return productoBd;
     }
 
@@ -86,10 +97,10 @@ public class ServicioProducto implements ServicioProductoImp {
     @Transactional
     public Optional<Producto> delete(Long id) {
         Optional<Producto> producto = repositorioProducto.findById(id);
-       producto.ifPresent(p -> {
-        repositorioProducto.delete(p);
-       });
-       return producto;
+        producto.ifPresent(p -> {
+            repositorioProducto.delete(p);
+        });
+        return producto;
     }
 
 }

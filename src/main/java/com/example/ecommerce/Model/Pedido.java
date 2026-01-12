@@ -24,7 +24,7 @@ public class Pedido {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Transient
+  @OneToOne
   private OrdenCompra ordenCompra;
   @Transient
   private EstadoPedido estadoPedido;

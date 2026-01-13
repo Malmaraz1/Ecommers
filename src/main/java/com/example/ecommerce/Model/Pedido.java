@@ -2,8 +2,6 @@ package com.example.ecommerce.Model;
 
 import java.time.LocalDate;
 
-import com.example.ecommerce.utils.GeneradorCodigo;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name="pedido")
+@Entity(name = "pedido")
 public class Pedido {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +34,7 @@ public class Pedido {
 
   public Pedido(Carrito carrito) {
     this.estadoPedido = new Pendiente();
-    
+
   }
 
   public boolean SolicitarCancelacion() {

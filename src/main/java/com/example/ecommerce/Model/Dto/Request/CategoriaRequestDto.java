@@ -1,7 +1,5 @@
 package com.example.ecommerce.Model.Dto.Request;
 
-import com.example.ecommerce.Model.Categoria;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -25,7 +23,7 @@ public class CategoriaRequestDto {
     @NotBlank(message = "El slug es obligatorio")
     @Size(max = 100, message = "El slug no puede exceder los 100 caracteres")
     private String slug;
- 
+
     private Long categoria_padre_id;
 
     public CategoriaRequestDto(
@@ -43,8 +41,4 @@ public class CategoriaRequestDto {
         this.categoria_padre_id = categoria_padre_id;
     }
 
-    
-
-  
- 
 }

@@ -1,19 +1,17 @@
 package com.example.ecommerce.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.jdbc.Expectation.OutParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ecommerce.Controller.ControllerProducto;
 import com.example.ecommerce.Model.Categoria;
 import com.example.ecommerce.Model.Producto;
-import com.example.ecommerce.Model.Dto.Request.CategoriaRequestDto;
+
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;

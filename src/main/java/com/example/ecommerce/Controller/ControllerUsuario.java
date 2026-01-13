@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.Model.Dto.UsuarioDto;
 import com.example.ecommerce.Model.Dto.Request.UsuarioRequestDto;
-import com.example.ecommerce.Model.Usuario;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
 
@@ -21,18 +21,18 @@ import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
 public class ControllerUsuario {
     @Autowired
     ServicioUsuarioImp servicioUsuario;
-   
-    @PostMapping("/registro")
-    public ResponseEntity<Usuario> registrarse(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+
+    @PostMapping("registro")
+    public ResponseEntity<UsuarioDto> registrarse(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.registrarse(usuarioRequestDto));
     }
 
-    @PostMapping("/sesion")
-    public ResponseEntity<Usuario> iniciarSesion(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+    @PostMapping("sesion")
+    public ResponseEntity<UsuarioDto> iniciarSesion(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.inciarSesion(usuarioRequestDto));
     }
 
-    @DeleteMapping("/actual")
+    @DeleteMapping("actual")
     public ResponseEntity<Void> cerrarSesion(@RequestHeader("Authorization") String token) {
         servicioUsuario.cerrarSesion(token);
         return ResponseEntity.noContent().build();

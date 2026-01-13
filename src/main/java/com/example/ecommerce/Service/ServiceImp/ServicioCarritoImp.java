@@ -1,6 +1,6 @@
 package com.example.ecommerce.Service.ServiceImp;
 
-import java.util.Optional;
+
 
 import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Carrito;
@@ -10,8 +10,8 @@ import com.example.ecommerce.Model.Carrito;
 public interface ServicioCarritoImp {
 
     Carrito crear(CarritoRequestDto carrito); 
-    Optional <Carrito> eliminar(Long idCarrito , Long idProducto);
-    Carrito agregar(Long idCarrito  , Long idProducto);
+    Carrito eliminar(Long idCarrito , Long idProducto  ,Integer cantidad);
+    Carrito agregar(Long idCarrito  , Long idProducto ,Integer cantidad);
     
     
 }

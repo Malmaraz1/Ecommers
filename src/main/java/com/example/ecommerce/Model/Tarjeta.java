@@ -2,6 +2,8 @@ package com.example.ecommerce.Model;
 
 import java.time.LocalDate;
 
+import lombok.Getter;
+@Getter
 public class Tarjeta implements MedioPago {
     private String numeroTarjeta; // Los 16 dígitos
     private String cvv;

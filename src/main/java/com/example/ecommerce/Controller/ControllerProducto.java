@@ -53,7 +53,7 @@ public class ControllerProducto {
     @DeleteMapping("/{idProducto}")
     public ResponseEntity<Void> delete(@PathVariable Long idProducto) {
         servicioProducto.delete(idProducto);
-        return ResponseEntity.noContent().build(); 
+        return ResponseEntity.noContent().build();
     }
 
 }

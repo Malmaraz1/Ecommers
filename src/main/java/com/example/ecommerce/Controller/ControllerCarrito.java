@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
@@ -33,16 +34,16 @@ public class ControllerCarrito {
 
   }
 
-  @PatchMapping("/productos/{idProducto}")
-  public ResponseEntity<Carrito> agregarproducto(@PathVariable Long idProducto ,@PathVariable Long idcarrito) {
-    Carrito actualizado = servicioCarrito.agregar(idcarrito , idProducto);
+  @PatchMapping("{idCarrito}/productos/{idproducto}/item_carrito")
+  public ResponseEntity<Carrito> agregarproducto(@PathVariable Long idProducto ,@PathVariable Long idcarrito ,@RequestParam Integer cantidad ) {
+    Carrito actualizado = servicioCarrito.agregar(idcarrito , idProducto,cantidad);
     return ResponseEntity.ok(actualizado);
   }
 
   @DeleteMapping("{idCarrito}/productos/{idproducto}")
-  public ResponseEntity<?> quitarProducto(@PathVariable Long idproducto , @PathVariable Long idcarrito) {
-    Optional<Carrito> carritoOptional = servicioCarrito.eliminar(idcarrito,idproducto);
-    if (carritoOptional.isPresent()) {
+  public ResponseEntity<?> quitarProducto(@PathVariable Long idproducto , @PathVariable Long idcarrito ,@RequestParam Integer cantidad) {
+    Carrito carritoOptional = servicioCarrito.eliminar(idcarrito,idproducto,cantidad);
+    if (carritoOptional != null) {
       return ResponseEntity.status(HttpStatus.OK).build();
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

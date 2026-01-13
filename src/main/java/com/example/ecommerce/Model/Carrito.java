@@ -22,30 +22,49 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name="carrito")
+@Entity(name = "carrito")
 public class Carrito {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
    @ManyToOne
-   @JoinColumn(name="usuario_id")
+   @JoinColumn(name = "usuario_id")
    private Usuario comprador;
    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
    private List<ItemCarrito> itemsCarrito = new ArrayList<>();
-   @Column(name="ultima_actualizacion")
+   @Column(name = "ultima_actualizacion")
    private LocalDate ultimaActualizacion;
-   
 
-
-
-   public void agregarItem(Producto producto, int Cantidad) {
-      Optional<ItemCarrito> existente = itemsCarrito.stream().filter(i -> i.getProducto().equals(producto)).findFirst();
-      if (existente.isPresent()) {
-         existente.get().setCantidad(Cantidad);
-      } else {
-         itemsCarrito.add(new ItemCarrito(Cantidad, producto.getPrecio(), producto));
-      }
+   public Carrito(Usuario comprador) {
+      this.comprador = comprador;
    }
 
- 
+   public void agregarItem(Producto producto, Integer cantidad) {
+      Optional<ItemCarrito> existente = itemsCarrito.stream().filter(i -> i.getProducto().equals(producto)).findFirst();
+      if (existente.isPresent()) {
+         ItemCarrito item = existente.get();
+         item.setCantidad(item.getCantidad() + cantidad);
+
+      } else {
+         ItemCarrito itemCarrito = new ItemCarrito(cantidad, producto.getPrecio(), producto);
+         itemsCarrito.add(itemCarrito);
+         itemCarrito.setCarrito(this);
+
+      }
+   }
+    public void quitarItem(Producto producto, Integer cantidad) {
+      Optional<ItemCarrito> existente = itemsCarrito.stream().filter(i -> i.getProducto().equals(producto)).findFirst();
+      if (existente.isPresent()) {
+         ItemCarrito item = existente.get();
+         item.setCantidad(item.getCantidad() - cantidad);
+
+      } else {
+         ItemCarrito itemCarrito = new ItemCarrito(cantidad, producto.getPrecio(), producto);
+         itemsCarrito.add(itemCarrito);
+         itemCarrito.setCarrito(this);
+
+      }
+   }
+   
+
 }

@@ -1,9 +1,7 @@
 package com.example.ecommerce.Model.Dto.Request;
 
-import com.example.ecommerce.Model.Categoria;
-
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Negative;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -33,6 +31,7 @@ public class ProductoRequestDto {
    private String descripcion;
    @Null
    private String img;
+
    public ProductoRequestDto(@NotBlank(message = "El nombre no puede estar vacío") String nombre,
          @NotNull(message = "El precio es obligatorio") @Positive(message = "El precio debe ser positivo") Double precio,
          @NotNull(message = "El ID no puede ser nulo") @Min(value = 1, message = "El ID debe ser un número positivo") Long categoria_id,
@@ -46,5 +45,4 @@ public class ProductoRequestDto {
       this.img = img;
    }
 
-   
 }

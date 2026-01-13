@@ -4,7 +4,7 @@ import com.example.ecommerce.Model.Carrito;
 import com.example.ecommerce.Model.Producto;
 import com.example.ecommerce.Repository.RepositorioCarrito;
 import com.example.ecommerce.Repository.RepositorioProducto;
-import com.example.ecommerce.Repository.RepositorioUsuario;
+
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

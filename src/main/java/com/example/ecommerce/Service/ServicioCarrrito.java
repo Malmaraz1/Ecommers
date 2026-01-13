@@ -2,15 +2,13 @@ package com.example.ecommerce.Service;
 
 import java.beans.Transient;
 import java.time.LocalDate;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.Model.Carrito;
-import com.example.ecommerce.Model.ItemCarrito;
-import com.example.ecommerce.Model.Producto;
+
 import com.example.ecommerce.Model.Usuario;
 import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Repository.RepositorioCarrito;
@@ -27,7 +25,7 @@ public class ServicioCarrrito implements ServicioCarritoImp {
 
     private final RepositorioCarrito repositorioCarrito;
     private final RepositorioUsuario repositorioUsuario;
-    private final RepositorioProducto repositorioProducto;
+    
     private final ServicioAgregarCarrito servicioAgregarCarrito;
     private final ServicioQuitarItemCarrito servicioQuitarItemCarrito;
 

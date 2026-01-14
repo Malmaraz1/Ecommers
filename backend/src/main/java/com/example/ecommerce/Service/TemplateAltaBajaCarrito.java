@@ -4,9 +4,9 @@ import com.example.ecommerce.Model.Carrito;
 import com.example.ecommerce.Model.Producto;
 import com.example.ecommerce.Repository.RepositorioCarrito;
 import com.example.ecommerce.Repository.RepositorioProducto;
+import com.example.ecommerce.exceptions.NotFoundException;
 
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,10 +17,10 @@ public abstract class TemplateAltaBajaCarrito {
         public final Carrito ejecutar(Long idCarrito, Long idProducto, Integer cantidad) {
 
                 Carrito carrito = repositorioCarrito.findById(idCarrito).orElseThrow(
-                                () -> new EntityNotFoundException("no se encontro el carrito"));
+                                () -> new NotFoundException("no se encontro el carrito"));
 
                 Producto producto = repositorioProducto.findById(idProducto).orElseThrow(
-                                () -> new EntityNotFoundException("no se encontro el producto"));
+                                () -> new NotFoundException("no se encontro el producto"));
 
                 aplicarLogicaDelItem(carrito, producto, cantidad);
 

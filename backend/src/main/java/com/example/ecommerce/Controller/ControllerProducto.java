@@ -27,12 +27,12 @@ public class ControllerProducto {
 
     @PostMapping()
     public ResponseEntity<Producto> save(@RequestBody ProductoRequestDto producto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.save(producto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.guardarProducto(producto));
     }
 
     @GetMapping("/{idProducto}")
     public ResponseEntity<Producto> findByEntity(@PathVariable Long idProducto) {
-        Optional<Producto> producto = servicioProducto.findById(idProducto);
+        Optional<Producto> producto = servicioProducto.buscarProducto(idProducto);
         if (producto.isPresent()) {
             return ResponseEntity.ok(producto.orElseThrow());
         }
@@ -42,7 +42,7 @@ public class ControllerProducto {
 
     @GetMapping()
     public ResponseEntity<List<Producto>> findAllProduct() {
-        List<Producto> productosDto = servicioProducto.findAll();
+        List<Producto> productosDto = servicioProducto.todosLosProductos();
         if (productosDto.isEmpty()) {
             throw new RuntimeException("No se encontrar productos");
         }
@@ -52,7 +52,7 @@ public class ControllerProducto {
 
     @DeleteMapping("/{idProducto}")
     public ResponseEntity<Void> delete(@PathVariable Long idProducto) {
-        servicioProducto.delete(idProducto);
+        servicioProducto.eliminarProducto(idProducto);
         return ResponseEntity.noContent().build();
     }
 

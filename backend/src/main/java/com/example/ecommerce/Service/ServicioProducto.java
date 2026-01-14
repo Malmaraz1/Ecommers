@@ -16,8 +16,8 @@ import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;
 import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
+import com.example.ecommerce.exceptions.NotFoundException;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @Service
@@ -29,17 +29,17 @@ public class ServicioProducto implements ServicioProductoImp {
     RepositorioCategoria repositorioCategoria;
 
     @Override
-    public List<Producto> findAll() {
-        // TODO Auto-generated method stub
+    public List<Producto> todosLosProductos() {
+
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
     @Transactional
-    public Producto save(@Valid ProductoRequestDto productoDto) {
+    public Producto guardarProducto(@Valid ProductoRequestDto productoDto) {
 
         Categoria categoria = repositorioCategoria.findById(productoDto.getCategoria_id())
-                .orElseThrow(() -> new EntityNotFoundException(
+                .orElseThrow(() -> new NotFoundException(
                         "La categoría con ID " + productoDto.getCategoria_id() + " no existe"));
 
         Producto producto = new Producto();
@@ -58,48 +58,42 @@ public class ServicioProducto implements ServicioProductoImp {
     }
 
     @Override
-    public Optional<Producto> findById(Long id) {
-        Optional<Producto> producto = repositorioProducto.findById(id);
-
-        if (producto.isEmpty()) {
-            throw new RuntimeException("producto no encontrado");
-        }
-        return producto;
-
-    }
-
-    @Override
-    public List<Producto> findByCategoria(Categoria categoria) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByCategoria'");
-    }
-
-    @Override
-    public List<Producto> findBySubCategoria(Categoria categoria) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findBySubCategoria'");
-    }
-
-    @Override
-    public List<Producto> findByPrecioMax() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByPrecioMax'");
-    }
-
-    @Override
-    public List<Producto> findByPrecioMin() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByPrecioMin'");
+    public List<Producto> productosPorCategoria(String categoria) {
+        return repositorioProducto.findByCategoria_Nombre(categoria);
     }
 
     @Override
     @Transactional
-    public Optional<Producto> delete(Long id) {
+    public Optional<Producto> eliminarProducto(Long id) {
         Optional<Producto> producto = repositorioProducto.findById(id);
         producto.ifPresent(p -> {
             repositorioProducto.delete(p);
         });
         return producto;
+    }
+
+    @Override
+    public Optional<Producto> buscarProducto(Long id) {
+        return repositorioProducto.findById(id);
+
+    }
+
+    @Override
+    public List<Producto> productosPorSubCategoria(String categoria) {
+        return repositorioProducto.findByCategoria_CategoriaPadre_Nombre(categoria);
+
+    }
+
+    @Override
+    public List<Producto> productosPorPrecioMax() {
+        return repositorioProducto.findFirstByOrderByPrecioDesc();
+
+    }
+
+    @Override
+    public List<Producto> productoPorPrecioMin() {
+        return repositorioProducto.findFirstByOrderByPrecioAsc();
+
     }
 
 }

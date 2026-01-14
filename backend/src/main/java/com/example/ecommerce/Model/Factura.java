@@ -43,13 +43,7 @@ public class Factura {
   private MedioPago metodoPago;
   
   
-  
-  public Factura (String numeroFactura, Comprador comprador,
-      Vendedor vendedor) {
-    this.numeroFactura = numeroFactura;
-    this.fechaEmision = LocalDate.now();
-    this.comprador = comprador;
-  }
+ 
 
     
 

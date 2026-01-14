@@ -19,6 +19,8 @@ import com.example.ecommerce.Model.Carrito;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioCarritoImp;
 
+import jakarta.validation.Valid;
+
 
 
 @RestController
@@ -29,7 +31,7 @@ public class ControllerCarrito {
   ServicioCarritoImp servicioCarrito;
 
   @PostMapping
-  public ResponseEntity<Carrito> nuevoCarrito(@RequestBody CarritoRequestDto carrito) {
+  public ResponseEntity<Carrito> nuevoCarrito(@Valid @RequestBody CarritoRequestDto carrito) {
     return ResponseEntity.status(HttpStatus.CREATED).body(servicioCarrito.crear(carrito));
 
   }

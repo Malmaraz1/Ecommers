@@ -11,6 +11,7 @@ public interface ServicioUsuarioImp {
     UsuarioDto inciarSesion(UsuarioRequestDto usuarioRequestDto);
     UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto);
     void cerrarSesion(String token);
+ 
 
     
 }

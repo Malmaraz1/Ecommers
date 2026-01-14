@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.example.ecommerce.Model.Dto.UsuarioDto;
 import com.example.ecommerce.Model.Dto.Request.UsuarioRequestDto;
 import com.example.ecommerce.Repository.RepositorioUsuario;
-import com.example.ecommerce.Model.Comprador;
+
 import com.example.ecommerce.Model.Usuario;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
@@ -25,13 +25,7 @@ public class ServicioUsuario implements ServicioUsuarioImp {
 
     @Override
     public UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto) {
-        Usuario compradorUsuario = new Comprador(usuarioRequestDto.getNombre(), usuarioRequestDto.getEmail());
-
-        Usuario compradorNuevo = repositorioUsuario.save(compradorUsuario);
-        if (compradorNuevo == null) {
-            throw new RuntimeException("No se pudo registrar al usuario");
-        }
-        return new UsuarioDto(compradorNuevo.getNombre(), compradorNuevo.getCorreo());
+       return new UsuarioDto(null, null);
 
     }
 
@@ -40,5 +34,6 @@ public class ServicioUsuario implements ServicioUsuarioImp {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'cerrarSesion'");
     }
+   
 
 }

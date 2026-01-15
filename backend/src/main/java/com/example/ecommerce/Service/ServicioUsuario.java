@@ -7,7 +7,7 @@ import com.example.ecommerce.Model.Dto.UsuarioDto;
 import com.example.ecommerce.Model.Dto.Request.UsuarioRequestDto;
 import com.example.ecommerce.Repository.RepositorioUsuario;
 
-import com.example.ecommerce.Model.Usuario;
+
 
 import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
 

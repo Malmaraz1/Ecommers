@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecommerce.Model.Categoria;
+
+import com.example.ecommerce.Model.Dto.CategoriaDto;
 import com.example.ecommerce.Model.Dto.Request.CategoriaRequestDto;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioCategoriaImp;
@@ -22,7 +23,7 @@ public class ControllerCategoria {
     ServicioCategoriaImp servicioCategoria;
 
     @PostMapping()
-    public ResponseEntity<Categoria> nuevaCategoria(@RequestBody CategoriaRequestDto categoriaRequestDto) {
+    public ResponseEntity<CategoriaDto> nuevaCategoria(@RequestBody CategoriaRequestDto categoriaRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(servicioCategoria.categoriaNueva(categoriaRequestDto));
 
     }

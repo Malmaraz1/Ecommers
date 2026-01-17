@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.Model.Dto.ProductoDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
-import com.example.ecommerce.Model.Producto;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
+import com.example.ecommerce.exceptions.NotFoundException;
 
 @RestController
 @RequestMapping("/productos")
@@ -26,13 +28,13 @@ public class ControllerProducto {
     ServicioProductoImp servicioProducto;
 
     @PostMapping()
-    public ResponseEntity<Producto> save(@RequestBody ProductoRequestDto producto) {
+    public ResponseEntity<ProductoDto> save(@RequestBody ProductoRequestDto producto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.guardarProducto(producto));
     }
 
     @GetMapping("/{idProducto}")
-    public ResponseEntity<Producto> findByEntity(@PathVariable Long idProducto) {
-        Optional<Producto> producto = servicioProducto.buscarProducto(idProducto);
+    public ResponseEntity<ProductoDto> findByEntity(@PathVariable Long idProducto) {
+        Optional<ProductoDto> producto = servicioProducto.buscarProducto(idProducto);
         if (producto.isPresent()) {
             return ResponseEntity.ok(producto.orElseThrow());
         }
@@ -41,10 +43,48 @@ public class ControllerProducto {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Producto>> findAllProduct() {
-        List<Producto> productosDto = servicioProducto.todosLosProductos();
+    public ResponseEntity<List<ProductoDto>> findAllProduct() {
+        List<ProductoDto> productosDto = servicioProducto.todosLosProductos();
         if (productosDto.isEmpty()) {
-            throw new RuntimeException("No se encontrar productos");
+            throw new NotFoundException("No se encontraron productos en la base de datos");
+        }
+        return ResponseEntity.ok(productosDto);
+
+    }
+
+    @GetMapping("/filtro")
+    public ResponseEntity<List<ProductoDto>> productosPorCategoria(
+            @RequestParam(name = "categoria", required = false) String nombreCategoria) {
+        List<ProductoDto> productosDto = servicioProducto.productosPorCategoria(nombreCategoria);
+
+        return ResponseEntity.ok(productosDto);
+
+    }
+
+    @GetMapping("/filtroSub")
+    public ResponseEntity<List<ProductoDto>> productosPorSubCategoria(
+            @RequestParam(name = "categoria", required = false) String nombreSubCategoria) {
+        List<ProductoDto> productosDto = servicioProducto.productosPorSubCategoria(nombreSubCategoria);
+
+        return ResponseEntity.ok(productosDto);
+
+    }
+
+    @GetMapping("/maximo")
+    public ResponseEntity<List<ProductoDto>> productosPorPrecioMax() {
+        List<ProductoDto> productosDto = servicioProducto.productosPorPrecioMax();
+        if (productosDto.isEmpty()) {
+            throw new NotFoundException("No se encontraron productos en la base de datos");
+        }
+        return ResponseEntity.ok(productosDto);
+
+    }
+
+    @GetMapping("/minimo")
+    public ResponseEntity<List<ProductoDto>> productoPorPrecioMin() {
+        List<ProductoDto> productosDto = servicioProducto.productoPorPrecioMin();
+        if (productosDto.isEmpty()) {
+            throw new NotFoundException("No se encontraron productos en la base de datos");
         }
         return ResponseEntity.ok(productosDto);
 

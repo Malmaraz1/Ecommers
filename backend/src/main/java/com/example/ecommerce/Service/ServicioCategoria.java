@@ -1,12 +1,11 @@
 package com.example.ecommerce.Service;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Model.Categoria;
+import com.example.ecommerce.Model.Dto.CategoriaDto;
 import com.example.ecommerce.Model.Dto.Request.CategoriaRequestDto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Service.ServiceImp.ServicioCategoriaImp;
@@ -21,7 +20,7 @@ public class ServicioCategoria implements ServicioCategoriaImp {
 
     @Override
     @Transactional
-    public Categoria categoriaNueva(@Valid CategoriaRequestDto categoriaRequestDto) {
+    public CategoriaDto categoriaNueva(@Valid CategoriaRequestDto categoriaRequestDto) {
 
         Categoria categoria = new Categoria();
         categoria.setNombre(categoriaRequestDto.getNombre());
@@ -45,7 +44,8 @@ public class ServicioCategoria implements ServicioCategoriaImp {
 
         Categoria nuevCategoria = repositorioCategoria.save(categoria);
 
-        return nuevCategoria;
+        return new CategoriaDto(nuevCategoria.getNombre(),
+                nuevCategoria.getDescripcion(), nuevCategoria.getSlug());
 
     }
 

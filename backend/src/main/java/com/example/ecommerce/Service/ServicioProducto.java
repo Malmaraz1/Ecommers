@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Model.Categoria;
 import com.example.ecommerce.Model.Producto;
-
+import com.example.ecommerce.Model.Dto.ProductoDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;
@@ -29,14 +29,21 @@ public class ServicioProducto implements ServicioProductoImp {
     RepositorioCategoria repositorioCategoria;
 
     @Override
-    public List<Producto> todosLosProductos() {
+    @Transactional(readOnly = true)
+    public List<ProductoDto> todosLosProductos() {
+        List<Producto> productos = repositorioProducto.findAll();
 
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+         if (productos.isEmpty()) {
+            throw new NotFoundException("no se encontraron productos");
+        }
+        
+          return productos.stream().map(ProductoDto::new)
+                .toList();
     }
 
     @Override
     @Transactional
-    public Producto guardarProducto(@Valid ProductoRequestDto productoDto) {
+    public ProductoDto guardarProducto(@Valid ProductoRequestDto productoDto) {
 
         Categoria categoria = repositorioCategoria.findById(productoDto.getCategoria_id())
                 .orElseThrow(() -> new NotFoundException(
@@ -51,48 +58,80 @@ public class ServicioProducto implements ServicioProductoImp {
         producto.setPrecio(productoDto.getPrecio());
         producto.setDescripcion_productro(productoDto.getDescripcion());
         producto.setImagen(null);
+        producto.setMarca(productoDto.getMarca());
 
-        Producto productoBd = repositorioProducto.save(producto);
+        Producto productoDb = repositorioProducto.save(producto);
 
-        return productoBd;
+        return new ProductoDto(productoDb);
+
     }
 
     @Override
-    public List<Producto> productosPorCategoria(String categoria) {
-        return repositorioProducto.findByCategoria_Nombre(categoria);
+    @Transactional(readOnly = true)
+    public List<ProductoDto> productosPorCategoria(String nombreCat) {
+        List<Producto> productos = repositorioProducto.buscarPorCategoriaPadre(nombreCat);
+          if (productos.isEmpty()) {
+            throw new NotFoundException("no se encontraron categorias para este producto service");
+        }
+        return productos.stream().map(ProductoDto::new)
+                .toList();
     }
 
     @Override
     @Transactional
-    public Optional<Producto> eliminarProducto(Long id) {
+    public void eliminarProducto(Long id) {
         Optional<Producto> producto = repositorioProducto.findById(id);
         producto.ifPresent(p -> {
             repositorioProducto.delete(p);
         });
-        return producto;
-    }
-
-    @Override
-    public Optional<Producto> buscarProducto(Long id) {
-        return repositorioProducto.findById(id);
 
     }
 
     @Override
-    public List<Producto> productosPorSubCategoria(String categoria) {
-        return repositorioProducto.findByCategoria_CategoriaPadre_Nombre(categoria);
+    @Transactional(readOnly = true)
+    public List<ProductoDto> productosPorSubCategoria(String categoria) {
+
+        System.out.println(categoria);
+        List<Producto> productos = repositorioProducto.buscarSubCategoria(categoria);
+        if (productos.isEmpty()) {
+            throw new NotFoundException("no se encontraron subCategorias para este producto service");
+        }
+        return productos.stream().map(ProductoDto::new)
+                .toList();
+    }
+
+    @Override
+    public List<ProductoDto> productosPorPrecioMax() {
+        List<Producto> productos = repositorioProducto.productosPorPrecioMax();
+        if (productos.isEmpty()) {
+            throw new NotFoundException("no se encontraron  productos");
+        }
+
+        return productos.stream().map(ProductoDto::new)
+                .toList();
 
     }
 
     @Override
-    public List<Producto> productosPorPrecioMax() {
-        return repositorioProducto.findFirstByOrderByPrecioDesc();
+    @Transactional(readOnly = true)
+    public List<ProductoDto> productoPorPrecioMin() {
+        List<Producto> productos = repositorioProducto.productosPorPrecioMin();
+        if (productos.isEmpty()) {
+            throw new NotFoundException("no se encontraron  productos");
+        }
+
+        return productos.stream().map(ProductoDto::new)
+                .toList();
 
     }
 
     @Override
-    public List<Producto> productoPorPrecioMin() {
-        return repositorioProducto.findFirstByOrderByPrecioAsc();
+    @Transactional(readOnly = true)
+    public Optional<ProductoDto> buscarProducto(Long idProducto) {
+        return repositorioProducto.findById(idProducto).map(
+                p -> {
+                    return new ProductoDto(p);
+                });
 
     }
 

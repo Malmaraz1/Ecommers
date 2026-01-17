@@ -4,19 +4,18 @@ import java.util.List;
 import java.util.Optional;
 
 
-
-import com.example.ecommerce.Model.Producto;
+import com.example.ecommerce.Model.Dto.ProductoDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 
 
 public interface ServicioProductoImp {
-List<Producto> todosLosProductos();    
-Producto guardarProducto(ProductoRequestDto productoDto);
-Optional<Producto> buscarProducto(Long id);
-List<Producto> productosPorCategoria(String categoria);
-List<Producto> productosPorSubCategoria(String categoria);
-List<Producto> productosPorPrecioMax();
-List<Producto> productoPorPrecioMin();
-Optional<Producto> eliminarProducto(Long id);
+List<ProductoDto> todosLosProductos();    
+ProductoDto guardarProducto(ProductoRequestDto productoDto);
+List<ProductoDto> productosPorCategoria(String categoria);
+List<ProductoDto> productosPorSubCategoria(String categoria);
+List<ProductoDto> productosPorPrecioMax();
+List<ProductoDto> productoPorPrecioMin();
+void  eliminarProducto(Long id);
+Optional<ProductoDto> buscarProducto(Long idProducto);
 
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Accordion, Form } from 'react-bootstrap';
 
 function FiltrosLaterales() {
-  // Estados para controlar qué está seleccionado
+  
   const [categoriaSel, setCategoriaSel] = useState(null);
   const [subcategoriaSel, setSubcategoriaSel] = useState(null);
 

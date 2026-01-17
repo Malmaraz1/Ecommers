@@ -1,0 +1,14 @@
+package com.example.ecommerce.Model.Dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class CategoriaDto {
+  private String nombre;
+  private String descripcion;
+  private String slug;
+}

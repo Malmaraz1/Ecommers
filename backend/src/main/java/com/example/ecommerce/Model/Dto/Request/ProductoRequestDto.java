@@ -16,7 +16,7 @@ public class ProductoRequestDto {
    @NotBlank(message = "El nombre no puede estar vacío")
    private String nombre;
 
-   @NotNull(message = "El precio es obligatorio") // Double requiere @NotNull
+   @NotNull(message = "El precio es obligatorio") 
    @Positive(message = "El precio debe ser positivo")
    private Double precio;
 
@@ -31,18 +31,23 @@ public class ProductoRequestDto {
    private String descripcion;
    @Null
    private String img;
-
+   @NotBlank(message = "La marca no puede estar vacia")
+   private String marca;
    public ProductoRequestDto(@NotBlank(message = "El nombre no puede estar vacío") String nombre,
          @NotNull(message = "El precio es obligatorio") @Positive(message = "El precio debe ser positivo") Double precio,
          @NotNull(message = "El ID no puede ser nulo") @Min(value = 1, message = "El ID debe ser un número positivo") Long categoria_id,
          @NotBlank(message = "El modelo no puede estar vacío") String modelo,
-         @Size(max = 500, message = "La descripción es demasiado larga") String descripcion, @Null String img) {
+         @Size(max = 500, message = "La descripción es demasiado larga") String descripcion, @Null String img,
+         String marca) {
       this.nombre = nombre;
       this.precio = precio;
       this.categoria_id = categoria_id;
       this.modelo = modelo;
       this.descripcion = descripcion;
       this.img = img;
+      this.marca = marca;
    }
+
+   
 
 }

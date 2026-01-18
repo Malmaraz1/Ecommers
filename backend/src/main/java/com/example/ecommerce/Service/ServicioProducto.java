@@ -2,10 +2,11 @@ package com.example.ecommerce.Service;
 
 import java.time.LocalDate;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,15 +31,15 @@ public class ServicioProducto implements ServicioProductoImp {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductoDto> todosLosProductos() {
-        List<Producto> productos = repositorioProducto.findAll();
+    public Page<ProductoDto> todosLosProductos(Pageable pageable) {
+        Page<Producto> productos = repositorioProducto.findAll(pageable);
 
-         if (productos.isEmpty()) {
+        if (productos.isEmpty()) {
             throw new NotFoundException("no se encontraron productos");
         }
-        
-          return productos.stream().map(ProductoDto::new)
-                .toList();
+
+        return productos.map(producto -> new ProductoDto(
+                producto));
     }
 
     @Override
@@ -68,13 +69,14 @@ public class ServicioProducto implements ServicioProductoImp {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductoDto> productosPorCategoria(String nombreCat) {
-        List<Producto> productos = repositorioProducto.buscarPorCategoriaPadre(nombreCat);
-          if (productos.isEmpty()) {
+    public Page<ProductoDto> productosPorCategoria(String nombreCat, Pageable pageable) {
+        Page<Producto> productos = repositorioProducto.buscarPorCategoriaPadre(nombreCat,pageable);
+        if (productos.isEmpty()) {
             throw new NotFoundException("no se encontraron categorias para este producto service");
         }
-        return productos.stream().map(ProductoDto::new)
-                .toList();
+        return productos.map(producto -> new ProductoDto(
+                producto));
+
     }
 
     @Override
@@ -89,39 +91,40 @@ public class ServicioProducto implements ServicioProductoImp {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductoDto> productosPorSubCategoria(String categoria) {
+    public Page<ProductoDto> productosPorSubCategoria(String categoria, Pageable pageable) {
 
         System.out.println(categoria);
-        List<Producto> productos = repositorioProducto.buscarSubCategoria(categoria);
+        Page<Producto> productos = repositorioProducto.buscarSubCategoria(categoria,pageable
+        );
         if (productos.isEmpty()) {
             throw new NotFoundException("no se encontraron subCategorias para este producto service");
         }
-        return productos.stream().map(ProductoDto::new)
-                .toList();
+        return productos.map(producto -> new ProductoDto(
+                producto));
     }
 
     @Override
-    public List<ProductoDto> productosPorPrecioMax() {
-        List<Producto> productos = repositorioProducto.productosPorPrecioMax();
+    public Page<ProductoDto> productosPorPrecioMax(Pageable pageable) {
+        Page<Producto> productos = repositorioProducto.productosPorPrecioMax(pageable);
         if (productos.isEmpty()) {
             throw new NotFoundException("no se encontraron  productos");
         }
 
-        return productos.stream().map(ProductoDto::new)
-                .toList();
+        return productos.map(producto -> new ProductoDto(
+                producto));
 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductoDto> productoPorPrecioMin() {
-        List<Producto> productos = repositorioProducto.productosPorPrecioMin();
+    public Page<ProductoDto> productoPorPrecioMin(Pageable pageable) {
+        Page<Producto> productos = repositorioProducto.productosPorPrecioMin(pageable);
         if (productos.isEmpty()) {
             throw new NotFoundException("no se encontraron  productos");
         }
 
-        return productos.stream().map(ProductoDto::new)
-                .toList();
+        return productos.map(producto -> new ProductoDto(
+                producto));
 
     }
 

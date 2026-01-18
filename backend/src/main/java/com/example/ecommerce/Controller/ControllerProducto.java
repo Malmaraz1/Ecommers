@@ -1,9 +1,11 @@
 package com.example.ecommerce.Controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +21,6 @@ import com.example.ecommerce.Model.Dto.ProductoDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
-import com.example.ecommerce.exceptions.NotFoundException;
 
 @RestController
 @RequestMapping("/productos")
@@ -43,49 +44,56 @@ public class ControllerProducto {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ProductoDto>> findAllProduct() {
-        List<ProductoDto> productosDto = servicioProducto.todosLosProductos();
-        if (productosDto.isEmpty()) {
-            throw new NotFoundException("No se encontraron productos en la base de datos");
-        }
+    public ResponseEntity<Page<ProductoDto>> findAllProduct(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<ProductoDto> productosDto = servicioProducto.todosLosProductos(PageRequest.of(page, size));
+
         return ResponseEntity.ok(productosDto);
 
     }
 
     @GetMapping("/filtro")
-    public ResponseEntity<List<ProductoDto>> productosPorCategoria(
-            @RequestParam(name = "categoria", required = false) String nombreCategoria) {
-        List<ProductoDto> productosDto = servicioProducto.productosPorCategoria(nombreCategoria);
+    public ResponseEntity<Page<ProductoDto>> productosPorCategoria(
+            @RequestParam(name = "categoria", required = false) String nombreCategoria,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProductoDto> productosDto = servicioProducto.productosPorCategoria(nombreCategoria, pageable);
 
         return ResponseEntity.ok(productosDto);
 
     }
 
     @GetMapping("/filtroSub")
-    public ResponseEntity<List<ProductoDto>> productosPorSubCategoria(
-            @RequestParam(name = "categoria", required = false) String nombreSubCategoria) {
-        List<ProductoDto> productosDto = servicioProducto.productosPorSubCategoria(nombreSubCategoria);
+    public ResponseEntity<Page<ProductoDto>> productosPorSubCategoria(
+            @RequestParam(name = "categoria", required = false) String nombreSubCategoria,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProductoDto> productosDto = servicioProducto.productosPorSubCategoria(nombreSubCategoria, pageable);
 
         return ResponseEntity.ok(productosDto);
 
     }
 
     @GetMapping("/maximo")
-    public ResponseEntity<List<ProductoDto>> productosPorPrecioMax() {
-        List<ProductoDto> productosDto = servicioProducto.productosPorPrecioMax();
-        if (productosDto.isEmpty()) {
-            throw new NotFoundException("No se encontraron productos en la base de datos");
-        }
+    public ResponseEntity<Page<ProductoDto>> productosPorPrecioMax(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProductoDto> productosDto = servicioProducto.productosPorPrecioMax(pageable);
+
         return ResponseEntity.ok(productosDto);
 
     }
 
     @GetMapping("/minimo")
-    public ResponseEntity<List<ProductoDto>> productoPorPrecioMin() {
-        List<ProductoDto> productosDto = servicioProducto.productoPorPrecioMin();
-        if (productosDto.isEmpty()) {
-            throw new NotFoundException("No se encontraron productos en la base de datos");
-        }
+    public ResponseEntity<Page<ProductoDto>> productoPorPrecioMin(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProductoDto> productosDto = servicioProducto.productoPorPrecioMin(pageable);
+
         return ResponseEntity.ok(productosDto);
 
     }

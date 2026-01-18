@@ -8,9 +8,12 @@ public class UsuarioDto {
 
     String nombre;
     String correo;
-    public UsuarioDto(String nombre, String correo) {
+    Long id;
+    public UsuarioDto(String nombre, String correo, Long id) {
         this.nombre = nombre;
         this.correo = correo;
+        this.id = id;
     }
+  
     
 }

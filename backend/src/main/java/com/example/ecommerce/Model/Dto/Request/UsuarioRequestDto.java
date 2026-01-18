@@ -11,6 +11,9 @@ public class UsuarioRequestDto {
     private String nombre;
     @Email(message = "Formato de email inválido")
     private String email;
-
+    @NotBlank(message = "La contraseña no puedo estar vacio")
+    private String contrasenia;
+    private boolean isAdmin = false;
+    
 
 }

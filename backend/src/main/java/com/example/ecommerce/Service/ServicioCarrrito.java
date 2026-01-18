@@ -1,9 +1,10 @@
 package com.example.ecommerce.Service;
 
-import java.beans.Transient;
+
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Model.Carrito;
 
@@ -14,7 +15,6 @@ import com.example.ecommerce.Repository.RepositorioCarrito;
 import com.example.ecommerce.Repository.RepositorioUsuario;
 import com.example.ecommerce.Service.ServiceImp.ServicioCarritoImp;
 import com.example.ecommerce.exceptions.NotFoundException;
-
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +29,7 @@ public class ServicioCarrrito implements ServicioCarritoImp {
     private final ServicioQuitarItemCarrito servicioQuitarItemCarrito;
 
     @Override
+    @Transactional
     public Carrito crear(CarritoRequestDto carritoRequestDto) {
 
         Usuario usuario = repositorioUsuario.findById(carritoRequestDto.getUsuario_id())
@@ -44,14 +45,14 @@ public class ServicioCarrrito implements ServicioCarritoImp {
     }
 
     @Override
-    @Transient
+    @Transactional
     public Carrito eliminar(Long idCarrito, Long idProducto, Integer cantidad) {
         Carrito carrito = servicioAgregarCarrito.ejecutar(idCarrito, idProducto, cantidad);
         return carrito;
     }
 
     @Override
-    @Transient
+    @Transactional
     public Carrito agregar(Long idCarrito, Long idProducto, Integer cantidad) {
 
         Carrito carrito = servicioQuitarItemCarrito.ejecutar(idCarrito, idProducto, cantidad);

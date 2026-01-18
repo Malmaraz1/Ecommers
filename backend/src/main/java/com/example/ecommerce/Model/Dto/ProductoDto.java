@@ -2,7 +2,7 @@ package com.example.ecommerce.Model.Dto;
 
 import com.example.ecommerce.Model.Producto;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProductoDto {
+private Long id;
 private String nombre;
 private String modelo;
 private Double precio;
@@ -19,6 +20,7 @@ private String descripcion;
 private String categoria;
 
 public ProductoDto(Producto p) {
+    this.id = p.getId();
     this.nombre = p.getNombre();
     this.modelo = p.getModelo();
     this.precio = p.getPrecio();

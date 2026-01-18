@@ -1,21 +1,24 @@
 package com.example.ecommerce.Service.ServiceImp;
 
-import java.util.List;
+
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.example.ecommerce.Model.Dto.ProductoDto;
 import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 
 
 public interface ServicioProductoImp {
-List<ProductoDto> todosLosProductos();    
+
 ProductoDto guardarProducto(ProductoRequestDto productoDto);
-List<ProductoDto> productosPorCategoria(String categoria);
-List<ProductoDto> productosPorSubCategoria(String categoria);
-List<ProductoDto> productosPorPrecioMax();
-List<ProductoDto> productoPorPrecioMin();
+Page<ProductoDto> productosPorCategoria(String categoria,Pageable pageable);
+Page<ProductoDto> productosPorSubCategoria(String categoria,Pageable pageable);
+Page<ProductoDto> productosPorPrecioMax(Pageable pageable);
+Page<ProductoDto> productoPorPrecioMin(Pageable pageable);
 void  eliminarProducto(Long id);
 Optional<ProductoDto> buscarProducto(Long idProducto);
+Page<ProductoDto> todosLosProductos(Pageable pageable);
 
 }

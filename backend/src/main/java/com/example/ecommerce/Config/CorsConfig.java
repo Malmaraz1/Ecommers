@@ -1,4 +1,4 @@
-package Config;
+package com.example.ecommerce.Config;
 
 
 

@@ -1,6 +1,5 @@
 package com.example.ecommerce.Model;
 
-
 import java.util.HashSet;
 
 import java.util.Set;
@@ -16,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,11 +38,12 @@ public class Usuario {
   private String contrasenia;
   @ManyToMany
   @JoinTable(
-    name = "usuario_rol",
-    joinColumns = @JoinColumn(name = "user_id") ,
-    inverseJoinColumns = @JoinColumn(name = "rol_id")
-  )
+  name = "usuario_rol", 
+  joinColumns = @JoinColumn(name = "user_id"), 
+  inverseJoinColumns = @JoinColumn(name = "rol_id"))
   private Set<Rol> roles = new HashSet<>();
+  @Transient
+  private boolean isAdmin;
 
   public Usuario(String nombre, String correo) {
     this.nombre = nombre;

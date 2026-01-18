@@ -18,7 +18,7 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/usuarios","/productos/**"   //permite que todas sus rutas hijas tambien seas publicas
+                .requestMatchers("/usuarios/registro","/productos/**"   //permite que todas sus rutas hijas tambien seas publicas
                     
                 ).permitAll().anyRequest().authenticated())
                 .csrf(config -> config.disable())

@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
+import com.example.ecommerce.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Pedido;
 
-import com.example.ecommerce.Service.ServiceImp.ServicioPedidoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
 
 @RestController
 @RequestMapping("/pedidos")
 public class ControllerPedido {
 
    @Autowired
-   ServicioPedidoImp servicioPedidoImp;
+   ServicioPedido servicioPedidoImp;
 
    @PostMapping
    public ResponseEntity<Pedido> generarPedido(@RequestBody CarritoRequestDto carritoRequestDto) {

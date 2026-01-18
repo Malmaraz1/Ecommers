@@ -10,19 +10,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ecommerce.Dto.ProductoDto;
+import com.example.ecommerce.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Model.Categoria;
 import com.example.ecommerce.Model.Producto;
-import com.example.ecommerce.Model.Dto.ProductoDto;
-import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;
-import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
+
 import com.example.ecommerce.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
 
 @Service
-public class ServicioProducto implements ServicioProductoImp {
+public class ServicioProductoImp implements ServicioProducto {
 
     @Autowired
     RepositorioProducto repositorioProducto;
@@ -70,7 +71,7 @@ public class ServicioProducto implements ServicioProductoImp {
     @Override
     @Transactional(readOnly = true)
     public Page<ProductoDto> productosPorCategoria(String nombreCat, Pageable pageable) {
-        Page<Producto> productos = repositorioProducto.buscarPorCategoriaPadre(nombreCat,pageable);
+        Page<Producto> productos = repositorioProducto.buscarPorCategoriaPadre(nombreCat, pageable);
         if (productos.isEmpty()) {
             throw new NotFoundException("no se encontraron categorias para este producto service");
         }
@@ -82,11 +83,11 @@ public class ServicioProducto implements ServicioProductoImp {
     @Override
     @Transactional
     public void eliminarProducto(Long id) {
-        Optional<Producto> producto = repositorioProducto.findById(id);
-        producto.ifPresent(p -> {
-            repositorioProducto.delete(p);
-        });
 
+        Producto producto = repositorioProducto.findById(id)
+                .orElseThrow(() -> new NotFoundException("No se encontró el producto con id " + id));
+
+        repositorioProducto.delete(producto);
     }
 
     @Override
@@ -94,8 +95,7 @@ public class ServicioProducto implements ServicioProductoImp {
     public Page<ProductoDto> productosPorSubCategoria(String categoria, Pageable pageable) {
 
         System.out.println(categoria);
-        Page<Producto> productos = repositorioProducto.buscarSubCategoria(categoria,pageable
-        );
+        Page<Producto> productos = repositorioProducto.buscarSubCategoria(categoria, pageable);
         if (productos.isEmpty()) {
             throw new NotFoundException("no se encontraron subCategorias para este producto service");
         }

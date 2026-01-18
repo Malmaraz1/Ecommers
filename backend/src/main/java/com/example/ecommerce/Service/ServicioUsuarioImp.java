@@ -1,8 +1,7 @@
 package com.example.ecommerce.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,17 +10,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ecommerce.Dto.UsuarioDto;
+import com.example.ecommerce.Dto.Request.UsuarioRequestDto;
 import com.example.ecommerce.Model.Rol;
 import com.example.ecommerce.Model.Usuario;
-import com.example.ecommerce.Model.Dto.UsuarioDto;
-import com.example.ecommerce.Model.Dto.Request.UsuarioRequestDto;
 import com.example.ecommerce.Repository.RepositorioRol;
 import com.example.ecommerce.Repository.RepositorioUsuario;
+import com.example.ecommerce.Service.ServiceImp.ServicioUsuario;
 
-import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
+
 
 @Service
-public class ServicioUsuario implements ServicioUsuarioImp {
+public class ServicioUsuarioImp implements ServicioUsuario {
 
     @Autowired
     RepositorioUsuario repositorioUsuario;
@@ -39,19 +39,13 @@ public class ServicioUsuario implements ServicioUsuarioImp {
 
     @Override
     @Transactional
-    public UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto) {
+    public UsuarioDto registrarse( UsuarioRequestDto usuarioRequestDto) {
         Optional<Rol> rol = repositorioRol.findByName("ROLE_USER");
         Set<Rol> roles = new HashSet<>();
         rol.ifPresent(roles::add);
 
-        if (usuarioRequestDto.isAdmin()) {
-            Optional<Rol> rolAdmin = repositorioRol.findByName("ROLE_ADMIN");
-
-            rolAdmin.ifPresent(roles::add);
-        }
-
         Usuario usuario = new Usuario();
-        usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContrasenia()));
+        usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContraseña()));
         usuario.setCorreo(usuarioRequestDto.getEmail());
         usuario.setNombre(usuarioRequestDto.getNombre());
         usuario.setRoles(roles);
@@ -66,6 +60,29 @@ public class ServicioUsuario implements ServicioUsuarioImp {
     public void cerrarSesion(String token) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'cerrarSesion'");
+    }
+
+    @Override
+    @Transactional
+    public UsuarioDto registraseComoAdmin(UsuarioRequestDto usuarioRequestDto) {
+        Optional<Rol> rolAdmin = repositorioRol.findByName("ROLE_ADMIN");
+        Set<Rol> roles = new HashSet<>();
+        rolAdmin.ifPresent(roles::add);
+
+        Usuario usuario = new Usuario();
+        usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContraseña()));
+        usuario.setCorreo(usuarioRequestDto.getEmail());
+        usuario.setNombre(usuarioRequestDto.getNombre());
+        usuario.setRoles(roles);
+        repositorioUsuario.save(usuario);
+        return new UsuarioDto(usuarioRequestDto.getNombre(),
+                usuarioRequestDto.getEmail(), usuario.getId());
+
+    }
+
+    @Override
+    public boolean existByUsername(String name) {
+        return repositorioUsuario.existsByNombre(name);
     }
 
 }

@@ -1,11 +1,11 @@
 package com.example.ecommerce.Service.ServiceImp;
 
-import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
+import com.example.ecommerce.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Pedido;
 
 
 
-public interface ServicioPedidoImp {
+public interface ServicioPedido {
 
  Pedido generarPedido(CarritoRequestDto carritoRequestDto);
 

@@ -2,14 +2,13 @@ package com.example.ecommerce.Service;
 
 import org.springframework.stereotype.Service;
 
-import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
-
+import com.example.ecommerce.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Pedido;
 
-import com.example.ecommerce.Service.ServiceImp.ServicioPedidoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
 
 @Service
-public class ServicioPedido implements ServicioPedidoImp {
+public class ServicioPedidoImp implements ServicioPedido {
   
 
     

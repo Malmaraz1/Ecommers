@@ -3,9 +3,9 @@ package com.example.ecommerce.Service;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.Model.Pedido;
-import com.example.ecommerce.Service.ServiceImp.ServicioPagoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioPago;
 @Service
-public class ServicioPago implements ServicioPagoImp {
+public class ServicioPagoImp implements ServicioPago {
 
     @Override
     public void realizarPago(Pedido pedido) {

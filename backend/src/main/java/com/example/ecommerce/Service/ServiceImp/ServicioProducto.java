@@ -6,11 +6,11 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.example.ecommerce.Model.Dto.ProductoDto;
-import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
+import com.example.ecommerce.Dto.ProductoDto;
+import com.example.ecommerce.Dto.Request.ProductoRequestDto;
 
 
-public interface ServicioProductoImp {
+public interface ServicioProducto {
 
 ProductoDto guardarProducto(ProductoRequestDto productoDto);
 Page<ProductoDto> productosPorCategoria(String categoria,Pageable pageable);

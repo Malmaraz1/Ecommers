@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
+import com.example.ecommerce.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Carrito;
 
-import com.example.ecommerce.Service.ServiceImp.ServicioCarritoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioCarrito;
 
 import jakarta.validation.Valid;
 
@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 public class ControllerCarrito {
 
   @Autowired
-  ServicioCarritoImp servicioCarrito;
+  ServicioCarrito servicioCarrito;
 
   @PostMapping
   public ResponseEntity<Carrito> nuevoCarrito(@Valid @RequestBody CarritoRequestDto carrito) {
@@ -37,13 +37,13 @@ public class ControllerCarrito {
   }
 
   @PatchMapping("{idCarrito}/productos/{idproducto}/item_carrito")
-  public ResponseEntity<Carrito> agregarproducto(@PathVariable Long idProducto ,@PathVariable Long idcarrito ,@RequestParam Integer cantidad ) {
+  public ResponseEntity<Carrito> agregarproducto(@Valid @PathVariable Long idProducto ,@PathVariable Long idcarrito ,@RequestParam Integer cantidad ) {
     Carrito actualizado = servicioCarrito.agregar(idcarrito , idProducto,cantidad);
     return ResponseEntity.ok(actualizado);
   }
 
   @DeleteMapping("{idCarrito}/productos/{idproducto}")
-  public ResponseEntity<?> quitarProducto(@PathVariable Long idproducto , @PathVariable Long idcarrito ,@RequestParam Integer cantidad) {
+  public ResponseEntity<?> quitarProducto(@Valid @PathVariable Long idproducto , @PathVariable Long idcarrito ,@RequestParam Integer cantidad) {
     Carrito carritoOptional = servicioCarrito.eliminar(idcarrito,idproducto,cantidad);
     if (carritoOptional != null) {
       return ResponseEntity.status(HttpStatus.OK).build();

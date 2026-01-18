@@ -11,31 +11,37 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecommerce.Model.Dto.UsuarioDto;
-import com.example.ecommerce.Model.Dto.Request.UsuarioRequestDto;
+import com.example.ecommerce.Dto.UsuarioDto;
+import com.example.ecommerce.Dto.Request.UsuarioRequestDto;
+import com.example.ecommerce.Service.ServicioUsuarioImp;
 
-import com.example.ecommerce.Service.ServiceImp.ServicioUsuarioImp;
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/usuarios")
 public class ControllerUsuario {
     @Autowired
     ServicioUsuarioImp servicioUsuario;
-
+    
     @PostMapping("registro")
-    public ResponseEntity<UsuarioDto> registrarse(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+    public ResponseEntity<UsuarioDto> registrarse(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.registrarse(usuarioRequestDto));
     }
 
     @PostMapping("sesion")
-    public ResponseEntity<UsuarioDto> iniciarSesion(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+    public ResponseEntity<UsuarioDto> iniciarSesion(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.inciarSesion(usuarioRequestDto));
     }
 
     @DeleteMapping("actual")
-    public ResponseEntity<Void> cerrarSesion(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<Void> cerrarSesion(@Valid @RequestHeader("Authorization") String token) {
         servicioUsuario.cerrarSesion(token);
         return ResponseEntity.noContent().build();
+    }
+     @PostMapping("registro/admin")
+    public ResponseEntity<UsuarioDto> registrarseComoAdmin(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.registrarse(usuarioRequestDto));
     }
 
 }

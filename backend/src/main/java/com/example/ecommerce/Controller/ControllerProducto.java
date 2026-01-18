@@ -17,24 +17,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ecommerce.Model.Dto.ProductoDto;
-import com.example.ecommerce.Model.Dto.Request.ProductoRequestDto;
+import com.example.ecommerce.Dto.ProductoDto;
+import com.example.ecommerce.Dto.Request.ProductoRequestDto;
+import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
 
-import com.example.ecommerce.Service.ServiceImp.ServicioProductoImp;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/productos")
 public class ControllerProducto {
     @Autowired
-    ServicioProductoImp servicioProducto;
+    ServicioProducto servicioProducto;
 
     @PostMapping()
-    public ResponseEntity<ProductoDto> save(@RequestBody ProductoRequestDto producto) {
+    public ResponseEntity<ProductoDto> save(@Valid @RequestBody ProductoRequestDto producto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.guardarProducto(producto));
     }
 
     @GetMapping("/{idProducto}")
-    public ResponseEntity<ProductoDto> findByEntity(@PathVariable Long idProducto) {
+    public ResponseEntity<ProductoDto> findByEntity(@Valid @PathVariable Long idProducto) {
         Optional<ProductoDto> producto = servicioProducto.buscarProducto(idProducto);
         if (producto.isPresent()) {
             return ResponseEntity.ok(producto.orElseThrow());
@@ -44,7 +45,7 @@ public class ControllerProducto {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<ProductoDto>> findAllProduct(
+    public ResponseEntity<Page<ProductoDto>> findAllProduct(@Valid
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
@@ -55,7 +56,7 @@ public class ControllerProducto {
     }
 
     @GetMapping("/filtro")
-    public ResponseEntity<Page<ProductoDto>> productosPorCategoria(
+    public ResponseEntity<Page<ProductoDto>> productosPorCategoria(@Valid
             @RequestParam(name = "categoria", required = false) String nombreCategoria,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -67,7 +68,7 @@ public class ControllerProducto {
     }
 
     @GetMapping("/filtroSub")
-    public ResponseEntity<Page<ProductoDto>> productosPorSubCategoria(
+    public ResponseEntity<Page<ProductoDto>> productosPorSubCategoria(@Valid
             @RequestParam(name = "categoria", required = false) String nombreSubCategoria,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -79,7 +80,7 @@ public class ControllerProducto {
     }
 
     @GetMapping("/maximo")
-    public ResponseEntity<Page<ProductoDto>> productosPorPrecioMax(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<ProductoDto>> productosPorPrecioMax(@Valid @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ProductoDto> productosDto = servicioProducto.productosPorPrecioMax(pageable);
@@ -89,7 +90,7 @@ public class ControllerProducto {
     }
 
     @GetMapping("/minimo")
-    public ResponseEntity<Page<ProductoDto>> productoPorPrecioMin(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<ProductoDto>> productoPorPrecioMin(@Valid @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ProductoDto> productosDto = servicioProducto.productoPorPrecioMin(pageable);
@@ -98,8 +99,8 @@ public class ControllerProducto {
 
     }
 
-    @DeleteMapping("/{idProducto}")
-    public ResponseEntity<Void> delete(@PathVariable Long idProducto) {
+    @DeleteMapping("/producto/{idProducto}")
+    public ResponseEntity<Void> delete(@Valid @PathVariable Long idProducto) {
         servicioProducto.eliminarProducto(idProducto);
         return ResponseEntity.noContent().build();
     }

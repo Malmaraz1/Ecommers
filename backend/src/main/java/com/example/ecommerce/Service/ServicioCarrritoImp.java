@@ -6,21 +6,21 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ecommerce.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Carrito;
 
 import com.example.ecommerce.Model.Usuario;
-import com.example.ecommerce.Model.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Repository.RepositorioCarrito;
 
 import com.example.ecommerce.Repository.RepositorioUsuario;
-import com.example.ecommerce.Service.ServiceImp.ServicioCarritoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioCarrito;
 import com.example.ecommerce.exceptions.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ServicioCarrrito implements ServicioCarritoImp {
+public class ServicioCarrritoImp implements ServicioCarrito {
 
     private final RepositorioCarrito repositorioCarrito;
     private final RepositorioUsuario repositorioUsuario;

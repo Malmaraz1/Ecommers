@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ecommerce.Dto.CategoriaDto;
+import com.example.ecommerce.Dto.Request.CategoriaRequestDto;
 import com.example.ecommerce.Model.Categoria;
-import com.example.ecommerce.Model.Dto.CategoriaDto;
-import com.example.ecommerce.Model.Dto.Request.CategoriaRequestDto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
-import com.example.ecommerce.Service.ServiceImp.ServicioCategoriaImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioCategoria;
 
 import jakarta.validation.Valid;
 
 @Service
-public class ServicioCategoria implements ServicioCategoriaImp {
+public class ServicioCategoriaImp implements ServicioCategoria {
 
     @Autowired
     RepositorioCategoria repositorioCategoria;

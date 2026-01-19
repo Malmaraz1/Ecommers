@@ -37,13 +37,14 @@ public class Usuario {
   @Column(name = "contrasenia")
   private String contrasenia;
   @ManyToMany
-  @JoinTable(
-  name = "usuario_rol", 
-  joinColumns = @JoinColumn(name = "user_id"), 
+  @JoinTable(name = "usuario_rol", joinColumns = 
+  @JoinColumn(name = "user_id"), 
   inverseJoinColumns = @JoinColumn(name = "rol_id"))
   private Set<Rol> roles = new HashSet<>();
   @Transient
   private boolean isAdmin;
+  
+  private boolean enabled;
 
   public Usuario(String nombre, String correo) {
     this.nombre = nombre;

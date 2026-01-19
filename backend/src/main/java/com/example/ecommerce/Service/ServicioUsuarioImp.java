@@ -18,8 +18,6 @@ import com.example.ecommerce.Repository.RepositorioRol;
 import com.example.ecommerce.Repository.RepositorioUsuario;
 import com.example.ecommerce.Service.ServiceImp.ServicioUsuario;
 
-
-
 @Service
 public class ServicioUsuarioImp implements ServicioUsuario {
 
@@ -39,19 +37,19 @@ public class ServicioUsuarioImp implements ServicioUsuario {
 
     @Override
     @Transactional
-    public UsuarioDto registrarse( UsuarioRequestDto usuarioRequestDto) {
+    public UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto) {
         Optional<Rol> rol = repositorioRol.findByName("ROLE_USER");
         Set<Rol> roles = new HashSet<>();
         rol.ifPresent(roles::add);
 
         Usuario usuario = new Usuario();
         usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContraseña()));
-        usuario.setCorreo(usuarioRequestDto.getEmail());
+        usuario.setCorreo(usuarioRequestDto.getCorreo());
         usuario.setNombre(usuarioRequestDto.getNombre());
         usuario.setRoles(roles);
         repositorioUsuario.save(usuario);
         return new UsuarioDto(usuarioRequestDto.getNombre(),
-                usuarioRequestDto.getEmail(), usuario.getId());
+                usuarioRequestDto.getCorreo(), usuario.getId());
 
     }
 
@@ -71,18 +69,24 @@ public class ServicioUsuarioImp implements ServicioUsuario {
 
         Usuario usuario = new Usuario();
         usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContraseña()));
-        usuario.setCorreo(usuarioRequestDto.getEmail());
+        usuario.setCorreo(usuarioRequestDto.getCorreo());
         usuario.setNombre(usuarioRequestDto.getNombre());
         usuario.setRoles(roles);
         repositorioUsuario.save(usuario);
         return new UsuarioDto(usuarioRequestDto.getNombre(),
-                usuarioRequestDto.getEmail(), usuario.getId());
+                usuarioRequestDto.getCorreo(), usuario.getId());
 
     }
 
     @Override
     public boolean existByUsername(String name) {
         return repositorioUsuario.existsByNombre(name);
+    }
+
+    @Override
+    public boolean existByEmail(String email) {
+        return repositorioUsuario.existsByCorreo(email);
+
     }
 
 }

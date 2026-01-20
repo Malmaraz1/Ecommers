@@ -17,7 +17,7 @@ import com.example.ecommerce.Model.Producto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;
 import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
-
+import com.example.ecommerce.exceptions.AlreadyExistsException;
 import com.example.ecommerce.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
@@ -50,6 +50,10 @@ public class ServicioProductoImp implements ServicioProducto {
         Categoria categoria = repositorioCategoria.findById(productoDto.getCategoria_id())
                 .orElseThrow(() -> new NotFoundException(
                         "La categoría con ID " + productoDto.getCategoria_id() + " no existe"));
+
+        if (repositorioProducto.existsByNombre(productoDto.getNombre())) {
+            new AlreadyExistsException("Ya existe un producto con el nombre: " + productoDto.getNombre());
+        }
 
         Producto producto = new Producto();
 
@@ -104,6 +108,7 @@ public class ServicioProductoImp implements ServicioProducto {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ProductoDto> productosPorPrecioMax(Pageable pageable) {
         Page<Producto> productos = repositorioProducto.productosPorPrecioMax(pageable);
         if (productos.isEmpty()) {
@@ -135,6 +140,19 @@ public class ServicioProductoImp implements ServicioProducto {
                 p -> {
                     return new ProductoDto(p);
                 });
+
+    }
+
+    @Override
+    @Transactional
+    public ProductoDto editarProducto(Long idProducto, ProductoRequestDto productoRequestDto) {
+
+        Producto p = repositorioProducto.findById(idProducto)
+                .orElseThrow(() -> new NotFoundException("El producto con ID " + idProducto + " no existe"));
+
+        p.actualizarProducto(productoRequestDto);
+
+        return new ProductoDto(repositorioProducto.save(p));
 
     }
 

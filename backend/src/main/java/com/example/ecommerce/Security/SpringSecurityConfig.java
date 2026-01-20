@@ -3,6 +3,7 @@ package com.example.ecommerce.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,10 +33,12 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/usuarios/registro", "/productos/**" // permite que todas sus rutas hijas tambien seas
-                                                                       // publicas
-
-                ).permitAll().anyRequest().authenticated())
+                .requestMatchers("/usuarios/registro").permitAll()
+                .requestMatchers(HttpMethod.GET, "/productos/**").permitAll()
+                .requestMatchers(HttpMethod.POST,"/productos").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/productos/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/productos/{id}").hasRole("ADMIN")
+                .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtValidationFIlter(authenticationManager()))
                 .csrf(config -> config.disable())

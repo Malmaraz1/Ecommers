@@ -20,5 +20,6 @@ Page<ProductoDto> productoPorPrecioMin(Pageable pageable);
 void  eliminarProducto(Long id);
 Optional<ProductoDto> buscarProducto(Long idProducto);
 Page<ProductoDto> todosLosProductos(Pageable pageable);
+ProductoDto editarProducto(Long idProducto , ProductoRequestDto productoRequestDto);
 
 }

@@ -25,4 +25,6 @@ public interface RepositorioProducto extends JpaRepository<Producto, Long> {
     @Query("SELECT p FROM producto p ORDER BY p.precio Desc")
     Page<Producto> productosPorPrecioMax(Pageable pageable);
 
+    boolean existsByNombre(String nombre);
+
 }

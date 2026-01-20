@@ -9,14 +9,17 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 @Component
-public class ExistByUsernameValidation implements ConstraintValidator<ExistByUserName,String>{
+public class ExistByUsernameValidation implements ConstraintValidator<ExistByUserName, String> {
     @Autowired
     private ServicioUsuario servicioUsuario;
-    
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-       return !servicioUsuario.existByUsername(value);
+        if (servicioUsuario == null) {
+            return true;
+        }
+
+        return !servicioUsuario.existByUsername(value);
 
     }
 

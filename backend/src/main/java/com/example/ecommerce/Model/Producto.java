@@ -2,6 +2,8 @@ package com.example.ecommerce.Model;
 
 import java.time.LocalDate;
 
+import com.example.ecommerce.Dto.Request.ProductoRequestDto;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -44,4 +46,17 @@ public class Producto {
    @Column(name = "imagen")
    private String imagen;
 
+   public void actualizarProducto(ProductoRequestDto dto) {
+      this.nombre = dto.getNombre();
+      this.precio = dto.getPrecio();
+      this.modelo = dto.getModelo();
+      this.fabricante = dto.getFabricante();
+      this.marca = dto.getMarca();
+      this.descripcion_productro = dto.getDescripcion();
+      this.imagen = dto.getImg();
+      if (dto.getPaisOrigen() != null) {
+         this.paisOrigen = dto.getPaisOrigen();
+      }
+
+   }
 }

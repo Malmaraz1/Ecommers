@@ -7,11 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.Dto.ProductoDto;
 import com.example.ecommerce.Dto.Request.ProductoRequestDto;
+
 import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
 
 import jakarta.validation.Valid;
@@ -34,7 +37,7 @@ public class ControllerProducto {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.guardarProducto(producto));
     }
 
-    @GetMapping("/{idProducto}")
+    @GetMapping("{idProducto}")
     public ResponseEntity<ProductoDto> findByEntity(@Valid @PathVariable Long idProducto) {
         Optional<ProductoDto> producto = servicioProducto.buscarProducto(idProducto);
         if (producto.isPresent()) {
@@ -44,9 +47,17 @@ public class ControllerProducto {
 
     }
 
+    @PutMapping("{idProducto}")
+    public ResponseEntity<ProductoDto> editarProducto(@Valid @RequestBody ProductoRequestDto productoRequestDto,
+            @PathVariable Long idProducto) {
+        ProductoDto producto = servicioProducto.editarProducto(idProducto, productoRequestDto);
+
+        return ResponseEntity.ok(producto);
+
+    }
+
     @GetMapping()
-    public ResponseEntity<Page<ProductoDto>> findAllProduct(@Valid
-            @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<ProductoDto>> findAllProduct(@Valid @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
         Page<ProductoDto> productosDto = servicioProducto.todosLosProductos(PageRequest.of(page, size));
@@ -55,9 +66,9 @@ public class ControllerProducto {
 
     }
 
-    @GetMapping("/filtro")
-    public ResponseEntity<Page<ProductoDto>> productosPorCategoria(@Valid
-            @RequestParam(name = "categoria", required = false) String nombreCategoria,
+    @GetMapping("filtro")
+    public ResponseEntity<Page<ProductoDto>> productosPorCategoria(
+            @Valid @RequestParam(name = "categoria", required = false) String nombreCategoria,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -67,9 +78,9 @@ public class ControllerProducto {
 
     }
 
-    @GetMapping("/filtroSub")
-    public ResponseEntity<Page<ProductoDto>> productosPorSubCategoria(@Valid
-            @RequestParam(name = "categoria", required = false) String nombreSubCategoria,
+    @GetMapping("filtroSub")
+    public ResponseEntity<Page<ProductoDto>> productosPorSubCategoria(
+            @Valid @RequestParam(name = "categoria", required = false) String nombreSubCategoria,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -79,7 +90,7 @@ public class ControllerProducto {
 
     }
 
-    @GetMapping("/maximo")
+    @GetMapping("maximo")
     public ResponseEntity<Page<ProductoDto>> productosPorPrecioMax(@Valid @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -89,7 +100,7 @@ public class ControllerProducto {
 
     }
 
-    @GetMapping("/minimo")
+    @GetMapping("minimo")
     public ResponseEntity<Page<ProductoDto>> productoPorPrecioMin(@Valid @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -99,7 +110,7 @@ public class ControllerProducto {
 
     }
 
-    @DeleteMapping("/producto/{idProducto}")
+    @DeleteMapping("{idProducto}")
     public ResponseEntity<Void> delete(@Valid @PathVariable Long idProducto) {
         servicioProducto.eliminarProducto(idProducto);
         return ResponseEntity.noContent().build();

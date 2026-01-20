@@ -30,13 +30,6 @@ public class ServicioUsuarioImp implements ServicioUsuario {
 
     @Override
     @Transactional
-    public UsuarioDto inciarSesion(UsuarioRequestDto usuarioRequestDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inciarSesion'");
-    }
-
-    @Override
-    @Transactional
     public UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto) {
         Optional<Rol> rol = repositorioRol.findByName("ROLE_USER");
         Set<Rol> roles = new HashSet<>();

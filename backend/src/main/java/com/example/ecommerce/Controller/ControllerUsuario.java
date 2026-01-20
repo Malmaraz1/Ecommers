@@ -29,10 +29,6 @@ public class ControllerUsuario {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.registrarse(usuarioRequestDto));
     }
 
-    @PostMapping("sesion")
-    public ResponseEntity<UsuarioDto> iniciarSesion(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.inciarSesion(usuarioRequestDto));
-    }
 
     @DeleteMapping("actual")
     public ResponseEntity<Void> cerrarSesion(@Valid @RequestHeader("Authorization") String token) {

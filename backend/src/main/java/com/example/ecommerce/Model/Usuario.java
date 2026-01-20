@@ -44,7 +44,7 @@ public class Usuario {
   @Transient
   private boolean isAdmin;
   
-  private boolean enabled;
+  private boolean enabled = true;
 
   public Usuario(String nombre, String correo) {
     this.nombre = nombre;

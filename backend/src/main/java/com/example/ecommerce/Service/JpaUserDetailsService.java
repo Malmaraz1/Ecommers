@@ -1,9 +1,9 @@
 package com.example.ecommerce.Service;
 
-import java.text.CollationElementIterator;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import com.example.ecommerce.Model.Usuario;
 import com.example.ecommerce.Repository.RepositorioUsuario;
 import com.example.ecommerce.exceptions.NotFoundException;
-
+@Service
 public class JpaUserDetailsService implements UserDetailsService {
 
     @Autowired

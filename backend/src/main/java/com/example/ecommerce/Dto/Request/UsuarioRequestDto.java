@@ -20,7 +20,7 @@ public class UsuarioRequestDto {
     private String correo;
     @NotBlank(message = "La contraseña no puedo estar vacio")
     private String contraseña;
-    private boolean isAdmin = false;
+    private boolean isAdmin;
     
 
 }

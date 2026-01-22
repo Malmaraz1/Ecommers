@@ -11,7 +11,6 @@ import com.example.ecommerce.Dto.Request.ProductoRequestDto;
 
 
 public interface ServicioProducto {
-
 ProductoDto guardarProducto(ProductoRequestDto productoDto);
 Page<ProductoDto> productosPorCategoria(String categoria,Pageable pageable);
 Page<ProductoDto> productosPorSubCategoria(String categoria,Pageable pageable);
@@ -21,5 +20,4 @@ void  eliminarProducto(Long id);
 Optional<ProductoDto> buscarProducto(Long idProducto);
 Page<ProductoDto> todosLosProductos(Pageable pageable);
 ProductoDto editarProducto(Long idProducto , ProductoRequestDto productoRequestDto);
-
 }

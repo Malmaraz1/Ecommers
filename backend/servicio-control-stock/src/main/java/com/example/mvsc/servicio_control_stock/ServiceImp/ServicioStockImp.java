@@ -1,9 +1,5 @@
 package com.example.mvsc.servicio_control_stock.ServiceImp;
 
-
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -20,28 +16,30 @@ import com.example.mvsc.servicio_control_stock.Service.ServicioStock;
 @Service
 public class ServicioStockImp implements ServicioStock {
 
-    @Autowired
-    RepositorioDeposito repositorioDeposito;
-    RepositorioStock repositorioStock;
+        @Autowired
+        RepositorioDeposito repositorioDeposito;
+        RepositorioStock repositorioStock;
 
-    @Override
-    public StockDto crearStock(RequestStock requestStock) {
+        @Override
+        public StockDto crearStock(RequestStock requestStock) {
 
-        Deposito deposito = repositorioDeposito.findById(requestStock.getDeposito_id())
-                .orElseThrow(() -> new NotFoundException("no se encontro un deposito con id" +
-                        requestStock.getDeposito_id()));
+                Deposito deposito = repositorioDeposito.findById(requestStock.getDeposito_id())
+                                .orElseThrow(() -> new NotFoundException("no se encontro un deposito con id" +
+                                                requestStock.getDeposito_id()));
 
-        Stock stock = new Stock(deposito, requestStock.getProducto_id(),
-                requestStock.getCantidad(), requestStock.getPunto_reposicion(), requestStock.getStock_maximo(),
-                requestStock.getDetalle(), requestStock.getProxima_reposicion());
+                Stock stock = new Stock(deposito, requestStock.getProducto_id(),
+                                requestStock.getCantidad(), requestStock.getPunto_reposicion(),
+                                requestStock.getStock_maximo(),
+                                requestStock.getDetalle(), requestStock.getProxima_reposicion());
 
-        Stock stockNuevo = repositorioStock.save(stock);
+                Stock stockNuevo = repositorioStock.save(stock);
 
-        return new StockDto(stockNuevo.getId(), deposito.getId(),
-                requestStock.getProducto_id(),
-                requestStock.getCantidad(), requestStock.getPunto_reposicion(), requestStock.getStock_maximo(),
-                requestStock.getDetalle(), requestStock.getProxima_reposicion());
+                return new StockDto(stockNuevo.getId(), deposito.getId(),
+                                requestStock.getProducto_id(),
+                                requestStock.getCantidad(), requestStock.getPunto_reposicion(),
+                                requestStock.getStock_maximo(),
+                                requestStock.getDetalle(), requestStock.getProxima_reposicion());
 
-    }
+        }
 
 }

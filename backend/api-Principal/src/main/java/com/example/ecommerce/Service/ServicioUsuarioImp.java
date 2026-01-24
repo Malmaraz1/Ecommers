@@ -33,8 +33,14 @@ public class ServicioUsuarioImp implements ServicioUsuario {
     public UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto) {
         Optional<Rol> rol = repositorioRol.findByName("ROLE_USER");
         Set<Rol> roles = new HashSet<>();
-        rol.ifPresent(roles::add);
 
+        rol.ifPresent(roles::add);
+        if (usuarioRequestDto.isAdmin() == true) {
+            Optional<Rol> rolAdmin = repositorioRol.findByName("ROLE_ADMIN");
+            rolAdmin.ifPresent(roles::add);
+        }
+
+      
         Usuario usuario = new Usuario();
         usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContraseña()));
         usuario.setCorreo(usuarioRequestDto.getCorreo());
@@ -53,23 +59,6 @@ public class ServicioUsuarioImp implements ServicioUsuario {
         throw new UnsupportedOperationException("Unimplemented method 'cerrarSesion'");
     }
 
-    @Override
-    @Transactional
-    public UsuarioDto registraseComoAdmin(UsuarioRequestDto usuarioRequestDto) {
-        Optional<Rol> rolAdmin = repositorioRol.findByName("ROLE_ADMIN");
-        Set<Rol> roles = new HashSet<>();
-        rolAdmin.ifPresent(roles::add);
-
-        Usuario usuario = new Usuario();
-        usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContraseña()));
-        usuario.setCorreo(usuarioRequestDto.getCorreo());
-        usuario.setNombre(usuarioRequestDto.getNombre());
-        usuario.setRoles(roles);
-        repositorioUsuario.save(usuario);
-        return new UsuarioDto(usuarioRequestDto.getNombre(),
-                usuarioRequestDto.getCorreo(), usuario.getId());
-
-    }
 
     @Override
     public boolean existByUsername(String name) {

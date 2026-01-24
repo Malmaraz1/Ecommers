@@ -18,6 +18,8 @@ private String modelo;
 private Double precio;
 private String descripcion;
 private String categoria;
+private Integer cantidad;
+
 
 public ProductoDto(Producto p) {
     this.id = p.getId();

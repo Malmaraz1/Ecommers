@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Dto.ProductoDto;
+import com.example.ecommerce.Dto.StockDto;
 import com.example.ecommerce.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Model.Categoria;
 import com.example.ecommerce.Model.Producto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;
 import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
+import com.example.ecommerce.clients.StockClientRest;
 import com.example.ecommerce.exceptions.AlreadyExistsException;
 import com.example.ecommerce.exceptions.NotFoundException;
 
@@ -29,6 +31,8 @@ public class ServicioProductoImp implements ServicioProducto {
     RepositorioProducto repositorioProducto;
     @Autowired
     RepositorioCategoria repositorioCategoria;
+    @Autowired
+    StockClientRest stockClientRest;
 
     @Override
     @Transactional(readOnly = true)
@@ -52,7 +56,7 @@ public class ServicioProductoImp implements ServicioProducto {
                         "La categoría con ID " + productoDto.getCategoria_id() + " no existe"));
 
         if (repositorioProducto.existsByNombre(productoDto.getNombre())) {
-            new AlreadyExistsException("Ya existe un producto con el nombre: " + productoDto.getNombre());
+            throw new AlreadyExistsException("Ya existe un producto con el nombre: " + productoDto.getNombre());
         }
 
         Producto producto = new Producto();
@@ -68,6 +72,11 @@ public class ServicioProductoImp implements ServicioProducto {
 
         Producto productoDb = repositorioProducto.save(producto);
 
+        StockDto stockDto = new StockDto();
+        stockDto.setProducto_id(productoDb.getId());
+        stockDto.setDeposito_id((long) 1);
+        stockClientRest.crear(stockDto);
+        
         return new ProductoDto(productoDb);
 
     }

@@ -18,6 +18,7 @@ public class ServicioStockImp implements ServicioStock {
 
         @Autowired
         RepositorioDeposito repositorioDeposito;
+        @Autowired
         RepositorioStock repositorioStock;
 
         @Override
@@ -27,9 +28,19 @@ public class ServicioStockImp implements ServicioStock {
                                 .orElseThrow(() -> new NotFoundException("no se encontro un deposito con id" +
                                                 requestStock.getDeposito_id()));
 
+                Integer puntoReposition = (requestStock.getPunto_reposicion() != null)
+                                ? requestStock.getPunto_reposicion()
+                                : 500;
+                Integer stockmMaximo = (requestStock.getStock_maximo() != null)
+                                ? requestStock.getPunto_reposicion()
+                                : 1000;
+                Integer cantidad = (requestStock.getStock_maximo() != null)
+                                ? requestStock.getPunto_reposicion()
+                                : 50;
+
                 Stock stock = new Stock(deposito, requestStock.getProducto_id(),
-                                requestStock.getCantidad(), requestStock.getPunto_reposicion(),
-                                requestStock.getStock_maximo(),
+                                cantidad, puntoReposition,
+                                stockmMaximo,
                                 requestStock.getDetalle(), requestStock.getProxima_reposicion());
 
                 Stock stockNuevo = repositorioStock.save(stock);
@@ -39,6 +50,20 @@ public class ServicioStockImp implements ServicioStock {
                                 requestStock.getCantidad(), requestStock.getPunto_reposicion(),
                                 requestStock.getStock_maximo(),
                                 requestStock.getDetalle(), requestStock.getProxima_reposicion());
+
+        }
+
+        @Override
+        public StockDto detalle(Long idStock) {
+
+                Stock stockNuevo = repositorioStock.findById(idStock).orElseThrow(
+                                () -> new NotFoundException("no se encontro el stock con id " + idStock));
+
+                return new StockDto(stockNuevo.getId(), stockNuevo.getDeposito().getId(),
+                                stockNuevo.getProducto_id(),
+                                stockNuevo.getCantidad(), stockNuevo.getPunto_reposicion(),
+                                stockNuevo.getStock_maximo(),
+                                stockNuevo.getDetalle(), stockNuevo.getProxima_reposicion());
 
         }
 

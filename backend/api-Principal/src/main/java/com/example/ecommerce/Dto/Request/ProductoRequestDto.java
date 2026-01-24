@@ -2,6 +2,7 @@ package com.example.ecommerce.Dto.Request;
 
 import com.example.ecommerce.Model.PaisOrigen;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.validation.constraints.Min;
 
 import jakarta.validation.constraints.NotBlank;
@@ -35,9 +36,6 @@ public class ProductoRequestDto {
    private String img;
    @NotBlank(message = "La marca no puede estar vacia")
    private String marca;
-   @NotBlank(message = "El fabricante no puede estar vacia")
-   private String fabricante;
-   @NotBlank(message = "El pais no puede estar vacío")
-   private PaisOrigen paisOrigen;
+   
 
 }

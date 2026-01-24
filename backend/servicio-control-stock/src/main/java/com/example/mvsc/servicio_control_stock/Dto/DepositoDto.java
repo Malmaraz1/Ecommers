@@ -5,8 +5,9 @@ import com.example.mvsc.servicio_control_stock.Model.DatosContacto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+
 @Setter
+@Getter
 public class DepositoDto {
     private Long id;
     private String detalle;
@@ -16,5 +17,8 @@ public class DepositoDto {
         this.detalle = detalle;
         this.datosContacto = datosContacto;
     }
+   
+
+
 
 }

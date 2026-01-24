@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.mvsc.servicio_control_stock.Dto.DepositoDto;
 import com.example.mvsc.servicio_control_stock.Model.Deposito;
 import com.example.mvsc.servicio_control_stock.Service.ServicioDeposito;
 
@@ -21,10 +22,9 @@ public class ControladorDeposito {
     ServicioDeposito servicioDeposito;
 
     @PostMapping
-    public ResponseEntity<Deposito> crearDeposito(@Valid @RequestBody Deposito deposito) {
+    public ResponseEntity<DepositoDto> crearDeposito(@Valid @RequestBody Deposito deposito) {
 
-        servicioDeposito.crearDeposito(deposito);
-        return ResponseEntity.ok(deposito);
+        return ResponseEntity.ok(servicioDeposito.crearDeposito(deposito));
 
     }
 

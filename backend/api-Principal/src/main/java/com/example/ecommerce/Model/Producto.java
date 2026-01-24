@@ -6,7 +6,7 @@ import com.example.ecommerce.Dto.Request.ProductoRequestDto;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.Transient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -33,10 +33,7 @@ public class Producto {
    @Column(name = "modelo")
    private String modelo;
    @Column(name = "fabricante")
-   private String fabricante;
-   @Embedded
-   private PaisOrigen paisOrigen;
-   @Column(name = "marca")
+
    private String marca;
    @Column(name = "fecha_creacion")
    private LocalDate fechaCreacion;
@@ -45,18 +42,17 @@ public class Producto {
    private String descripcion_productro;
    @Column(name = "imagen")
    private String imagen;
+   @Transient
+   private Integer stockActual;
 
    public void actualizarProducto(ProductoRequestDto dto) {
       this.nombre = dto.getNombre();
       this.precio = dto.getPrecio();
       this.modelo = dto.getModelo();
-      this.fabricante = dto.getFabricante();
+
       this.marca = dto.getMarca();
       this.descripcion_productro = dto.getDescripcion();
       this.imagen = dto.getImg();
-      if (dto.getPaisOrigen() != null) {
-         this.paisOrigen = dto.getPaisOrigen();
-      }
 
    }
 }

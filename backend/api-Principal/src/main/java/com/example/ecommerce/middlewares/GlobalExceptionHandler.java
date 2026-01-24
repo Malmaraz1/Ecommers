@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.ecommerce.exceptions.AppError;
 
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @Value("${spring.profiles.active:prod}")
@@ -38,11 +37,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("status", "fail");
-        
+
         // Extraemos los mensajes de error de cada campo
         String errors = ex.getBindingResult()
-            .getFieldErrors()
-            .stream()
+                .getFieldErrors()
+                .stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
@@ -53,17 +52,21 @@ public class GlobalExceptionHandler {
     // 3. ATRAPA ERRORES GENÉRICOS (500)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericError(Exception ex) {
+        // ESTO ES VITAL: Imprime el error real en tu terminal de Java
+        ex.printStackTrace();
+
         Map<String, Object> body = new HashMap<>();
         body.put("status", "error");
-        
-        if ("desarrollo".equals(env)) {
+
+        // Cambiamos el chequeo para que sea más flexible
+        if ("desarrollo".equalsIgnoreCase(env)) {
             body.put("message", ex.getMessage());
-            body.put("stack", ex.getStackTrace());
+            body.put("error_type", ex.getClass().getName());
         } else {
             body.put("message", "Algo salió mal internamente");
         }
-        
+
         return ResponseEntity.status(500).body(body);
     }
-    
+
 }

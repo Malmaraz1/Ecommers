@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +46,7 @@ public class JwtValidationFIlter extends BasicAuthenticationFilter {
             return;
         }
 
-        String token = header.replace(PREFIX_TOKEN, "");
+        String token = header.replace(PREFIX_TOKEN, "").trim();
 
         try {
 
@@ -63,8 +64,10 @@ public class JwtValidationFIlter extends BasicAuthenticationFilter {
                             .addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityJsonCreator.class)
                             .readValue(authoritiesClaims.toString().getBytes(), SimpleGrantedAuthority[].class));
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username2,
-                    null, null);
+                    null, authorities);
 
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            chain.doFilter(request, response);
         } catch (JwtException e) {
             Map<String, String> body = new HashMap<>();
             body.put("error", e.getMessage());

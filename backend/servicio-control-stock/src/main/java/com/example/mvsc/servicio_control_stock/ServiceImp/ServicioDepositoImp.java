@@ -23,7 +23,7 @@ public class ServicioDepositoImp implements ServicioDeposito {
         Deposito depositoNuevo = new Deposito(deposito.getDetalle(), datosContacto);
 
         Deposito depositoDb = repositorioDeposito.save(depositoNuevo);
-
+        System.out.print("Esta es la id del deposito" + depositoDb.getId());
         return new DepositoDto(depositoDb.getId(), depositoDb.getDetalle(), depositoDb.getDatosContacto());
 
     }

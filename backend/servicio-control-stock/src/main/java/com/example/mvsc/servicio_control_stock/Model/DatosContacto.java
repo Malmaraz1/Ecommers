@@ -3,12 +3,16 @@ package com.example.mvsc.servicio_control_stock.Model;
 import jakarta.persistence.Embeddable;
 
 import jakarta.validation.constraints.NotNull;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Embeddable
 @Getter
 @Setter
+@NoArgsConstructor
+
 public class DatosContacto {
     @NotNull(message = "ingrese un domicilio")
     private String domicilio;

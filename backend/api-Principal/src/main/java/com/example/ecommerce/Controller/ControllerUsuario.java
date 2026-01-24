@@ -17,27 +17,21 @@ import com.example.ecommerce.Service.ServicioUsuarioImp;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/usuarios")
 public class ControllerUsuario {
     @Autowired
     ServicioUsuarioImp servicioUsuario;
-    
+
     @PostMapping("registro")
     public ResponseEntity<UsuarioDto> registrarse(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.registrarse(usuarioRequestDto));
     }
 
-
     @DeleteMapping("actual")
     public ResponseEntity<Void> cerrarSesion(@Valid @RequestHeader("Authorization") String token) {
         servicioUsuario.cerrarSesion(token);
         return ResponseEntity.noContent().build();
-    }
-     @PostMapping("registro/admin")
-    public ResponseEntity<UsuarioDto> registrarseComoAdmin(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(servicioUsuario.registrarse(usuarioRequestDto));
     }
 
 }

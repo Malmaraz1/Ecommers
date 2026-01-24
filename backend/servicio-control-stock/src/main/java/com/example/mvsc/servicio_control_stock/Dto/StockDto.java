@@ -3,15 +3,16 @@ package com.example.mvsc.servicio_control_stock.Dto;
 import java.time.LocalDate;
 
 
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class StockDto {
@@ -26,3 +27,5 @@ public class StockDto {
     private LocalDate proxima_reposicion;
 
 }
+
+

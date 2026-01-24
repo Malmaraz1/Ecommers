@@ -19,6 +19,7 @@ private Double precio;
 private String descripcion;
 private String categoria;
 private Integer cantidad;
+private String marca;
 
 
 public ProductoDto(Producto p) {
@@ -28,6 +29,8 @@ public ProductoDto(Producto p) {
     this.precio = p.getPrecio();
     this.descripcion = p.getDescripcion_productro();
     this.categoria = p.getCategoria().getNombre();
+    this.marca = p.getMarca();
+   
   
 }
 

@@ -32,13 +32,10 @@ public class Producto {
    private Categoria categoria;
    @Column(name = "modelo")
    private String modelo;
-   @Column(name = "fabricante")
-
+   @Column(name = "marca")
    private String marca;
    @Column(name = "fecha_creacion")
    private LocalDate fechaCreacion;
-   @Embedded
-   private Garantia meses_garantia;
    private String descripcion_productro;
    @Column(name = "imagen")
    private String imagen;
@@ -49,7 +46,6 @@ public class Producto {
       this.nombre = dto.getNombre();
       this.precio = dto.getPrecio();
       this.modelo = dto.getModelo();
-
       this.marca = dto.getMarca();
       this.descripcion_productro = dto.getDescripcion();
       this.imagen = dto.getImg();

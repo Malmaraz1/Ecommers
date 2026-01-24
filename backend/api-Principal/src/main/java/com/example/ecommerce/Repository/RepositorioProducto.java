@@ -5,6 +5,7 @@ package com.example.ecommerce.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.example.ecommerce.Model.Producto;
 
 @Repository
-public interface RepositorioProducto extends JpaRepository<Producto, Long> {
+public interface RepositorioProducto extends JpaRepository<Producto, Long> , JpaSpecificationExecutor<Producto>{
     @Query("SELECT p FROM producto p WHERE p.categoria.nombre = :nombre")
     Page<Producto> buscarSubCategoria(@Param("nombre") String nombre,Pageable pageable);
 

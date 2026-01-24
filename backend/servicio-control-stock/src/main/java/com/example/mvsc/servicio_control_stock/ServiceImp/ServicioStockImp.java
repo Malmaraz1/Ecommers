@@ -55,10 +55,10 @@ public class ServicioStockImp implements ServicioStock {
 
         @Override
         public StockDto detalle(Long idStock) {
-
+                
                 Stock stockNuevo = repositorioStock.findById(idStock).orElseThrow(
                                 () -> new NotFoundException("no se encontro el stock con id " + idStock));
-
+                
                 return new StockDto(stockNuevo.getId(), stockNuevo.getDeposito().getId(),
                                 stockNuevo.getProducto_id(),
                                 stockNuevo.getCantidad(), stockNuevo.getPunto_reposicion(),

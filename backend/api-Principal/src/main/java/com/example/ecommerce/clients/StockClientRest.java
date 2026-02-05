@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.ecommerce.Dto.StockDto;
 
-@FeignClient(name = "servicio-control-stock", url = "localhost:8002")
+@FeignClient(name = "servicio-control-stock", url = "${servidor.stock.url}")
 public interface StockClientRest {
 
 
-    @GetMapping("idStock")
-    public StockDto detalle(@PathVariable Long idStock);
+    @GetMapping("{idStock}")
+    StockDto detalle(@PathVariable Long idStock);
     @PostMapping("stock")
     public StockDto crear(@RequestBody StockDto stockDto);
 

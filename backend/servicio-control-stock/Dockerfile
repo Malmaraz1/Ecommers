@@ -21,8 +21,9 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-COPY --from=builder /app/target/ecommerce-0.0.1-SNAPSHOT.jar app.jar
-ENV PORT=8001
+COPY --from=builder /app/target/servicio-control-stock-0.0.1-SNAPSHOT.jar app.jar
+
+ENV PORT=8002
 EXPOSE $PORT
 
 # Ejecutamos el archivo renombrado para que sea más simple

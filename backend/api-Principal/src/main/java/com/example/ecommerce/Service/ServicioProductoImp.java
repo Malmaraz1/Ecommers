@@ -58,7 +58,7 @@ public class ServicioProductoImp implements ServicioProducto {
 
         Categoria categoria = repositorioCategoria.findById(productoDto.getCategoria_id())
                 .orElseThrow(() -> new NotFoundException(
-                        "La categoría con ID " + productoDto.getCategoria_id() + " no existe"));
+                        "La categoría con id " + productoDto.getCategoria_id() + " no existe"));
 
         if (repositorioProducto.existsByNombre(productoDto.getNombre())) {
             throw new AlreadyExistsException("Ya existe un producto con el nombre: " + productoDto.getNombre());
@@ -96,7 +96,7 @@ public class ServicioProductoImp implements ServicioProducto {
     public void eliminarProducto(Long id) {
 
         Producto producto = repositorioProducto.findById(id)
-                .orElseThrow(() -> new NotFoundException("No se encontró el producto con id " + id));
+                .orElseThrow(() -> new NotFoundException("No se encontró el producto con id  " + id));
 
         repositorioProducto.delete(producto);
     }
@@ -117,7 +117,7 @@ public class ServicioProductoImp implements ServicioProducto {
     public ProductoDto editarProducto(Long idProducto, ProductoRequestDto productoRequestDto) {
 
         Producto p = repositorioProducto.findById(idProducto)
-                .orElseThrow(() -> new NotFoundException("El producto con ID " + idProducto + " no existe"));
+                .orElseThrow(() -> new NotFoundException("El producto con id " + idProducto + " no existe"));
 
         p.actualizarProducto(productoRequestDto);
 
@@ -152,7 +152,7 @@ public class ServicioProductoImp implements ServicioProducto {
         Page<Producto> productosPage = repositorioProducto.findAll(spec, pageable);
 
         if (productosPage.isEmpty()) {
-            throw new NotFoundException("No se encontraron productos con los filtros aplicados");
+            throw new NotFoundException("No se encontraron productos con los filtros aplicados!!");
         }
 
         return productosPage.map(producto -> new ProductoDto(

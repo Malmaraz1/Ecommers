@@ -32,6 +32,7 @@ public class ServicioUsuarioImp implements ServicioUsuario {
     @Transactional
     public UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto) {
         Optional<Rol> rol = repositorioRol.findByName("ROLE_USER");
+        
         Set<Rol> roles = new HashSet<>();
 
         rol.ifPresent(roles::add);
@@ -40,7 +41,6 @@ public class ServicioUsuarioImp implements ServicioUsuario {
             rolAdmin.ifPresent(roles::add);
         }
 
-      
         Usuario usuario = new Usuario();
         usuario.setContrasenia(passwordEncoder.encode(usuarioRequestDto.getContraseña()));
         usuario.setCorreo(usuarioRequestDto.getCorreo());
@@ -58,7 +58,6 @@ public class ServicioUsuarioImp implements ServicioUsuario {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'cerrarSesion'");
     }
-
 
     @Override
     public boolean existByUsername(String name) {

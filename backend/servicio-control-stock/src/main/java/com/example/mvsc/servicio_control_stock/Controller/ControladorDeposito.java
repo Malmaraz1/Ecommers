@@ -22,7 +22,7 @@ public class ControladorDeposito {
     ServicioDeposito servicioDeposito;
 
     @PostMapping
-    public ResponseEntity<DepositoDto> crearDeposito(@Valid @RequestBody Deposito deposito) {
+    public ResponseEntity<DepositoDto>  crearDeposito(@Valid @RequestBody Deposito deposito) {
 
         return ResponseEntity.ok(servicioDeposito.crearDeposito(deposito));
 

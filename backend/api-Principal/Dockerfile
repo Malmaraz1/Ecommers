@@ -11,6 +11,7 @@ RUN mvn dependency:go-offline
 # 3. Recién ahora copiamos el código fuente
 # Si cambias algo en src, Docker empezará desde aquí hacia abajo
 COPY src ./src
+ENV MAVEN_OPTS="-Xmx350m"
 
 # 4. Compilamos el proyecto
 # Como las dependencias ya están en la imagen, esto será rapidísimo

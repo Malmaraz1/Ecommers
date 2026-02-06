@@ -8,6 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class EcommerceApplication {
 
 	public static void main(String[] args) {
+		System.out.println(System.getenv("Esta es la url de mi base de datos"+"DB_URL"));
+		System.out.println(System.getenv("Esta es el usuario de mi base de datos"+"DB_USERNAME"));
 		SpringApplication.run(EcommerceApplication.class, args);
 	}
 

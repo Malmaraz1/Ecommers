@@ -1,0 +1,14 @@
+# --- IDEs y Editores ---
+.vscode/
+.idea/
+
+# --- Archivos de Entorno (Secretos) ---
+.env
+*.env
+
+# --- Archivos de Sistema (Basura) ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log

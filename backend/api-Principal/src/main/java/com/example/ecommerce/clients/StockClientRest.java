@@ -13,7 +13,7 @@ import com.example.ecommerce.Dto.StockDto;
 public interface StockClientRest {
 
 
-    @GetMapping("{idStock}")
+    @GetMapping("stock/{idStock}")
     StockDto detalle(@PathVariable Long idStock);
     @PostMapping("stock")
     public StockDto crear(@RequestBody StockDto stockDto);

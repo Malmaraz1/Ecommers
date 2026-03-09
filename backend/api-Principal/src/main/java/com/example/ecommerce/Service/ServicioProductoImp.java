@@ -11,7 +11,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import com.example.ecommerce.Dto.Filtros;
 import com.example.ecommerce.Dto.ProductoDto;
 import com.example.ecommerce.Dto.StockDto;
@@ -32,12 +31,10 @@ import jakarta.validation.Valid;
 @Service
 public class ServicioProductoImp implements ServicioProducto {
 
-    @Autowired
     RepositorioProducto repositorioProducto;
-    @Autowired
-    RepositorioCategoria repositorioCategoria;
-    @Autowired
+
     StockClientRest stockClientRest;
+    RepositorioCategoria repositorioCategoria;
 
     @Override
     @Transactional(readOnly = true)
@@ -50,6 +47,13 @@ public class ServicioProductoImp implements ServicioProducto {
 
         return productos.map(producto -> new ProductoDto(
                 producto));
+    }
+
+    public ServicioProductoImp(RepositorioProducto repositorioProducto, StockClientRest stockClientRest,
+            RepositorioCategoria repositorioCategoria) {
+        this.repositorioProducto = repositorioProducto;
+        this.stockClientRest = stockClientRest;
+        this.repositorioCategoria = repositorioCategoria;
     }
 
     @Override
@@ -119,9 +123,14 @@ public class ServicioProductoImp implements ServicioProducto {
         Producto p = repositorioProducto.findById(idProducto)
                 .orElseThrow(() -> new NotFoundException("El producto con id " + idProducto + " no existe"));
 
-        p.actualizarProducto(productoRequestDto);
+        Categoria categoriaProxy = repositorioCategoria.getReferenceById(productoRequestDto.getCategoria_id());
+       
+        p.actualizarDatos(productoRequestDto.getNombre(), productoRequestDto.getPrecio() , productoRequestDto.getModelo(), productoRequestDto.getMarca(), 
+        productoRequestDto.getDescripcion(),productoRequestDto.getImg(),categoriaProxy);
 
-        return new ProductoDto(repositorioProducto.save(p));
+        repositorioProducto.save(p);
+
+        return new ProductoDto(p);
 
     }
 

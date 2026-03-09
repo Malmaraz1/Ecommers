@@ -13,4 +13,6 @@ public interface ServicioUsuario {
 
     boolean existByEmail(String email);
 
+    UsuarioDto usuarioActual(Long ususarioId);
+
 }

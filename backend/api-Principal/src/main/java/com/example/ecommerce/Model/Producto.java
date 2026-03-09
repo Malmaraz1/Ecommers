@@ -42,13 +42,14 @@ public class Producto {
    @Transient
    private Integer stockActual;
 
-   public void actualizarProducto(ProductoRequestDto dto) {
-      this.nombre = dto.getNombre();
-      this.precio = dto.getPrecio();
-      this.modelo = dto.getModelo();
-      this.marca = dto.getMarca();
-      this.descripcion_productro = dto.getDescripcion();
-      this.imagen = dto.getImg();
+public void actualizarDatos(String nombre, Double precio, String modelo, String marca, String descripcion, String imagen, Categoria nuevaCategoria) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.modelo = modelo;
+        this.marca = marca;
+        this.descripcion_productro = descripcion;
+        this.imagen = imagen;
+        this.categoria = nuevaCategoria;
+    }
 
-   }
 }

@@ -48,6 +48,10 @@ public class SwaggerConfig {
                                                         .addProperty("contrasenia", new Schema<>().type("string").example("123456"))))))
                                 .responses(new ApiResponses()
                                         .addApiResponse("200", new ApiResponse().description("Login exitoso. El token se encuentra en el Body o Header.")))));
+
+
+
+                                        
     }
 
     private SecurityScheme createAPIKeyScheme() {

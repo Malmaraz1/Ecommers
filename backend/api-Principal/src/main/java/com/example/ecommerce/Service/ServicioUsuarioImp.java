@@ -1,5 +1,6 @@
 package com.example.ecommerce.Service;
 
+import java.lang.StackWalker.Option;
 import java.util.HashSet;
 
 import java.util.Optional;
@@ -17,6 +18,9 @@ import com.example.ecommerce.Model.Usuario;
 import com.example.ecommerce.Repository.RepositorioRol;
 import com.example.ecommerce.Repository.RepositorioUsuario;
 import com.example.ecommerce.Service.ServiceImp.ServicioUsuario;
+import com.example.ecommerce.exceptions.NotFoundException;
+
+import jakarta.validation.Valid;
 
 @Service
 public class ServicioUsuarioImp implements ServicioUsuario {
@@ -32,7 +36,7 @@ public class ServicioUsuarioImp implements ServicioUsuario {
     @Transactional
     public UsuarioDto registrarse(UsuarioRequestDto usuarioRequestDto) {
         Optional<Rol> rol = repositorioRol.findByName("ROLE_USER");
-        
+
         Set<Rol> roles = new HashSet<>();
 
         rol.ifPresent(roles::add);
@@ -68,6 +72,18 @@ public class ServicioUsuarioImp implements ServicioUsuario {
     public boolean existByEmail(String email) {
         return repositorioUsuario.existsByCorreo(email);
 
+    }
+
+    @Override
+    public UsuarioDto usuarioActual(Long usuarioId) {
+
+        Optional<Usuario> usuario = repositorioUsuario.findById(usuarioId);
+        if (usuario.isEmpty()) {
+            throw new NotFoundException(" no se encontro al usuario con id " + usuarioId + "");
+        }
+
+        UsuarioDto usuarioDto = new UsuarioDto(usuario.get().getNombre(), usuario.get().getCorreo(), usuarioId);
+        return usuarioDto;
     }
 
 }

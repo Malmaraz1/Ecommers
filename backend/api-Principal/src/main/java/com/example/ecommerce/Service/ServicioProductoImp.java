@@ -90,7 +90,7 @@ public class ServicioProductoImp implements ServicioProducto {
         stockDto.setProducto_id(productoDb.getId());
         stockDto.setDeposito_id((long) 1);
         stockClientRest.crear(stockDto);
-
+        
         return new ProductoDto(productoDb);
 
     }

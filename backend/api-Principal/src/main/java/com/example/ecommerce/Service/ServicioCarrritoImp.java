@@ -70,7 +70,7 @@ public class ServicioCarrritoImp implements ServicioCarrito {
         StockDto stockDto = stockClientRest.detalle(idProducto);
 
         if (stockDto.getCantidad() > 0) {
-         throw new RuntimeException("No hay stock del producto");
+            throw new RuntimeException("No hay stock del producto");
         }
         Carrito carrito = servicioAgregarCarrito.ejecutar(idCarrito, idProducto, cantidad);
         CarritoDto carritoDto = new CarritoDto();

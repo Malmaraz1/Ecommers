@@ -27,7 +27,7 @@ public class Stock {
     @JoinColumn(name = "deposito_id")
     private Deposito deposito;
     @Column(name = "producto_id")
-    private Long producto_id;
+    private Long productoId;
     private Integer cantidad;
     private Integer punto_reposicion;
     private Integer stock_maximo;
@@ -37,7 +37,7 @@ public class Stock {
     public Stock(Deposito deposito, Long producto_id, Integer cantidad, Integer punto_reposicion, Integer stock_maximo,
             String detalle, LocalDate proxima_reposicion) {
         this.deposito = deposito;
-        this.producto_id = producto_id;
+        this.productoId= producto_id;
         this.cantidad = cantidad;
         this.punto_reposicion = punto_reposicion;
         this.stock_maximo = stock_maximo;

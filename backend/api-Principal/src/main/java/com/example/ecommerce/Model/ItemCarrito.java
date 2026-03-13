@@ -21,9 +21,9 @@ public class ItemCarrito {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "cantidad")
-    private Integer cantidad;
+    private int cantidad;
     @Column(name = "precio_unitario")
-    private Double precioUnitario;
+    private int precioUnitario;
     @ManyToOne
     @JoinColumn(name = "carrito_id")
     private Carrito carrito;
@@ -31,10 +31,13 @@ public class ItemCarrito {
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
-    public ItemCarrito(Integer cantidad, Double precioUnitario, Producto producto) {
+    public ItemCarrito(int cantidad, int precioUnitario, Producto producto) {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.producto = producto;
+    }
+    public int calcularTotal(){
+     return this.cantidad * precioUnitario;
     }
 
 }

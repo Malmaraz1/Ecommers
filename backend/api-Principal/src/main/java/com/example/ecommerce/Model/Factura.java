@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import com.example.ecommerce.utils.GeneradorCodigo;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,6 +19,7 @@ import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,24 +28,33 @@ public class Factura {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @ManyToOne
-  @JoinColumn(name="orden_compra_id")
-  private OrdenCompra ordenCompra;
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "item_factura_id")
   private List<ItemFactura> itemFactura = new ArrayList<>();
   private String numeroFactura;
-  @Column(name="fecha_emision")
+  @Column(name = "fecha_emision")
   private LocalDate fechaEmision;
   @ManyToOne
-  @JoinColumn(name="usuario_id")
+  @JoinColumn(name = "usuario_id")
   private Usuario comprador;
   @Transient
   private MedioPago metodoPago;
-  
-  
- 
+  @Column(name = "total_factura")
+  private int total_factura;
+  @ManyToOne
+  @JoinColumn(name = "factura_id")
+  private Pedido pedido;
 
-    
+  public Factura(Pedido pedido
+      ) {
+    this.itemFactura = pedido.getItems_carrito().stream()
+        .map(i -> new ItemFactura(i.getProducto(), i.getPrecioUnitario(), i.getCantidad())).toList();
+    this.numeroFactura = GeneradorCodigo.generar();
+    this.fechaEmision = LocalDate.now();
+    this.comprador = pedido.getComprador();
+    this.total_factura = pedido.getItems_carrito().
+    stream().mapToInt(i -> i.getCantidad() * i.getPrecioUnitario()).sum();
+
+  }
 
 }

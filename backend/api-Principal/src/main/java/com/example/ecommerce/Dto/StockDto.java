@@ -1,6 +1,6 @@
 package com.example.ecommerce.Dto;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,7 @@ import lombok.Setter;
 public class StockDto {
     private Long producto_id;
     private Long deposito_id;
+    private Integer cantidad;
     
 
    

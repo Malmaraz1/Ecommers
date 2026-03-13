@@ -33,7 +33,7 @@ public class Carrito {
    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
    private List<ItemCarrito> itemsCarrito = new ArrayList<>();
    @Column(name = "ultima_actualizacion")
-   private LocalDate ultimaActualizacion;
+   private LocalDate ultimaActualizacion = LocalDate.now();
 
    public Carrito(Usuario comprador) {
       this.comprador = comprador;

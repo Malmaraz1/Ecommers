@@ -1,22 +1,22 @@
 package com.example.ecommerce;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.ecommerce.Dto.ProductoDto;
+
+
 import com.example.ecommerce.Dto.StockDto;
 import com.example.ecommerce.Dto.Request.ProductoRequestDto;
 import com.example.ecommerce.Model.Categoria;
@@ -24,7 +24,6 @@ import com.example.ecommerce.Model.Producto;
 import com.example.ecommerce.Repository.RepositorioCategoria;
 import com.example.ecommerce.Repository.RepositorioProducto;
 import com.example.ecommerce.Service.ServicioProductoImp;
-import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
 import com.example.ecommerce.clients.StockClientRest;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,7 +55,7 @@ class EcommerceApplicationTests {
 		Producto productoTest = new Producto();
 		productoTest.setId(100L);
 		productoTest.setNombre("Lavarropas Drean Next 8.14");
-		productoTest.setPrecio(150000.00);
+		productoTest.setPrecio(150000);
 		productoTest.setCategoria(categoriaTest); // <-- Acá le inyectamos la categoría que creamos arriba
 		productoTest.setModelo("Next 8.14 WCR");
 		productoTest.setMarca("Dream");
@@ -94,7 +93,7 @@ class EcommerceApplicationTests {
 		Producto productoTest = new Producto();
 		productoTest.setId(100L);
 		productoTest.setNombre("Lavarropas Drean Next 8.14");
-		productoTest.setPrecio(150000.00);
+		productoTest.setPrecio(150000);
 		productoTest.setCategoria(categoriaTest); // <-- Acá le inyectamos la categoría que creamos arriba
 		productoTest.setModelo("Next 8.14 WCR");
 		productoTest.setMarca("Dream");
@@ -127,7 +126,7 @@ class EcommerceApplicationTests {
 		Producto productoTest = new Producto();
 		productoTest.setId(100L);
 		productoTest.setNombre("Lavarropas Drean Next 8.14");
-		productoTest.setPrecio(150000.00);
+		productoTest.setPrecio(150000);
 		productoTest.setCategoria(categoriaTest); // <-- Acá le inyectamos la categoría que creamos arriba
 		productoTest.setModelo("Next 8.14 WCR");
 		productoTest.setMarca("Dream");

@@ -43,9 +43,9 @@ public class ServicioStockImp implements ServicioStock {
                                 stockmMaximo,
                                 requestStock.getDetalle(), requestStock.getProxima_reposicion());
 
-                Stock stockNuevo = repositorioStock.save(stock);
+                Stock stockDetalle = repositorioStock.save(stock);
 
-                return new StockDto(stockNuevo.getId(), deposito.getId(),
+                return new StockDto(stockDetalle.getId(), deposito.getId(),
                                 requestStock.getProducto_id(),
                                 requestStock.getCantidad(), requestStock.getPunto_reposicion(),
                                 requestStock.getStock_maximo(),
@@ -54,16 +54,16 @@ public class ServicioStockImp implements ServicioStock {
         }
 
         @Override
-        public StockDto detalle(Long idStock) {
+        public StockDto detalle(Long producto_id) {
                 
-                Stock stockNuevo = repositorioStock.findById(idStock).orElseThrow(
-                                () -> new NotFoundException("no se encontro el stock con id " + idStock));
+                Stock stockDetalle = repositorioStock.findByProductId(producto_id).orElseThrow(
+                                () -> new NotFoundException("no se encontro el stock para el producto con id " + producto_id));
                 
-                return new StockDto(stockNuevo.getId(), stockNuevo.getDeposito().getId(),
-                                stockNuevo.getProducto_id(),
-                                stockNuevo.getCantidad(), stockNuevo.getPunto_reposicion(),
-                                stockNuevo.getStock_maximo(),
-                                stockNuevo.getDetalle(), stockNuevo.getProxima_reposicion());
+                return new StockDto(stockDetalle.getId(), stockDetalle.getDeposito().getId(),
+                                stockDetalle.getProducto_id(),
+                                stockDetalle.getCantidad(), stockDetalle.getPunto_reposicion(),
+                                stockDetalle.getStock_maximo(),
+                                stockDetalle.getDetalle(), stockDetalle.getProxima_reposicion());
 
         }
 

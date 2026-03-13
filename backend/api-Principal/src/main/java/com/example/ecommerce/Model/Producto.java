@@ -2,7 +2,7 @@ package com.example.ecommerce.Model;
 
 import java.time.LocalDate;
 
-import com.example.ecommerce.Dto.Request.ProductoRequestDto;
+
 
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -27,7 +27,7 @@ public class Producto {
    @Column(name = "nombre")
    private String nombre;
    @Column(name = "precio")
-   private Double precio;
+   private int precio;
    @ManyToOne
    private Categoria categoria;
    @Column(name = "modelo")
@@ -42,7 +42,7 @@ public class Producto {
    @Transient
    private Integer stockActual;
 
-public void actualizarDatos(String nombre, Double precio, String modelo, String marca, String descripcion, String imagen, Categoria nuevaCategoria) {
+public void actualizarDatos(String nombre, int precio, String modelo, String marca, String descripcion, String imagen, Categoria nuevaCategoria) {
         this.nombre = nombre;
         this.precio = precio;
         this.modelo = modelo;

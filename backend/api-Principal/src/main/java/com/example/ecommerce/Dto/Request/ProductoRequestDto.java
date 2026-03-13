@@ -29,7 +29,7 @@ public class ProductoRequestDto {
    @NotNull(message = "El precio es obligatorio")
    @Positive(message = "El precio debe ser positivo")
    @Schema(example = "150000.00", description = "Precio unitario en pesos")
-   private Double precio;
+   private int precio;
 
    @NotNull(message = "El ID no puede ser nulo")
    @Min(value = 1, message = "El ID debe ser un número positivo")

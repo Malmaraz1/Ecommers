@@ -1,7 +1,5 @@
 package com.example.ecommerce.Controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.Dto.CarritoDto;
 import com.example.ecommerce.Dto.Request.CarritoRequestDto;
-import com.example.ecommerce.Model.Carrito;
+
 
 import com.example.ecommerce.Service.ServiceImp.ServicioCarrito;
 
 import jakarta.validation.Valid;
-
-
 
 @RestController
 @RequestMapping("/carritos")
@@ -31,26 +28,28 @@ public class ControllerCarrito {
   ServicioCarrito servicioCarrito;
 
   @PostMapping
-  public ResponseEntity<Carrito> nuevoCarrito(@Valid @RequestBody CarritoRequestDto carrito) {
+  public ResponseEntity<CarritoDto> nuevoCarrito(@Valid @RequestBody CarritoRequestDto carrito) {
+
     return ResponseEntity.status(HttpStatus.CREATED).body(servicioCarrito.crear(carrito));
 
   }
 
   @PatchMapping("{idCarrito}/productos/{idproducto}/item_carrito")
-  public ResponseEntity<Carrito> agregarproducto(@Valid @PathVariable Long idProducto ,@PathVariable Long idcarrito ,@RequestParam Integer cantidad ) {
-    Carrito actualizado = servicioCarrito.agregar(idcarrito , idProducto,cantidad);
+  public ResponseEntity<CarritoDto> agregarproducto(@Valid @PathVariable Long idProducto, @PathVariable Long idcarrito,
+      @RequestParam Integer cantidad) {
+    CarritoDto actualizado = servicioCarrito.agregar(idcarrito, idProducto, cantidad);
     return ResponseEntity.ok(actualizado);
   }
 
   @DeleteMapping("{idCarrito}/productos/{idproducto}")
-  public ResponseEntity<?> quitarProducto(@Valid @PathVariable Long idproducto , @PathVariable Long idcarrito ,@RequestParam Integer cantidad) {
-    Carrito carritoOptional = servicioCarrito.eliminar(idcarrito,idproducto,cantidad);
+  public ResponseEntity<?> quitarProducto(@Valid @PathVariable Long idproducto, @PathVariable Long idcarrito,
+      @RequestParam Integer cantidad) {
+    CarritoDto carritoOptional = servicioCarrito.quitarProducto(idcarrito, idproducto, cantidad);
     if (carritoOptional != null) {
       return ResponseEntity.status(HttpStatus.OK).build();
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
   }
-  
 
 }

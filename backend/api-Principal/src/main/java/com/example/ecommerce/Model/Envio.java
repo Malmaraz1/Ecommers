@@ -6,10 +6,6 @@ public class Envio implements EstadoPedido{
     public void gestionarPago() {
      
     }
-    public void cambioEstado(){
-        if(pedido.SolicitarCancelacion()){
-            pedido.setEstadoPedido(new Cancelado());
-        }
-    }
+  
   
 }

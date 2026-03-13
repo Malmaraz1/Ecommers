@@ -1,6 +1,6 @@
 package com.example.ecommerce.Service;
 
-import java.lang.StackWalker.Option;
+
 import java.util.HashSet;
 
 import java.util.Optional;
@@ -20,7 +20,7 @@ import com.example.ecommerce.Repository.RepositorioUsuario;
 import com.example.ecommerce.Service.ServiceImp.ServicioUsuario;
 import com.example.ecommerce.exceptions.NotFoundException;
 
-import jakarta.validation.Valid;
+
 
 @Service
 public class ServicioUsuarioImp implements ServicioUsuario {

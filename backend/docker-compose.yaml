@@ -5,26 +5,26 @@ services:
      ports:
       - "3307:3306"
      environment:
-      MYSQL_ROOT_PASSWORD: DB_PASSWORD
-      MYSQL_DATABASE: DB_DATABASE
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
      volumes:
       - data-mysql:/var/lib/mysql
      restart: always
-     networks: 
-      - spring  
-       
+     networks:
+      - spring
+
   postgres14:
     image: postgres:14-alpine
     ports:
       - "5532:5432"
     environment:
-      POSTGRES_PASSWORD: DB_PASSWORD
-      POSTGRES_DB: DB_DATABASE 
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - data-postgres:/var/lib/postgresql/data
-    restart: always    
+    restart: always
     networks:
-      - spring  
+      - spring
 
   api-principal:
     build:
@@ -38,8 +38,8 @@ services:
     depends_on:
       - mysql8
       - servidor-stock
-       
-    restart: always        
+
+    restart: always
 
 
   servidor-stock:
@@ -54,13 +54,4 @@ services:
       - spring
     depends_on:
       - postgres14
-    restart: always    
-
-
-
-volumes:
-  data-mysql:    
-  data-postgres: 
-
-networks:
-  spring:
+    restart: always

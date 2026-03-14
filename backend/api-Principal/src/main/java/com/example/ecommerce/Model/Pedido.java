@@ -43,5 +43,9 @@ public class Pedido {
 
   }
 
+  public int totalCarrito(){
+    return items_carrito.stream().mapToInt(i -> i.calcularTotal()).sum();
+  }
+
 
 }

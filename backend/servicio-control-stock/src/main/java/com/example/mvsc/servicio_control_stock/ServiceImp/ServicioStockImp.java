@@ -32,10 +32,10 @@ public class ServicioStockImp implements ServicioStock {
                                 ? requestStock.getPunto_reposicion()
                                 : 500;
                 Integer stockmMaximo = (requestStock.getStock_maximo() != null)
-                                ? requestStock.getPunto_reposicion()
+                                ? requestStock.getStock_maximo()
                                 : 1000;
-                Integer cantidad = (requestStock.getStock_maximo() != null)
-                                ? requestStock.getPunto_reposicion()
+                Integer cantidad = (requestStock.getCantidad()!= null)
+                                ? requestStock.getCantidad()
                                 : 50;
 
                 Stock stock = new Stock(deposito, requestStock.getProducto_id(),

@@ -34,14 +34,14 @@ public class ControllerCarrito {
 
   }
 
-  @PatchMapping("{idCarrito}/productos/{idproducto}/item_carrito")
+  @PatchMapping("/{idCarrito}/productos/{idproducto}/item_carrito")
   public ResponseEntity<CarritoDto> agregarproducto(@Valid @PathVariable Long idproducto, @PathVariable Long idcarrito,
       @RequestParam Integer cantidad) {
     CarritoDto actualizado = servicioCarrito.agregar(idcarrito, idproducto, cantidad);
     return ResponseEntity.ok(actualizado);
   }
 
-  @DeleteMapping("{idCarrito}/productos/{idproducto}")
+  @DeleteMapping("/{idCarrito}/productos/{idproducto}")
   public ResponseEntity<?> quitarProducto(@Valid @PathVariable Long idproducto, @PathVariable Long idcarrito,
       @RequestParam Integer cantidad) {
     CarritoDto carritoOptional = servicioCarrito.quitarProducto(idcarrito, idproducto, cantidad);

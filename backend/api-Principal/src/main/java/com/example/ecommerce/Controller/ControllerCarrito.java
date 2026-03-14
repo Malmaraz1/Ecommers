@@ -35,9 +35,9 @@ public class ControllerCarrito {
   }
 
   @PatchMapping("/{idCarrito}/productos/{idProducto}/item_carrito")
-  public ResponseEntity<CarritoDto> agregarproducto(@Valid @PathVariable Long idProducto, @PathVariable Long idcarrito,
+  public ResponseEntity<CarritoDto> agregarproducto(@Valid @PathVariable("idCarrito") Long idCarrito, @PathVariable("idProducto") Long idProducto,
       @RequestParam Integer cantidad) {
-    CarritoDto actualizado = servicioCarrito.agregar(idcarrito, idProducto, cantidad);
+    CarritoDto actualizado = servicioCarrito.agregar(idCarrito, idProducto, cantidad);
     return ResponseEntity.ok(actualizado);
   }
 

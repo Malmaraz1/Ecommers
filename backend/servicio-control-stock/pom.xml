@@ -54,8 +54,8 @@
 		<dependency>
     	<groupId>com.stripe</groupId>
     	<artifactId>stripe-java</artifactId>
-    	<version>28.1.0</version> </dependency>
-		
+    	<version>28.1.0</version> 
+		<dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

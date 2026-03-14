@@ -1,10 +1,11 @@
 package com.example.ecommerce.Service.ServiceImp;
 
 import com.example.ecommerce.Model.Pedido;
+import com.stripe.exception.StripeException;
 
 public interface ServicioPago {
     
-   void realizarPago(Pedido pedido);
+   String realizarPago(Pedido pedido) throws StripeException;
    void cancelarPago(Pedido pedido);
    
 }

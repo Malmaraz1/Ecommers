@@ -42,9 +42,9 @@ public class ControllerCarrito {
   }
 
   @DeleteMapping("/{idCarrito}/productos/{idproducto}")
-  public ResponseEntity<?> quitarProducto(@Valid @PathVariable Long idproducto, @PathVariable Long idcarrito,
+  public ResponseEntity<?> quitarProducto(@Valid @PathVariable Long idproducto, @PathVariable Long idCarrito,
       @RequestParam Integer cantidad) {
-    CarritoDto carritoOptional = servicioCarrito.quitarProducto(idcarrito, idproducto, cantidad);
+    CarritoDto carritoOptional = servicioCarrito.quitarProducto(idCarrito, idproducto, cantidad);
     if (carritoOptional != null) {
       return ResponseEntity.status(HttpStatus.OK).build();
     }

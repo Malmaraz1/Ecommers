@@ -5,7 +5,9 @@ import java.time.LocalDate;
 
 
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.Column;
 
@@ -19,8 +21,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "producto")
+@Entity
+@Table(name = "producto", indexes = {
+    @Index(name = "idx_producto_precio", columnList = "precio"),
+    @Index(name = "idx_producto_nombre", columnList = "nombre")
+})
 public class Producto {
+
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;

@@ -31,10 +31,10 @@ public class ControladorStock {
         return ResponseEntity.ok(requestStock);
     }
 
-    @GetMapping("idStock")
-    public ResponseEntity<StockDto> detalle(@PathVariable Long idStock) {
+    @GetMapping("{idProducto}")
+    public ResponseEntity<StockDto> detalle(@PathVariable Long idProducto) {
 
-        return ResponseEntity.ok(servicioStock.detalle(idStock));
+        return ResponseEntity.ok(servicioStock.detalle(idProducto));
 
     }
 }

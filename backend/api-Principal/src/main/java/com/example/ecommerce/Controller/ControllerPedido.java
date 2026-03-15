@@ -22,7 +22,7 @@ public class ControllerPedido {
    @Autowired
    ServicioPedido servicioPedidoImp;
 
-   @PostMapping
+   @PostMapping("{carritoId}")
    public ResponseEntity<PedidoDto> generarPedido(@PathVariable Long carritoId) {
       return ResponseEntity.status(HttpStatus.CREATED).body(servicioPedidoImp.generarPedido(carritoId));
 

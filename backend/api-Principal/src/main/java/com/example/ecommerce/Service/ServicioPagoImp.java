@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import com.example.ecommerce.Model.ItemCarrito;
 import com.example.ecommerce.Model.ItemPedido;
 import com.example.ecommerce.Model.Pedido;
+import com.example.ecommerce.Repository.RepositorioPago;
 import com.example.ecommerce.Repository.RepositorioPedido;
 import com.example.ecommerce.Service.ServiceImp.ServicioPago;
 import com.example.ecommerce.exceptions.NotFoundException;
+import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -24,13 +26,15 @@ public class ServicioPagoImp implements ServicioPago {
     RepositorioPedido repositorioPedido;
     @Autowired
     ServidorConversorDeMonedasImp servidorConversorDeMonedasImp;
-    
+   
+
     @Value("${app.frontend.url}")
     private String frontendUrl;
 
     @Override
     public String realizarPago(Long pedidoId) throws StripeException {
 
+       
         Pedido pedidoDb = repositorioPedido.findById(pedidoId).orElseThrow(
                 () -> new NotFoundException("No se encontro el pedido con id " + pedidoId));
 
@@ -61,6 +65,7 @@ public class ServicioPagoImp implements ServicioPago {
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .setSuccessUrl(frontendUrl + "/success")
                 .setCancelUrl(frontendUrl + "/cancel")
+                .putMetadata("pedido_id", pedidoId.toString())
                 .addAllLineItem(lineItems)
                 .build();
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Model.Pedido;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
@@ -22,7 +23,7 @@ public class ControllerPedido {
    ServicioPedido servicioPedidoImp;
 
    @PostMapping
-   public ResponseEntity<Pedido> generarPedido(@PathVariable Long carritoId) {
+   public ResponseEntity<PedidoDto> generarPedido(@PathVariable Long carritoId) {
       return ResponseEntity.status(HttpStatus.CREATED).body(servicioPedidoImp.generarPedido(carritoId));
 
    }

@@ -68,5 +68,6 @@ public class ServicioStockImp implements ServicioStock {
                                 stockDetalle.getDetalle(), stockDetalle.getProxima_reposicion());
 
         }
+        
 
 }

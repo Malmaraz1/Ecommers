@@ -1,12 +1,13 @@
 package com.example.ecommerce.Service.ServiceImp;
 
+import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Model.Pedido;
 
 
 
 public interface ServicioPedido {
 
- Pedido generarPedido(Long carritoId );
+ PedidoDto generarPedido(Long carritoId );
 
 
     

@@ -82,6 +82,12 @@ public class ServicioCarrritoImp implements ServicioCarrito {
     @Transactional
     public CarritoDto agregar(Long idCarrito, Long idProducto, Integer cantidad) {
 
+        StockDto stockDto = stockClientRest.detalle(idProducto);
+
+        if(stockDto.getCantidad() < cantidad){
+            throw new RuntimeException("no hay stock sufiente para este producto");
+        }
+
         Carrito carrito = servicioAgregarCarrito.ejecutar(idCarrito, idProducto, cantidad);
         CarritoDto carritoDto = new CarritoDto();
         List<ItemCarritoDto> itemDtos = carrito.getItemsCarrito().stream().map(item -> {

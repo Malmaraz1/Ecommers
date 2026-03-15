@@ -1,6 +1,7 @@
 package com.example.ecommerce.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ecommerce.Dto.CarritoDto;
 import com.example.ecommerce.Dto.StockDto;
 import com.example.ecommerce.Dto.Request.CarritoRequestDto;
+import com.example.ecommerce.Dto.Request.ItemCarritoDto;
 import com.example.ecommerce.Model.Carrito;
 
 import com.example.ecommerce.Model.Usuario;
@@ -67,12 +69,20 @@ public class ServicioCarrritoImp implements ServicioCarrito {
     @Transactional
     public CarritoDto agregar(Long idCarrito, Long idProducto, Integer cantidad) {
 
-        
         Carrito carrito = servicioAgregarCarrito.ejecutar(idCarrito, idProducto, cantidad);
         CarritoDto carritoDto = new CarritoDto();
+        List<ItemCarritoDto> itemDtos = carrito.getItemsCarrito().stream().map(item -> {
+            ItemCarritoDto dto = new ItemCarritoDto();
+            dto.setId(item.getId());
+            dto.setCantidad(item.getCantidad());
+            dto.setPrecioUnitario(item.getPrecioUnitario());
+            dto.setProductoId(item.getProducto().getId());
+            return dto;
+        }).toList();
+
         carritoDto.setComprador_id(carrito.getComprador().getId());
         carritoDto.setId(carrito.getId());
-        carritoDto.setItemsCarrito(carrito.getItemsCarrito());
+        carritoDto.setItemsCarrito(itemDtos);
 
         return carritoDto;
 

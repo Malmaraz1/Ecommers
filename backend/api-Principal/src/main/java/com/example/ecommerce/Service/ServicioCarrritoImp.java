@@ -66,7 +66,10 @@ public class ServicioCarrritoImp implements ServicioCarrito {
     @Override
     @Transactional
     public CarritoDto agregar(Long idCarrito, Long idProducto, Integer cantidad) {
-       System.out.println("Buscando producto: " + idProducto);
+        
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("ID PRODUCTO RECIBIDO: " + idProducto);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         StockDto stockDto = stockClientRest.detalle(idProducto);
 
         if (stockDto.getCantidad() < cantidad) {

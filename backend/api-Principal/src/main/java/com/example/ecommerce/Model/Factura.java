@@ -47,12 +47,12 @@ public class Factura {
 
   public Factura(Pedido pedido
       ) {
-    this.itemFactura = pedido.getItems_carrito().stream()
+    this.itemFactura = pedido.getItems_pedido().stream()
         .map(i -> new ItemFactura(i.getProducto(), i.getPrecioUnitario(), i.getCantidad())).toList();
     this.numeroFactura = GeneradorCodigo.generar();
     this.fechaEmision = LocalDate.now();
     this.comprador = pedido.getComprador();
-    this.total_factura = pedido.getItems_carrito().
+    this.total_factura = pedido.getItems_pedido().
     stream().mapToInt(i -> i.getCantidad() * i.getPrecioUnitario()).sum();
 
   }

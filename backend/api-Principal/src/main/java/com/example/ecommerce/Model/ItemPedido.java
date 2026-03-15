@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class ItemPedido {
     private int cantidad;
     @Column(name = "precio_unitario")
     private int precioUnitario;
+    @ManyToOne
     @JoinColumn(name = "producto_id")
     private Producto producto;
 

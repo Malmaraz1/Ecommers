@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import java.util.Optional;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -90,7 +89,7 @@ public class ServicioProductoImp implements ServicioProducto {
         stockDto.setProducto_id(productoDb.getId());
         stockDto.setDeposito_id((long) 1);
         stockClientRest.crear(stockDto);
-        
+
         return new ProductoDto(productoDb);
 
     }
@@ -124,9 +123,10 @@ public class ServicioProductoImp implements ServicioProducto {
                 .orElseThrow(() -> new NotFoundException("El producto con id " + idProducto + " no existe"));
 
         Categoria categoriaProxy = repositorioCategoria.getReferenceById(productoRequestDto.getCategoria_id());
-       
-        p.actualizarDatos(productoRequestDto.getNombre(), productoRequestDto.getPrecio() , productoRequestDto.getModelo(), productoRequestDto.getMarca(), 
-        productoRequestDto.getDescripcion(),productoRequestDto.getImg(),categoriaProxy);
+
+        p.actualizarDatos(productoRequestDto.getNombre(), productoRequestDto.getPrecio(),
+                productoRequestDto.getModelo(), productoRequestDto.getMarca(),
+                productoRequestDto.getDescripcion(), productoRequestDto.getImg(), categoriaProxy);
 
         repositorioProducto.save(p);
 
@@ -144,20 +144,22 @@ public class ServicioProductoImp implements ServicioProducto {
             spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("precio"), filtro.getPrecioMin()));
         }
 
+        // 2. Filtro de Precio Máximo (Opcional)
         if (filtro.getPrecioMax() != null) {
             spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("precio"), filtro.getPrecioMax()));
         }
 
-        spec = spec.and((root, query, cb) -> {
+        if (filtro.getCategoria() != null && !filtro.getCategoria().isBlank()) {
+            spec = spec.and((root, query, cb) -> {
+                // Usamos JoinType.LEFT para que no descarte productos si algo falla
+                Join<Producto, Categoria> catJoin = root.join("categoria", JoinType.LEFT);
+                Join<Categoria, Categoria> padreJoin = catJoin.join("categoriaPadre", JoinType.LEFT);
 
-            Join<Producto, Categoria> catJoin = root.join("categoria");
-
-            Join<Categoria, Categoria> padreJoin = catJoin.join("categoriaPadre", JoinType.LEFT);
-
-            return cb.or(
-                    cb.equal(catJoin.get("nombre"), filtro.getCategoria()),
-                    cb.equal(padreJoin.get("nombre"), filtro.getCategoria()));
-        });
+                return cb.or(
+                        cb.equal(catJoin.get("nombre"), filtro.getCategoria()),
+                        cb.equal(padreJoin.get("nombre"), filtro.getCategoria()));
+            });
+        }
         Page<Producto> productosPage = repositorioProducto.findAll(spec, pageable);
 
         if (productosPage.isEmpty()) {
@@ -171,7 +173,7 @@ public class ServicioProductoImp implements ServicioProducto {
 
     @Override
     public boolean existByProductoName(String name) {
-       return  repositorioProducto.existsByNombre(name);
+        return repositorioProducto.existsByNombre(name);
     }
 
 }

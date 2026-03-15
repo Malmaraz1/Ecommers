@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.ecommerce.Dto.ItemCarritoDto;
 import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Model.Carrito;
-import com.example.ecommerce.Model.Pedido;
+
 import com.example.ecommerce.Repository.RepositorioCarrito;
 import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.Dto.PedidoDto;
-import com.example.ecommerce.Model.Pedido;
+
 
 import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
 

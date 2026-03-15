@@ -3,8 +3,6 @@ package com.example.ecommerce.Dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.ecommerce.Dto.Request.ItemCarritoDto;
-
 import lombok.Getter;
 import lombok.Setter;
 

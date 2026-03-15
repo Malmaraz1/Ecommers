@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Dto.CarritoDto;
+import com.example.ecommerce.Dto.ItemCarritoDto;
 import com.example.ecommerce.Dto.StockDto;
 import com.example.ecommerce.Dto.Request.CarritoRequestDto;
-import com.example.ecommerce.Dto.Request.ItemCarritoDto;
 import com.example.ecommerce.Model.Carrito;
 
 import com.example.ecommerce.Model.Usuario;

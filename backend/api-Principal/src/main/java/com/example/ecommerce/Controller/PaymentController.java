@@ -2,6 +2,7 @@ package com.example.ecommerce.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +17,10 @@ public class PaymentController {
     @Autowired
     ServicioPagoImp servicioPagoImp;
 
-    @PostMapping("/checkout")
-    public ResponseEntity<String> createCheckout(@RequestBody Pedido pedidoRequest) throws StripeException {
+    @PostMapping("/checkout/{pedidoId}")
+    public ResponseEntity<String> createCheckout(@PathVariable Long pedidoId ) throws StripeException {
         // request trae el ID del producto, NO el precio
-        String urlDePago = servicioPagoImp.realizarPago(pedidoRequest);
+        String urlDePago = servicioPagoImp.realizarPago(pedidoId);
         return ResponseEntity.ok(urlDePago);
     }
     

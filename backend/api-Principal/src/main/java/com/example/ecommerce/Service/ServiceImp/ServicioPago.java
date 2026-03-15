@@ -5,7 +5,7 @@ import com.stripe.exception.StripeException;
 
 public interface ServicioPago {
     
-   String realizarPago(Pedido pedido) throws StripeException;
+   String realizarPago(Long pedidoId) throws StripeException;
    void cancelarPago(Pedido pedido);
    
 }

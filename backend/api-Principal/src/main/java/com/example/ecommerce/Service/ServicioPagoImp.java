@@ -29,10 +29,10 @@ public class ServicioPagoImp implements ServicioPago {
     private String frontendUrl;
 
     @Override
-    public String realizarPago(Pedido pedido) throws StripeException {
+    public String realizarPago(Long pedidoId) throws StripeException {
 
-        Pedido pedidoDb = repositorioPedido.findById(pedido.getId()).orElseThrow(
-                () -> new NotFoundException("No se encontro el pedido con id " + pedido.getId()));
+        Pedido pedidoDb = repositorioPedido.findById(pedidoId).orElseThrow(
+                () -> new NotFoundException("No se encontro el pedido con id " + pedidoId));
 
         List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
 

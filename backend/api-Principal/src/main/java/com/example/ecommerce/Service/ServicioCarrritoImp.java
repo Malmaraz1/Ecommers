@@ -1,6 +1,7 @@
 package com.example.ecommerce.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -45,10 +46,12 @@ public class ServicioCarrritoImp implements ServicioCarrito {
 
         Carrito carritoNuevo = repositorioCarrito.save(carrito);
 
+        List<ItemCarritoDto> itemDtos = new ArrayList<>();
+
         CarritoDto carritoDto = new CarritoDto();
         carritoDto.setComprador_id(carritoNuevo.getComprador().getId());
         carritoDto.setId(carritoNuevo.getId());
-        carritoDto.setItemsCarrito(carritoNuevo.getItemsCarrito());
+        carritoDto.setItemsCarrito(itemDtos);
 
         return carritoDto;
     }
@@ -58,9 +61,19 @@ public class ServicioCarrritoImp implements ServicioCarrito {
     public CarritoDto quitarProducto(Long idCarrito, Long idProducto, Integer cantidad) {
         Carrito carrito = servicioQuitarItemCarrito.ejecutar(idCarrito, idProducto, cantidad);
         CarritoDto carritoDto = new CarritoDto();
+
+        List<ItemCarritoDto> itemDtos = carrito.getItemsCarrito().stream().map(item -> {
+            ItemCarritoDto dto = new ItemCarritoDto();
+            dto.setId(item.getId());
+            dto.setCantidad(item.getCantidad());
+            dto.setPrecioUnitario(item.getPrecioUnitario());
+            dto.setProductoId(item.getProducto().getId());
+            return dto;
+        }).toList();
+
         carritoDto.setComprador_id(carrito.getComprador().getId());
         carritoDto.setId(carrito.getId());
-        carritoDto.setItemsCarrito(carrito.getItemsCarrito());
+        carritoDto.setItemsCarrito(itemDtos);
 
         return carritoDto;
     }

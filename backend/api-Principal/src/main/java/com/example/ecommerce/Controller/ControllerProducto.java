@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ import jakarta.validation.Valid;
 public class ControllerProducto {
     @Autowired
     ServicioProducto servicioProducto;
+
 
     @PostMapping()
     @Operation(summary = "Crea un producto nuevo", description = "Nota: El nombre debe ser único. Si el ejemplo ya existe, cambie el nombre a 'Monitor 123'.")

@@ -2,6 +2,7 @@ package com.example.ecommerce.Controller;
 
 import java.util.Optional;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,8 +37,7 @@ public class ControllerProducto {
     ServicioProducto servicioProducto;
 
     @PostMapping()
-    @Operation(summary = "Crea un producto nuevo", 
-           description = "Nota: El nombre debe ser único. Si el ejemplo ya existe, cambie el nombre a 'Monitor 123'.")
+    @Operation(summary = "Crea un producto nuevo", description = "Nota: El nombre debe ser único. Si el ejemplo ya existe, cambie el nombre a 'Monitor 123'.")
     public ResponseEntity<ProductoDto> save(@Valid @RequestBody ProductoRequestDto producto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.guardarProducto(producto));
     }
@@ -73,11 +73,11 @@ public class ControllerProducto {
 
     @GetMapping("filtros")
     public ResponseEntity<Page<ProductoDto>> filtros(
-            @Valid Filtros filtros,
+            @ParameterObject @Valid Filtros filtro,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ProductoDto> productosDto = servicioProducto.filtros(filtros, pageable);
+        Page<ProductoDto> productosDto = servicioProducto.filtros(filtro, pageable);
 
         return ResponseEntity.ok(productosDto);
 

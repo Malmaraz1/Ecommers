@@ -45,7 +45,7 @@ public class SwaggerConfig {
                                         .content(new Content().addMediaType("application/json",
                                                 new MediaType().schema(new Schema<>()
                                                         .addProperty("nombre", new Schema<>().type("string").example("admin"))
-                                                        .addProperty("contrasenia", new Schema<>().type("string").example("123456"))))))
+                                                        .addProperty("contrasenia", new Schema<>().type("string").example("1234"))))))
                                 .responses(new ApiResponses()
                                         .addApiResponse("200", new ApiResponse().description("Login exitoso. El token se encuentra en el Body o Header.")))));
 

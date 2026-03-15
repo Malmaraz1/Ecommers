@@ -169,4 +169,9 @@ public class ServicioProductoImp implements ServicioProducto {
 
     }
 
+    @Override
+    public boolean existByProductoName(String name) {
+       return  repositorioProducto.existsByNombre(name);
+    }
+
 }

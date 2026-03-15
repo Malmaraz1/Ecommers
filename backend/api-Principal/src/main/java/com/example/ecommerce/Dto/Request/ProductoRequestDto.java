@@ -1,7 +1,7 @@
 package com.example.ecommerce.Dto.Request;
 
 import com.example.ecommerce.Model.Producto;
-
+import com.example.ecommerce.exceptions.ExistByProductoName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
@@ -24,6 +24,7 @@ import lombok.Setter;
 public class ProductoRequestDto {
    @NotBlank(message = "El nombre no puede estar vacío")
    @Schema(example = "Lavarropas Drean Next 8.14", description = "Nombre del producto")
+   @ExistByProductoName
    private String nombre;
 
    @NotNull(message = "El precio es obligatorio")

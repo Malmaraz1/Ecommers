@@ -20,4 +20,5 @@ Optional<ProductoDto> buscarProducto(Long idProducto);
 Page<ProductoDto> todosLosProductos(Pageable pageable);
 ProductoDto editarProducto(Long idProducto , ProductoRequestDto productoRequestDto);
 Page<ProductoDto> filtros(Filtros filtro, Pageable pageable);
+boolean existByProductoName(String name);
 }

@@ -25,15 +25,19 @@ import com.example.ecommerce.Dto.Request.ProductoRequestDto;
 
 import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/productos")
+
 public class ControllerProducto {
     @Autowired
     ServicioProducto servicioProducto;
 
     @PostMapping()
+    @Operation(summary = "Crea un producto nuevo", 
+           description = "Nota: El nombre debe ser único. Si el ejemplo ya existe, cambie el nombre a 'Monitor 123'.")
     public ResponseEntity<ProductoDto> save(@Valid @RequestBody ProductoRequestDto producto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioProducto.guardarProducto(producto));
     }
@@ -67,7 +71,7 @@ public class ControllerProducto {
 
     }
 
-     @GetMapping("filtros")
+    @GetMapping("filtros")
     public ResponseEntity<Page<ProductoDto>> filtros(
             @Valid Filtros filtros,
             @RequestParam(defaultValue = "0") int page,
@@ -78,13 +82,11 @@ public class ControllerProducto {
         return ResponseEntity.ok(productosDto);
 
     }
- 
 
     @DeleteMapping("{idProducto}")
     public ResponseEntity<Void> delete(@Valid @PathVariable Long idProducto) {
         servicioProducto.eliminarProducto(idProducto);
         return ResponseEntity.noContent().build();
     }
-    
 
 }

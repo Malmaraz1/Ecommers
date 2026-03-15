@@ -1,40 +1,64 @@
 package com.example.ecommerce.Service;
 
+import com.example.ecommerce.Repository.RepositorioPedido;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.Dto.ItemCarritoDto;
+import com.example.ecommerce.Dto.ItemPedidoDto;
 import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Model.Carrito;
-
+import com.example.ecommerce.Model.ItemPedido;
+import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Repository.RepositorioCarrito;
 import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
 
 @Service
 public class ServicioPedidoImp implements ServicioPedido {
-
+    @Autowired
+    RepositorioPedido repositorioPedido;
     @Autowired
     RepositorioCarrito repositorioCarrito;
+
+    ServicioPedidoImp(RepositorioPedido repositorioPedido) {
+        this.repositorioPedido = repositorioPedido;
+    }
 
     @Override
     public PedidoDto generarPedido(Long carritoId) {
 
         Carrito carrito = repositorioCarrito.findById(carritoId).orElseThrow();
 
-        PedidoDto pedidoDto = new PedidoDto();
-
-        List<ItemCarritoDto> itemDtos = carrito.getItemsCarrito().stream().map(item -> {
-            ItemCarritoDto dto = new ItemCarritoDto();
-            dto.setId(item.getId());
+        Pedido pedido = new Pedido();
+        List<ItemPedido> itemDtos = carrito.getItemsCarrito().stream().map(item -> {
+            ItemPedido dto = new ItemPedido();
+            dto.setProducto(item.getProducto());
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
-            dto.setProductoId(item.getProducto().getId());
             return dto;
         }).toList();
-        pedidoDto.setUsuario_id(carrito.getComprador().getId());
-        pedidoDto.setItemCarritoDto(itemDtos);
+
+        pedido.setComprador(carrito.getComprador());
+        pedido.setItems_pedido(itemDtos);
+
+        Pedido pedido2 = repositorioPedido.save(pedido);
+
+        PedidoDto pedidoDto = new PedidoDto();
+
+        List<ItemPedidoDto> itemDto = pedido2.getItems_pedido().stream().map(item -> {
+            ItemPedidoDto dto = new ItemPedidoDto();
+            dto.setId(item.getId());
+            dto.setProductoId(item.getProducto().getId());
+            dto.setCantidad(item.getCantidad());
+            dto.setPrecioUnitario(item.getPrecioUnitario());
+            return dto;
+        }).toList();
+
+        pedidoDto.setItemPedidoDto(itemDto);
+        pedidoDto.setId(pedido2.getId());
+        pedidoDto.setUsuario_id(pedido2.getComprador().getId());
 
         return pedidoDto;
 

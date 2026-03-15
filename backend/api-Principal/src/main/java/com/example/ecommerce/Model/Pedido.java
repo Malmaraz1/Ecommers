@@ -32,19 +32,14 @@ public class Pedido {
   @JoinColumn(name = "usuario_id")
   private Usuario comprador;
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "pedido_id")
-  private List<ItemCarrito> items_carrito = new ArrayList<>();
+  @JoinColumn(name = "item_pedido")
+  private List<ItemPedido> items_pedido = new ArrayList<>();
+ 
 
-  public Pedido(Carrito carrito) {
-    this.estadoPedido = new Pendiente();
-    this.setItems_carrito(items_carrito);
-    this.setComprador(carrito.getComprador());
-    
-
-  }
+  
 
   public int totalCarrito(){
-    return items_carrito.stream().mapToInt(i -> i.calcularTotal()).sum();
+    return items_pedido.stream().mapToInt(i -> i.calcularTotal()).sum();
   }
 
 

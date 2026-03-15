@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.Model.ItemCarrito;
+import com.example.ecommerce.Model.ItemPedido;
 import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Repository.RepositorioPedido;
 import com.example.ecommerce.Service.ServiceImp.ServicioPago;
@@ -35,7 +36,7 @@ public class ServicioPagoImp implements ServicioPago {
 
         List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
 
-        for (ItemCarrito item : pedidoDb.getItems_carrito()) {
+        for (ItemPedido item : pedidoDb.getItems_pedido()) {
 
             lineItems.add(
 

@@ -11,6 +11,6 @@ import lombok.Setter;
 public class PedidoDto {
     private Long id;
     private Long usuario_id;
-    private List<ItemCarritoDto> itemCarritoDto = new ArrayList<>();
+    private List<ItemPedidoDto> itemPedidoDto = new ArrayList<>();
 
 }

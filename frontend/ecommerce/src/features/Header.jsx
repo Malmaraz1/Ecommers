@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
-import { FiShoppingCart } from 'react-icons/fi'; 
-import Badge from 'react-bootstrap/Badge';
+import { FiShoppingCart } from "react-icons/fi";
+import Badge from "react-bootstrap/Badge";
 import Navbar from "react-bootstrap/Navbar";
 
 function MiNavbar() {

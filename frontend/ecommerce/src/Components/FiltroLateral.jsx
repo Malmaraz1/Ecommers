@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { Accordion, Form } from 'react-bootstrap';
+import { useState } from "react";
+import { Accordion, Form } from "react-bootstrap";
 
 function FiltrosLaterales() {
-  
   const [categoriaSel, setCategoriaSel] = useState(null);
   const [subcategoriaSel, setSubcategoriaSel] = useState(null);
 
@@ -10,13 +9,12 @@ function FiltrosLaterales() {
     <aside>
       <h5>Filtros</h5>
       <Accordion defaultActiveKey="0" flush>
-        
         {/* ACORDEÓN DE CATEGORÍAS */}
         <Accordion.Item eventKey="0">
           <Accordion.Header>Categoría Principal</Accordion.Header>
           <Accordion.Body>
-            {['Electrónica', 'Hogar', 'Deportes'].map((cat) => (
-              <Form.Check 
+            {["Electrónica", "Hogar", "Deportes"].map((cat) => (
+              <Form.Check
                 key={cat}
                 type="radio"
                 label={cat}
@@ -31,12 +29,12 @@ function FiltrosLaterales() {
         </Accordion.Item>
 
         {/* SUBCATEGORÍAS: Solo aparecen si elegiste Electrónica */}
-        {categoriaSel === 'Electrónica' && (
+        {categoriaSel === "Electrónica" && (
           <Accordion.Item eventKey="1">
             <Accordion.Header>Subcategorías</Accordion.Header>
             <Accordion.Body>
-              {['Celulares', 'Laptops'].map((sub) => (
-                <Form.Check 
+              {["Celulares", "Laptops"].map((sub) => (
+                <Form.Check
                   key={sub}
                   type="radio"
                   label={sub}
@@ -49,7 +47,7 @@ function FiltrosLaterales() {
         )}
 
         {/* MODELOS: Solo aparecen si elegiste Celulares */}
-        {subcategoriaSel === 'Celulares' && (
+        {subcategoriaSel === "Celulares" && (
           <Accordion.Item eventKey="2">
             <Accordion.Header>Modelos de Celular</Accordion.Header>
             <Accordion.Body>
@@ -59,7 +57,6 @@ function FiltrosLaterales() {
             </Accordion.Body>
           </Accordion.Item>
         )}
-
       </Accordion>
     </aside>
   );

@@ -1,8 +1,6 @@
-
-
-import React from 'react';
-import { Nav } from 'react-bootstrap';
-import { Funnel } from 'react-bootstrap-icons';
+import React from "react";
+import { Nav } from "react-bootstrap";
+import { Funnel } from "react-bootstrap-icons";
 
 const OrdenadorProductos = ({ alCambiarOrden }) => {
   return (
@@ -14,9 +12,9 @@ const OrdenadorProductos = ({ alCambiarOrden }) => {
       </div>
 
       {/* Botones de Ordenamiento */}
-      <Nav 
-        variant="pills" 
-        className="gap-3 me-2" 
+      <Nav
+        variant="pills"
+        className="gap-3 me-2"
         onSelect={(selectedKey) => alCambiarOrden(selectedKey)}
       >
         <Nav.Item>
@@ -30,7 +28,10 @@ const OrdenadorProductos = ({ alCambiarOrden }) => {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="precio-desc" className="border text-dark bg-white">
+          <Nav.Link
+            eventKey="precio-desc"
+            className="border text-dark bg-white"
+          >
             Precio Max
           </Nav.Link>
         </Nav.Item>

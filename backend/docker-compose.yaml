@@ -10,9 +10,9 @@ services:
      volumes:
       - data-mysql:/var/lib/mysql
      restart: always
-     networks: 
-      - spring  
-       
+     networks:
+      - spring
+
   postgres14:
     image: postgres:14-alpine
     ports:
@@ -22,9 +22,9 @@ services:
       POSTGRES_DB: ${POSTGRES_DB} 
     volumes:
       - data-postgres:/var/lib/postgresql/data
-    restart: always    
+    restart: always
     networks:
-      - spring  
+      - spring
 
   api-principal:
     build:
@@ -33,14 +33,13 @@ services:
     ports:
       - "8001:8001"
     env_file: ./api-Principal/.env
-      
     networks:
       - spring
     depends_on:
       - mysql8
       - servidor-stock
-       
-    restart: always        
+
+    restart: always
 
 
   servidor-stock:
@@ -55,10 +54,7 @@ services:
       - spring
     depends_on:
       - postgres14
-    restart: always    
-
-
-
+    restart: always
 volumes:
   data-mysql:    
   data-postgres: 

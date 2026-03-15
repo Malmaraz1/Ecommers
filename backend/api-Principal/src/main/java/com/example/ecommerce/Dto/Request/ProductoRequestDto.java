@@ -44,7 +44,6 @@ public class ProductoRequestDto {
    @Size(max = 500, message = "La descripción es demasiado larga")
    @Schema(example = "descripcion de prueba", description = "descripcion del producto")
    private String descripcion;
-   @Null
    @Schema(example = "https://tusitio.com/default-placeholder.png", description = "imagen del producto")
    private String img;
    @NotBlank(message = "La marca no puede estar vacia")

@@ -3,6 +3,7 @@ package com.example.mvsc.servicio_control_stock.ServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.mvsc.servicio_control_stock.Dto.StockDto;
 import com.example.mvsc.servicio_control_stock.Dto.RequestDto.RequestStock;
@@ -54,6 +55,7 @@ public class ServicioStockImp implements ServicioStock {
         }
 
         @Override
+        @Transactional(readOnly = true)
         public StockDto detalle(Long producto_id) {
                 
                 Stock stockDetalle = repositorioStock.findByProductoId(producto_id).orElseThrow(

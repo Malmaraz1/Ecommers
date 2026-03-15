@@ -33,6 +33,7 @@ services:
     ports:
       - "8001:8001"
     env_file: ./api-Principal/.env
+
     networks:
       - spring
     depends_on:
@@ -55,3 +56,5 @@ services:
     depends_on:
       - postgres14
     restart: always
+
+    

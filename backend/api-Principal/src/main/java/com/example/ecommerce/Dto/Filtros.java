@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Filtros {
     String categoria;
-    Double precioMax;
-    Double precioMin;
+    Integer precioMax;
+    Integer precioMin;
 }

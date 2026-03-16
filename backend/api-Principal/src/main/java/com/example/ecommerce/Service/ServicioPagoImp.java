@@ -71,7 +71,7 @@ public class ServicioPagoImp implements ServicioPago {
 
                 SessionCreateParams params = SessionCreateParams.builder()
                                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                                .setSuccessUrl(frontendUrl + "/success")
+                                .setSuccessUrl(frontendUrl + "/success?session_id={CHECKOUT_SESSION_ID}")
                                 .setCancelUrl(frontendUrl + "/cancel")
                                 .putMetadata("pedido_id", pedidoId.toString())
                                 .addAllLineItem(lineItems)

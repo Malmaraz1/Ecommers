@@ -14,6 +14,8 @@ public class ServicioQuitarItemCarrito extends TemplateAltaBajaCarrito {
         
     }
 
+
+    
     @Override
     protected void aplicarLogicaDelItem(Carrito carrito, Producto producto, Integer cantidad) {
          carrito.quitarItem(producto, cantidad);

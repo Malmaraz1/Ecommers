@@ -25,6 +25,18 @@ services:
     restart: always
     networks:
       - spring
+    rabbitmq:
+      image: rabbitmq:3-management
+      container_name: rabbitmq-ecommerce
+      ports:
+      - "5672:5672"   # Puerto de comunicación AMQP
+      - "15672:15672" # Interfaz de Administración Web
+      environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      networks:
+      - spring
+      restart: always  
 
   api-principal:
     build:
@@ -38,7 +50,7 @@ services:
     depends_on:
       - mysql8
       - servidor-stock
-
+      - rabbitmq
     restart: always
 
 
@@ -54,6 +66,7 @@ services:
       - spring
     depends_on:
       - postgres14
+      - rabbitmq
     restart: always
 volumes:
   data-mysql:    

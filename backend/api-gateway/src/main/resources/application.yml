@@ -7,12 +7,12 @@ spring:
       routes:
         # Ruta para el Microservicio Principal
         - id: api-principal-route
-          uri: uri:http://api-principal:8001
+          uri: http://api-principal:8001
           predicates:
-            - Path=/api/orders/**, /api/users/**
+            - Path=/carritos/** , /categorias/** , /pedidos/** ,/productos/**,/usuarios/** ,/api/payments/**
 
-        # Ruta para el Microservicio de Stock
+        
         - id: stock-service-route
           uri: http://servidor-stock:8002
           predicates:
-            - Path=/api/stock/**
+            - Path=/stock/** ,/deposito/**

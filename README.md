@@ -46,3 +46,24 @@ Infraestructura: Docker & Docker Compose para orquestación y despliegue en Azur
 /docker-compose.yml: Definición de red y contenedores.
 
 /.env.example: Plantilla de configuración.
+
+🛠️ Instalación y Ejecución Local
+Para replicar el entorno de producción en tu máquina, seguí estos pasos:
+
+Clonar el repositorio:
+
+Bash
+git clone [URL_DE_TU_REPO]
+cd [NOMBRE_CARPETA]
+Configurar Variables de Entorno:
+Copiá el archivo .env.example a uno nuevo llamado .env y completá tus credenciales:
+
+Bash
+STRIPE_API_KEY=tu_llave_test
+EXCHANGE_RATE_KEY=tu_api_key
+DB_PASSWORD=tu_password_local
+Levantar con Docker:
+
+Bash
+docker-compose up --build
+Los servicios estarán disponibles en el puerto 8080 (Gateway).

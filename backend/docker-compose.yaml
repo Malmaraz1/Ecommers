@@ -74,6 +74,8 @@ services:
     build: ./api-gateway
     ports:
       - "8080:8080"
+    networks:
+      - spring
     depends_on:
       - api-principal
       - servidor-stock

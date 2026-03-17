@@ -1,9 +1,8 @@
 🛒 E-Commerce Microservices Ecosystem
 Sistema distribuido de alto rendimiento diseñado para la gestión integral de ventas y control de inventario, desarrollado bajo principios de Clean Architecture y Domain-Driven Design (DDD).
 
-🚀Demo & Documentación servicio-principal
-
-Interactive Docs (Swagger): http://68.211.161.210:8001/swagger-ui/index.html#
+🚀Demo & Documentación 
+servicio-principal Interactive Docs (Swagger): http://68.211.161.210:8001/swagger-ui/index.html#
 
 servicio-stock
 Interactive Docs (Swagger): http://68.211.161.210:8002/swagger-ui/index.html#

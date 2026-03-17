@@ -70,6 +70,13 @@ services:
       - postgres14
       - rabbitmq
     restart: always
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api-principal
+      - servidor-stock
 volumes:
   data-mysql:    
   data-postgres: 

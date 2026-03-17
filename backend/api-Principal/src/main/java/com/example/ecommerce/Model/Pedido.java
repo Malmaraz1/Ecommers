@@ -32,7 +32,7 @@ public class Pedido {
   @JoinColumn(name = "usuario_id")
   private Usuario comprador;
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "item_pedido")
+  @JoinColumn(name = "pedido_id")
   private List<ItemPedido> items_pedido = new ArrayList<>();
  
 

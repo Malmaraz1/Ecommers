@@ -29,7 +29,7 @@ public class Factura {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "item_factura_id")
+  @JoinColumn(name = "factura_id")
   private List<ItemFactura> itemFactura = new ArrayList<>();
   private String numeroFactura;
   @Column(name = "fecha_emision")

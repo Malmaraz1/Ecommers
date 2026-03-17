@@ -56,6 +56,14 @@ Contamos con una suite de pruebas robusta para garantizar la integridad de la l�
 ## 📂 Guía de Instalación Rápida
 
 ### 1️⃣ Clonar el repositorio
-```bash
 git clone [https://github.com/tu-usuario/tu-repo.git](https://github.com/tu-usuario/tu-repo.git)
-cd tu-repo
+
+### 2️⃣ Configurar Entorno (.env)
+cp .env.example .env
+
+### 3️⃣ Levantar con Docker 🚀
+docker-compose up --build -d
+
+### 📞 Contacto & Portfolio
+https://matias-backend-portfolio.netlify.app/
+

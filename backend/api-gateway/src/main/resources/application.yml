@@ -1,22 +1,32 @@
 server:
   port: 8080
-  
+
 spring:
   cloud:
     gateway:
       routes:
-
-
         - id: api-principal-route
           uri: http://api-principal:8001
           predicates:
-            - Path= /login/** , /carritos/** , /categorias/** , /pedidos/** ,/productos/**,/usuarios/** ,/api/payments/**
+            # Agregamos v3/api-docs para que el Gateway pueda leer la definición de Swagger
+            - Path=/login/**, /carritos/**, /categorias/**, /pedidos/**, /productos/**, /usuarios/**, /api/payments/**, /v3/api-docs/**
           filters:
-            - StripPrefix=1        
+            - StripPrefix=0 # CUIDADO: Si usas StripPrefix=1, le quitas la primera parte de la URL al microservicio.
+
         - id: stock-service-route
           uri: http://servidor-stock:8002
           predicates:
-            - Path=/stock/** ,/deposito/**
+            - Path=/stock/**, /deposito/**, /stock-docs/**
+          filters:
+            # Ejemplo: si el micro espera /v3/api-docs pero tú lo llamas desde /stock-docs
+            - RewritePath=/stock-docs/(?<segment>.*), /v3/api-docs/$\{segment}
 
-  
-
+# Configuración del Agregador de Swagger
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: API Principal
+        url: /v3/api-docs
+      - name: Servicio Stock
+        url: /stock-docs

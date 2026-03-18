@@ -56,15 +56,15 @@ Contamos con una suite de pruebas robusta para garantizar la integridad de la l�
 
 ### Diagrama de Despliegue
 Muestra la infraestructura de microservicios usando Docker, la API Principal y el Microservicio de Stock.
-![Diagrama de Despliegue](./assets/diagramas/deploy.png)
+![Diagrama de Despliegue](https://github.com/Malmaraz1/Ecommers/blob/main/backend/api-Principal/src/assets/diagramas/deploy.png)
 
 ### Modelo de Datos (DER)
 Relación entre las tablas de MySQL (Principal) y PostgreSQL (Stock).
-![DER_Api_Principal](./assets/diagramas/der_ecommerce.jpg)
-![DER Servicio_stock](./assets/diagramas/der_stock.jpg)
+![DER_Api_Principal](https://github.com/Malmaraz1/Ecommers/blob/main/backend/api-Principal/src/assets/diagramas/der_ecommerce.jpg)
+![DER Servicio_stock](https://github.com/Malmaraz1/Ecommers/blob/main/backend/api-Principal/src/assets/diagramas/der_stock.jpg)
 ### Diagrama de Clases
 
-![Diagrama de Despliegue](./assets/diagramas/diagrama_de_clases_ecommerce.jpg)
+![Diagrama de Despliegue](https://github.com/Malmaraz1/Ecommers/blob/main/backend/api-Principal/src/assets/diagramas/diagrama_de_clases_ecommerce.jpg)
 
 
 ## 📂 Guía de Instalación Rápida

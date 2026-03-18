@@ -35,7 +35,7 @@ public class ServicioStockImp implements ServicioStock {
                 Integer stockmMaximo = (requestStock.getStock_maximo() != null)
                                 ? requestStock.getStock_maximo()
                                 : 1000;
-                Integer cantidad = (requestStock.getCantidad()!= null)
+                Integer cantidad = (requestStock.getCantidad() != null)
                                 ? requestStock.getCantidad()
                                 : 50;
 
@@ -57,10 +57,11 @@ public class ServicioStockImp implements ServicioStock {
         @Override
         @Transactional(readOnly = true)
         public StockDto detalle(Long producto_id) {
-                
+
                 Stock stockDetalle = repositorioStock.findByProductoId(producto_id).orElseThrow(
-                                () -> new NotFoundException("no se encontro el stock para el producto con id " + producto_id));
-                
+                                () -> new NotFoundException(
+                                                "no se encontro el stock para el producto con id " + producto_id));
+
                 return new StockDto(stockDetalle.getId(), stockDetalle.getDeposito().getId(),
                                 stockDetalle.getProductoId(),
                                 stockDetalle.getCantidad(), stockDetalle.getPunto_reposicion(),
@@ -68,6 +69,16 @@ public class ServicioStockImp implements ServicioStock {
                                 stockDetalle.getDetalle(), stockDetalle.getProxima_reposicion());
 
         }
-        
+
+        @Override
+        public void descontarStock(Long producto_id, int cantidad) {
+
+                Stock stock = repositorioStock.findByProductoId(producto_id).orElseThrow();
+
+                stock.setCantidad(stock.getCantidad() - cantidad);
+
+                repositorioStock.save(stock);
+
+        }
 
 }

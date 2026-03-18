@@ -64,6 +64,29 @@ public class ServicioPedidoImp implements ServicioPedido {
 
     }
 
+    public PedidoDto getPedido(Long pedido_id) {
+        
+       Pedido pedido = repositorioPedido.findById(pedido_id).orElseThrow();
+
+        PedidoDto pedidoDto = new PedidoDto();
+
+        List<ItemPedidoDto> itemDto = pedidoDto.getItemPedidoDto().stream().map(item -> {
+            ItemPedidoDto dto = new ItemPedidoDto();
+            dto.setId(item.getId());
+            dto.setProductoId(item.getId());
+            dto.setCantidad(item.getCantidad());
+            dto.setPrecioUnitario(item.getPrecioUnitario());
+            return dto;
+        }).toList();
+
+
+        pedidoDto.setId(pedido_id);
+        pedidoDto.setItemPedidoDto(itemDto);
+        pedidoDto.setUsuario_id(pedido.getComprador().getId());
+        return pedidoDto;
+
+    }
+
    
 
 }

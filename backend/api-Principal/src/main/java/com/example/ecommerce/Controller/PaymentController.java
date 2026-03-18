@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Record.PagoExitosoResponse;
 import com.example.ecommerce.Service.ServicioPagoImp;
-
+import com.example.ecommerce.Service.ServicioPedidoImp;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 
@@ -29,6 +30,8 @@ public class PaymentController {
     ServicioPagoImp servicioPagoImp;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    ServicioPedidoImp servicioPedidoImp;
 
     @PostMapping("/checkout/{pedidoId}")
     public ResponseEntity<String> createCheckout(@PathVariable Long pedidoId) throws StripeException {
@@ -46,7 +49,8 @@ public class PaymentController {
 
         servicioPagoImp.marcarComoPagado(pedidoIdReal);
 
-        rabbitTemplate.convertAndSend("cola.facturacion", pedidoIdReal);
+        PedidoDto pedidoDto = servicioPedidoImp.getPedido(pedidoIdReal);
+        rabbitTemplate.convertAndSend("cola.facturacion", pedidoDto);
 
         return ResponseEntity.ok(new PagoExitosoResponse(
                 "COMPLETADO",

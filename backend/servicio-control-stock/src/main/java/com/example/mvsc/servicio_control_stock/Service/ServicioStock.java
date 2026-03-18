@@ -9,5 +9,6 @@ public interface ServicioStock {
 
     StockDto crearStock(RequestStock requestStock);
     StockDto detalle(Long producto_id);
+    void descontarStock(Long producto_id , int cantidad);
     
 }

@@ -1,5 +1,6 @@
 package com.example.mvsc.servicio_control_stock.Config;
 
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,5 +11,10 @@ public class RabbitConfig {
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
+    }
+    @Bean
+    public Queue facturacionQueue() {
+        // "true" significa que la cola es durable (no se borra si se reinicia RabbitMQ)
+        return new Queue("cola.facturacion", true);
     }
 }

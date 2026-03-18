@@ -51,7 +51,7 @@ public class PaymentController {
 
         PedidoDto pedidoDto = servicioPedidoImp.getPedido(pedidoIdReal);
 
-        System.out.print(pedidoDto);
+        System.out.print("pedido " + pedidoDto);
         rabbitTemplate.convertAndSend("cola.facturacion", pedidoDto);
 
         return ResponseEntity.ok(new PagoExitosoResponse(

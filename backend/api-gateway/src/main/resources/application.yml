@@ -1,17 +1,12 @@
 server:
   port: 8080
- spring:
-   cloud:
-     gateway:     
-        routes:
-
-
+  
 spring:
   cloud:
     gateway:
       routes:
 
-        # Ruta para el Microservicio Principal
+
         - id: api-principal-route
           uri: http://api-principal:8001
           predicates:
@@ -23,13 +18,5 @@ spring:
           predicates:
             - Path=/stock/** ,/deposito/**
 
-        -  id: api-principal-route
-           uri: http://api-principal:8001
-           predicates:
-            - Path=/carritos/** , /categorias/** , /pedidos/**
-              ,/productos/**,/usuarios/** ,/api/payments/**
-        -  id: stock-service-route
-           uri: http://servidor-stock:8002
-           predicates:
-            - Path=/stock/** ,/deposito/**
+  
 

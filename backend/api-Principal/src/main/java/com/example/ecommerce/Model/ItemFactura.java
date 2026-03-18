@@ -30,6 +30,9 @@ public class ItemFactura {
     private int cantidad;
     @Column(name = "total_factura")
     private int total_factura;
+    @ManyToOne
+    @JoinColumn(name="factura_id")
+    private Factura factura;
 
     public ItemFactura(Producto producto, int precio, int cantidad) {
         this.producto = producto;

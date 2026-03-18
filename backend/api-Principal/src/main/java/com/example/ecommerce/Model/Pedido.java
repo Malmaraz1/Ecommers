@@ -31,8 +31,7 @@ public class Pedido {
   @ManyToOne
   @JoinColumn(name = "usuario_id")
   private Usuario comprador;
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "pedido_id")
+  @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ItemPedido> items_pedido = new ArrayList<>();
  
 

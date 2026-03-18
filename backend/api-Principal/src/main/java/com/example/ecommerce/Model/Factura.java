@@ -28,8 +28,7 @@ public class Factura {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "factura_id")
+  @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ItemFactura> itemFactura = new ArrayList<>();
   private String numeroFactura;
   @Column(name = "fecha_emision")

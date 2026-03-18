@@ -24,6 +24,9 @@ public class ItemPedido {
     @ManyToOne
     @JoinColumn(name = "producto_id")
     private Producto producto;
+    @ManyToOne
+    @JoinColumn(name = "pedido_id") 
+    private Pedido pedido;
 
     public int calcularTotal() {
         return this.cantidad * precioUnitario;

@@ -30,6 +30,7 @@ public class ItemCarrito {
     @ManyToOne
     @JoinColumn(name = "producto_id")
     private Producto producto;
+   
 
     public ItemCarrito(int cantidad, int precioUnitario, Producto producto) {
         this.cantidad = cantidad;

@@ -24,9 +24,12 @@ spring:
 # Configuración del Agregador de Swagger
 springdoc:
   swagger-ui:
+    # Esto hará que entres directamente con /swagger-ui.html
     path: /swagger-ui.html
+    # Importante para que no intente buscar archivos que no existen
+    use-root-path: true
     urls:
-      - name: API Principal
+      - name: "API Principal"
         url: /v3/api-docs
-      - name: Servicio Stock
+      - name: "Servicio Stock"
         url: /stock-docs

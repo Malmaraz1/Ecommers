@@ -52,6 +52,20 @@ Contamos con una suite de pruebas robusta para garantizar la integridad de la l�
 * **Edge Cases:** Foco crítico en validaciones de stock y procesamiento de pagos.
 
 ---
+## Arquitectura del Proyecto
+
+### Diagrama de Despliegue
+Muestra la infraestructura de microservicios usando Docker, la API Principal y el Microservicio de Stock.
+![Diagrama de Despliegue](./assets/diagramas/deploy.png)
+
+### Modelo de Datos (DER)
+Relación entre las tablas de MySQL (Principal) y PostgreSQL (Stock).
+![DER_Api_Principal](./assets/diagramas/der_ecommerce.jpg)
+![DER Servicio_stock](./assets/diagramas/der_stock.jpg)
+### Diagrama de Clases
+
+![Diagrama de Despliegue](./assets/diagramas/diagrama_de_clases_ecommerce.jpg)
+
 
 ## 📂 Guía de Instalación Rápida
 
@@ -64,6 +78,5 @@ cp .env.example .env
 ### 3️⃣ Levantar con Docker 🚀
 docker-compose up --build -d
 
-### 📞 Contacto & Portfolio
-https://matias-backend-portfolio.netlify.app/
+
 

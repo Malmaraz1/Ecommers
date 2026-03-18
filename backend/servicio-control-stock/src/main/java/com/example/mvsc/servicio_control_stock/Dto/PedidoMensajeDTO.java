@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 public class PedidoMensajeDTO {
     private Long pedidoId;
-    private List<ItemStockDTO> items;
+    private List<ItemPedidoDto> itemPedidoDto;
     private Long usuario_id;
     
 }

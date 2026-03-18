@@ -15,13 +15,15 @@ public class StockConsumer {
 
     @RabbitListener(queues = "cola.facturacion")
     public void recibirPedidoYRestarStock(PedidoMensajeDTO datos) {
-        System.out.println("📬 Mensaje recibido de RabbitMQ para el pedido: " + datos.getPedidoId());
-        
-   
-        datos.getItems().forEach(item -> {
-            servicioStock.descontarStock(item.getProductoId(), item.getCantidad());
-        });
-        
-        System.out.println("✅ Stock actualizado exitosamente.");
+        if (datos == null || datos.getItemPedidoDto() == null) {
+        System.err.println("❌ Error: Se recibió un mensaje vacío o sin items.");
+        return; 
+    }
+
+   System.out.println("📬 Mensaje recibido para el pedido: " + datos.getPedidoId());
+    
+    datos.getItemPedidoDto().forEach(item -> {
+        servicioStock.descontarStock(item.getProductoId(), item.getCantidad());
+    });
     }
 }

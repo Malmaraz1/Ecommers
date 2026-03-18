@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ItemStockDTO {
+public class ItemPedidoDto {
      private Long id;
     private int cantidad;
     private int precioUnitario;

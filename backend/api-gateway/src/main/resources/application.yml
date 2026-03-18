@@ -10,16 +10,13 @@ spring:
           predicates:
             # Agregamos v3/api-docs para que el Gateway pueda leer la definición de Swagger
             - Path=/login/**, /carritos/**, /categorias/**, /pedidos/**, /productos/**, /usuarios/**, /api/payments/**, /v3/api-docs/**
-          filters:
-            - StripPrefix=0 # CUIDADO: Si usas StripPrefix=1, le quitas la primera parte de la URL al microservicio.
+          
 
         - id: stock-service-route
           uri: http://localhost:8002
           predicates:
             - Path=/stock/**, /deposito/**, /stock-docs/**
-          filters:
-            # Ejemplo: si el micro espera /v3/api-docs pero tú lo llamas desde /stock-docs
-            - RewritePath=/stock-docs/(?<segment>.*), /v3/api-docs/$\{segment}
+          
 
 # Configuración del Agregador de Swagger
 springdoc:

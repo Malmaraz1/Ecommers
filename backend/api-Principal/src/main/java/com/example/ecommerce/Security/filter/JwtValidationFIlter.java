@@ -78,13 +78,5 @@ public class JwtValidationFIlter extends BasicAuthenticationFilter {
             response.setContentType(CONTENT_TYPE);
         }
     }
-    @Override
-protected boolean shouldNotFilter(HttpServletRequest request) {
-   String path = request.getServletPath();
-    // Esto permite que el Gateway lea la documentación sin pedirle Token
-    return path.startsWith("/v3/api-docs") || 
-           path.startsWith("/swagger-ui") || 
-           path.startsWith("/swagger-resources");
-}
 
 }

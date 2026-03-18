@@ -10,6 +10,7 @@ public class ItemPedidoDto {
     private int cantidad;
     private int precioUnitario;
     private Long productoId;
+    private Long pedido_id;
 }
     
 

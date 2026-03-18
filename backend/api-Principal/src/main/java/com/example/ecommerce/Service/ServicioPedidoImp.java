@@ -37,6 +37,7 @@ public class ServicioPedidoImp implements ServicioPedido {
             dto.setProducto(item.getProducto());
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
+            dto.setPedido(pedido);
             
             
             return dto;
@@ -55,6 +56,8 @@ public class ServicioPedidoImp implements ServicioPedido {
             dto.setProductoId(item.getProducto().getId());
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
+            dto.setPedido_id(item.getPedido().getId());
+            
             return dto;
         }).toList();
 

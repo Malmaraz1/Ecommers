@@ -35,7 +35,7 @@ public class PaymentController {
 
     @PostMapping("/checkout/{pedidoId}")
     public ResponseEntity<String> createCheckout(@PathVariable Long pedidoId) throws StripeException {
-        // request trae el ID del producto, NO el precio
+        
         String urlDePago = servicioPagoImp.realizarPago(pedidoId);
         return ResponseEntity.ok(urlDePago);
     }

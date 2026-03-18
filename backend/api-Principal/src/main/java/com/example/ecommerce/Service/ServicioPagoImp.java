@@ -33,9 +33,7 @@ public class ServicioPagoImp implements ServicioPago {
 
         @Value("${app.frontend.url}")
         private String frontendUrl;
-        
 
-        
         @Override
         public String realizarPago(Long pedidoId) throws StripeException {
 
@@ -53,7 +51,7 @@ public class ServicioPagoImp implements ServicioPago {
                                                                                                 // producto
                                                         .setPriceData(
                                                                         SessionCreateParams.LineItem.PriceData.builder()
-                                                                                        .setCurrency("brl") 
+                                                                                        .setCurrency("brl")
                                                                                         .setUnitAmount(Math.round(item
                                                                                                         .getProducto()
                                                                                                         .getPrecio()
@@ -69,6 +67,9 @@ public class ServicioPagoImp implements ServicioPago {
                                                                                                                         .build())
                                                                                         .build())
                                                         .build());
+                }
+                if (lineItems.isEmpty()) {
+                        throw new RuntimeException("Error: El pedido " + pedidoId + " no tiene productos asociados.");
                 }
 
                 SessionCreateParams params = SessionCreateParams.builder()

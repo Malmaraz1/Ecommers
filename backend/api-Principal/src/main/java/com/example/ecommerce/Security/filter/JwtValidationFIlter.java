@@ -80,9 +80,11 @@ public class JwtValidationFIlter extends BasicAuthenticationFilter {
     }
     @Override
 protected boolean shouldNotFilter(HttpServletRequest request) {
-    String path = request.getServletPath();
-    // Si la ruta empieza con v3/api-docs o swagger, este filtro no se ejecuta
-    return path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui");
+   String path = request.getServletPath();
+    // Esto permite que el Gateway lea la documentación sin pedirle Token
+    return path.startsWith("/v3/api-docs") || 
+           path.startsWith("/swagger-ui") || 
+           path.startsWith("/swagger-resources");
 }
 
 }

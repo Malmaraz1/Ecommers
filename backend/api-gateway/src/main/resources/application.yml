@@ -3,7 +3,8 @@
  spring:
    cloud:
      gateway:
-       routes:
+       webflux:      
+        routes:
 
 
         -  id: api-principal-route

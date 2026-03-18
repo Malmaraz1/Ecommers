@@ -9,24 +9,12 @@ spring:
           uri: http://localhost:8001
           predicates:
             # Agregamos v3/api-docs para que el Gateway pueda leer la definición de Swagger
-            - Path=/login/**, /carritos/**, /categorias/**, /pedidos/**, /productos/**, /usuarios/**, /api/payments/**, /v3/api-docs/**
+            - Path=/login/**, /carritos/**, /categorias/**, /pedidos/**, /productos/**, /usuarios/**, /api/payments/**
           
 
         - id: stock-service-route
           uri: http://localhost:8002
           predicates:
-            - Path=/stock/**, /deposito/**, /stock-docs/**
+            - Path=/stock/**, /deposito/**
           
 
-# Configuración del Agregador de Swagger
-springdoc:
-  swagger-ui:
-    # Esto hará que entres directamente con /swagger-ui.html
-    path: /swagger-ui.html
-    # Importante para que no intente buscar archivos que no existen
-    use-root-path: true
-    urls:
-      - name: "API Principal"
-        url: /v3/api-docs
-      - name: "Servicio Stock"
-        url: /stock-docs

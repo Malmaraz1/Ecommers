@@ -58,7 +58,7 @@ services:
       - mysql8
       - servidor-stock
       - rabbitmq
-      - redis
+      
     restart: always
     environment:
       - JAVA_OPTS=-Xmx256m -Xms128m

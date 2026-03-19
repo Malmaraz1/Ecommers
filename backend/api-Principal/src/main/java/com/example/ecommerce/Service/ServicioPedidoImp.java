@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.ecommerce.Dto.ItemPedidoDto;
 import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Model.Carrito;
+import com.example.ecommerce.Model.EstadoPedido;
 import com.example.ecommerce.Model.ItemPedido;
 import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Repository.RepositorioCarrito;
@@ -45,6 +46,7 @@ public class ServicioPedidoImp implements ServicioPedido {
 
         pedido.setComprador(carrito.getComprador());
         pedido.setItems_pedido(itemDtos);
+        pedido.setEstadoPedido(EstadoPedido.PENDIENTE);
 
         Pedido pedido2 = repositorioPedido.save(pedido);
         

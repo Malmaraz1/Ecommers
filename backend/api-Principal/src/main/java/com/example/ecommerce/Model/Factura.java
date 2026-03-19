@@ -44,7 +44,7 @@ public class Factura {
   @JoinColumn(name = "factura_id")
   private Pedido pedido;
 
-  public Factura(Pedido pedido
+  public Factura crearFactura(Pedido pedido
       ) {
     this.itemFactura = pedido.getItems_pedido().stream()
         .map(i -> new ItemFactura(i.getProducto(), i.getPrecioUnitario(), i.getCantidad())).toList();
@@ -53,7 +53,7 @@ public class Factura {
     this.comprador = pedido.getComprador();
     this.total_factura = pedido.getItems_pedido().
     stream().mapToInt(i -> i.getCantidad() * i.getPrecioUnitario()).sum();
-
+     return this;
   }
 
 }

@@ -3,7 +3,7 @@ package com.example.ecommerce.Controllers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.ecommerce.Controller.ControllerCarrito;
 import com.example.ecommerce.Dto.CarritoDto;
 import com.example.ecommerce.Dto.Request.CarritoRequestDto;
-import com.example.ecommerce.Model.Usuario;
+
 import com.example.ecommerce.Service.ServicioCarrritoImp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

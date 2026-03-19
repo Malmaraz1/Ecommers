@@ -7,16 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.example.ecommerce.Dto.PagoDto;
-import com.example.ecommerce.Model.ItemCarrito;
+
 import com.example.ecommerce.Model.ItemPedido;
 import com.example.ecommerce.Model.Pago;
 import com.example.ecommerce.Model.Pedido;
+
 import com.example.ecommerce.Repository.RepositorioPago;
 import com.example.ecommerce.Repository.RepositorioPedido;
 import com.example.ecommerce.Service.ServiceImp.ServicioPago;
 import com.example.ecommerce.exceptions.NotFoundException;
-import com.stripe.Stripe;
+
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -30,6 +30,8 @@ public class ServicioPagoImp implements ServicioPago {
         ServidorConversorDeMonedasImp servidorConversorDeMonedasImp;
         @Autowired
         RepositorioPago repositorioPago;
+        @Autowired
+        ServicioFactura servicioFactura;
 
         @Value("${app.frontend.url}")
         private String frontendUrl;
@@ -101,7 +103,9 @@ public class ServicioPagoImp implements ServicioPago {
 
                 repositorioPago.save(pago);
 
-                 
+                servicioFactura.guardarFactura(pedido);
+
+                repositorioPedido.deleteById(pedidoIdReal);
 
         }
 

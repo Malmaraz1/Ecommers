@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.mvsc.servicio_control_stock.Dto.PedidoMensajeDTO;
 import com.example.mvsc.servicio_control_stock.Service.ServicioStock;
-import com.example.mvsc.servicio_control_stock.ServiceImp.ServicioStockImp;
+
 
 @Component
 public class StockConsumer {

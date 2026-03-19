@@ -1,16 +1,18 @@
 version: "3.9"
+
 services:
+  # --- INFRAESTRUCTURA ---
   mysql8:
-     image: mysql:8
-     ports:
+    image: mysql:8
+    ports:
       - "3307:3306"
-     environment:
+    environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
-     volumes:
+    volumes:
       - data-mysql:/var/lib/mysql
-     restart: always
-     networks:
+    restart: always
+    networks:
       - spring
 
   postgres14:
@@ -27,19 +29,31 @@ services:
       - spring
 
   rabbitmq:
-      image: rabbitmq:3-management
-      container_name: rabbitmq-ecommerce
-      ports:
-      - "5672:5672"   # Puerto de comunicación AMQP
-      - "15672:15672" # Interfaz de Administración Web
-      environment:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-ecommerce
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit vm_memory_high_watermark 0.6
-      networks:
+    networks:
       - spring
-      restart: always  
+    restart: always  
 
+  redis: # Agregado para tu carrito pro
+    image: redis:7-alpine
+    container_name: redis-cache
+    restart: always
+    networks:
+      - spring
+    deploy:
+      resources:
+        limits:
+          memory: 100M # Redis es muy liviano
+
+  # --- MICROSERVICIOS ---
   api-principal:
     build:
       context: ./api-Principal
@@ -53,8 +67,17 @@ services:
       - mysql8
       - servidor-stock
       - rabbitmq
+      - redis
     restart: always
-
+    environment:
+      - JAVA_OPTS=-Xmx256m -Xms128m
+    # EL DEPLOY VA AQUÍ DENTRO
+    deploy:
+      resources:
+        limits:
+          memory: 350M
+        reservations:
+          memory: 128M
 
   servidor-stock:
     build:
@@ -70,18 +93,20 @@ services:
       - postgres14
       - rabbitmq
     restart: always
-  api-gateway:
-    build: ./api-gateway
-    ports:
-      - "8080:8080"
-    networks:
-      - spring
-    depends_on:
-      - api-principal
-      - servidor-stock
+    environment:
+      - JAVA_OPTS=-Xmx256m -Xms128m
+    # Y AQUÍ TAMBIÉN
+    deploy:
+      resources:
+        limits:
+          memory: 350M
+        reservations:
+          memory: 128M
+
 volumes:
   data-mysql:    
   data-postgres: 
 
 networks:
   spring:
+

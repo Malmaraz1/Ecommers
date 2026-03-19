@@ -45,15 +45,29 @@ public class Factura {
   private Pedido pedido;
 
   public Factura crearFactura(Pedido pedido) {
-    this.itemFactura = pedido.getItems_pedido().stream()
-        .map(i -> new ItemFactura(i.getProducto(), i.getPrecioUnitario(), i.getCantidad())).toList();
+    // 1. Limpiamos la lista por las dudas
+    this.itemFactura = new ArrayList<>();
+
+    // 2. Mapeamos y seteamos la relación bidireccional
+    pedido.getItems_pedido().forEach(i -> {
+      ItemFactura nuevoItem = new ItemFactura();
+      nuevoItem.setProducto(i.getProducto());
+      nuevoItem.setPrecio(i.getPrecioUnitario());
+      nuevoItem.setCantidad(i.getCantidad());
+      nuevoItem.setTotal_factura(i.getCantidad() * i.getPrecioUnitario());
+      nuevoItem.setFactura(this);
+      this.itemFactura.add(nuevoItem);
+    });
+
     this.numeroFactura = GeneradorCodigo.generar();
     this.fechaEmision = LocalDate.now();
     this.comprador = pedido.getComprador();
-    this.total_factura = pedido.getItems_pedido().stream().mapToInt(i -> i.getCantidad() * i.getPrecioUnitario()).sum();
+    this.total_factura = pedido.getItems_pedido().stream()
+        .mapToInt(i -> i.getCantidad() * i.getPrecioUnitario()).sum();
     this.pedido = pedido;
-    return this;
 
+   
+    return this;
   }
 
 }

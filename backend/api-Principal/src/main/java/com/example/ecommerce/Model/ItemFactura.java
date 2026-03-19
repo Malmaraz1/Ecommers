@@ -34,10 +34,11 @@ public class ItemFactura {
     @JoinColumn(name="factura_id")
     private Factura factura;
 
-    public ItemFactura(Producto producto, int precio, int cantidad) {
+    public ItemFactura(Producto producto, int precio, int cantidad , Factura factura) {
         this.producto = producto;
         this.precio = precio;
         this.cantidad = cantidad;
+        this.factura = factura;
     }
 
    

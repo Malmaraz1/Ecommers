@@ -47,7 +47,8 @@ public class ServicioPedidoImp implements ServicioPedido {
         pedido.setItems_pedido(itemDtos);
 
         Pedido pedido2 = repositorioPedido.save(pedido);
-
+        
+        repositorioCarrito.deleteById(carritoId);
         PedidoDto pedidoDto = new PedidoDto();
 
         List<ItemPedidoDto> itemDto = pedido2.getItems_pedido().stream().map(item -> {

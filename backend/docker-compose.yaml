@@ -42,16 +42,7 @@ services:
       - spring
     restart: always  
 
-  redis: # Agregado para tu carrito pro
-    image: redis:7-alpine
-    container_name: redis-cache
-    restart: always
-    networks:
-      - spring
-    deploy:
-      resources:
-        limits:
-          memory: 100M # Redis es muy liviano
+  
 
   # --- MICROSERVICIOS ---
   api-principal:

@@ -1,13 +1,14 @@
 package com.example.ecommerce.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Dto.FacturaDto;
 import com.example.ecommerce.Model.Factura;
 import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Repository.RepositorioFactura;
-
+@Service
 public class ServicioFactura {
 
     @Autowired

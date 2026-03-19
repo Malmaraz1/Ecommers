@@ -41,19 +41,19 @@ public class Factura {
   @Column(name = "total_factura")
   private int total_factura;
   @ManyToOne
-  @JoinColumn(name = "factura_id")
+  @JoinColumn(name = "pedido_id")
   private Pedido pedido;
 
-  public Factura crearFactura(Pedido pedido
-      ) {
+  public Factura crearFactura(Pedido pedido) {
     this.itemFactura = pedido.getItems_pedido().stream()
         .map(i -> new ItemFactura(i.getProducto(), i.getPrecioUnitario(), i.getCantidad())).toList();
     this.numeroFactura = GeneradorCodigo.generar();
     this.fechaEmision = LocalDate.now();
     this.comprador = pedido.getComprador();
-    this.total_factura = pedido.getItems_pedido().
-    stream().mapToInt(i -> i.getCantidad() * i.getPrecioUnitario()).sum();
-     return this;
+    this.total_factura = pedido.getItems_pedido().stream().mapToInt(i -> i.getCantidad() * i.getPrecioUnitario()).sum();
+    this.pedido = pedido;
+    return this;
+
   }
 
 }

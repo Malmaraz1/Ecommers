@@ -7,5 +7,6 @@ public interface ServicioPago {
     
    String realizarPago(Long pedidoId) throws StripeException;
    void cancelarPago(Pedido pedido);
+   void marcarComoPagado(Long pedidoIdReal);
    
 }

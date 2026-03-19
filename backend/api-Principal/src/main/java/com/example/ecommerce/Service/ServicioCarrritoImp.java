@@ -96,6 +96,7 @@ public class ServicioCarrritoImp implements ServicioCarrito {
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
             dto.setProductoId(item.getProducto().getId());
+        
             return dto;
         }).toList();
 

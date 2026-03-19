@@ -17,26 +17,31 @@ import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Record.PagoExitosoResponse;
 import com.example.ecommerce.Service.ServicioPagoImp;
 import com.example.ecommerce.Service.ServicioPedidoImp;
+import com.example.ecommerce.Service.ServiceImp.ServicioCarrito;
+import com.example.ecommerce.Service.ServiceImp.ServicioPago;
+import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 
-import lombok.extern.slf4j.Slf4j;
+
 
 @RestController
 
 @RequestMapping("/api/payments")
 public class PaymentController {
     @Autowired
-    ServicioPagoImp servicioPagoImp;
+    ServicioPago servicioPago;
     @Autowired
     private RabbitTemplate rabbitTemplate;
     @Autowired
-    ServicioPedidoImp servicioPedidoImp;
+    ServicioPedido servicioPedido;
+    @Autowired
+    ServicioCarrito servicioCarrito;
 
     @PostMapping("/checkout/{pedidoId}")
     public ResponseEntity<String> createCheckout(@PathVariable Long pedidoId) throws StripeException {
         
-        String urlDePago = servicioPagoImp.realizarPago(pedidoId);
+        String urlDePago = servicioPago.realizarPago(pedidoId);
         return ResponseEntity.ok(urlDePago);
     }
 
@@ -47,12 +52,14 @@ public class PaymentController {
         Session session = Session.retrieve(sessionId);
         Long pedidoIdReal = Long.parseLong(session.getMetadata().get("pedido_id"));
 
-        servicioPagoImp.marcarComoPagado(pedidoIdReal);
+        servicioPago.marcarComoPagado(pedidoIdReal);
 
-        PedidoDto pedidoDto = servicioPedidoImp.getPedido(pedidoIdReal);
+        PedidoDto pedidoDto = servicioPedido.getPedido(pedidoIdReal);
 
         System.out.print("pedido " + pedidoDto);
         rabbitTemplate.convertAndSend("cola.facturacion", pedidoDto);
+
+
 
         return ResponseEntity.ok(new PagoExitosoResponse(
                 "COMPLETADO",
@@ -60,4 +67,6 @@ public class PaymentController {
                 pedidoIdReal,
                 LocalDateTime.now().toString()));
     }
+
+    
 }

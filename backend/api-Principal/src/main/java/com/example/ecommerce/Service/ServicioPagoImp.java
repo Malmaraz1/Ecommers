@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-
+import com.example.ecommerce.Model.EstadoPedido;
 import com.example.ecommerce.Model.ItemPedido;
 import com.example.ecommerce.Model.Pago;
 import com.example.ecommerce.Model.Pedido;
@@ -100,12 +100,14 @@ public class ServicioPagoImp implements ServicioPago {
 
                 Pago pago = new Pago();
                 pago.setPedido(pedido);
+                
 
                 repositorioPago.save(pago);
-
+                pedido.setEstadoPedido(EstadoPedido.PAGADO);
+                repositorioPedido.save(pedido);
                 servicioFactura.guardarFactura(pedido);
 
-                repositorioPedido.deleteById(pedidoIdReal);
+                
 
         }
 

@@ -1,7 +1,8 @@
 package com.example.ecommerce.Model;
 
-public interface EstadoPedido {
- public void gestionarPago();
- 
+public enum EstadoPedido {
+
+    PENDIENTE, PAGADO, CANCELADO, ARCHIVADO
+
 
 }

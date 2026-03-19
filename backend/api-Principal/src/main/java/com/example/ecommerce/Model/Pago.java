@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity(name = "pago")
 @Getter
 @Setter
-public class Pago implements EstadoPedido {
+public class Pago {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -24,13 +24,8 @@ public class Pago implements EstadoPedido {
   @JoinColumn(name = "pedido_id")
   private Pedido pedido;
 
-  public void cambioEstado() {
 
-  }
 
-  @Override
-  public void gestionarPago() {
-
-  }
+  
 
 }

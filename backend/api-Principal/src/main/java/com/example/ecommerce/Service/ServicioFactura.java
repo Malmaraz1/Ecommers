@@ -8,6 +8,7 @@ import com.example.ecommerce.Dto.FacturaDto;
 import com.example.ecommerce.Model.Factura;
 import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Repository.RepositorioFactura;
+import com.example.ecommerce.exceptions.NotFoundException;
 @Service
 public class ServicioFactura {
 
@@ -23,14 +24,17 @@ public class ServicioFactura {
     }
 
     @Transactional(readOnly = true)
-    public FacturaDto facturaActual(Long facturaId) {
+    public FacturaDto facturaActual(Long pedidoId) {
 
-        Factura factura = repositorioFactura.findById(facturaId).orElseThrow();
+        Factura factura = repositorioFactura.findByPedidoId(pedidoId);
+         if(factura == null){
+            new NotFoundException("n o se encontro factura para este pedido con id "+ pedidoId);
+         }
 
         FacturaDto facturaDto = new FacturaDto();
         facturaDto.setComprador(factura.getComprador());
         facturaDto.setFechaEmision(factura.getFechaEmision());
-        facturaDto.setId(facturaId);
+        facturaDto.setId(factura.getId());
         facturaDto.setNumeroFactura(factura.getNumeroFactura());
         facturaDto.setPedido(factura.getPedido());
         facturaDto.setTotal_factura(factura.getTotal_factura());

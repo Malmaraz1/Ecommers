@@ -7,5 +7,7 @@ import com.example.ecommerce.Model.Factura;
 
 public interface RepositorioFactura extends JpaRepository<Factura,Long> {
 
+    Factura findByPedidoId(Long pedidoId);
+
         
 }

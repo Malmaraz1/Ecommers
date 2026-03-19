@@ -22,10 +22,10 @@ public class ControllerFactura {
     @Autowired
     ServicioFactura servicioFactura;
 
-    @GetMapping("{facturaId}")
-    public ResponseEntity<FacturaDto> usuarioActual(@PathVariable Long facturaId) {
+    @GetMapping("{pedidoId}")
+    public ResponseEntity<FacturaDto> usuarioActual(@PathVariable Long pedidoId) {
 
-        FacturaDto facturaDto = servicioFactura.facturaActual(facturaId);
+        FacturaDto facturaDto = servicioFactura.facturaActual(pedidoId);
 
         return ResponseEntity.ok(facturaDto);
 

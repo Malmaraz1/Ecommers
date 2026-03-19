@@ -73,7 +73,9 @@ public class ServicioStockImp implements ServicioStock {
         @Override
         public void descontarStock(Long producto_id, int cantidad) {
 
-                Stock stock = repositorioStock.findByProductoId(producto_id).orElseThrow();
+                Stock stock = repositorioStock.findByProductoId(producto_id).orElseThrow(
+                        () -> new NotFoundException("No se encontro el stock para este producto")
+                );
 
                 stock.setCantidad(stock.getCantidad() - cantidad);
 

@@ -50,12 +50,12 @@ public class ServicioFactura {
         }).toList();
 
         FacturaDto facturaDto = new FacturaDto();
-        facturaDto.setComprador(factura.getComprador());
+        facturaDto.setComprador(factura.getComprador().getId());
         facturaDto.setFechaEmision(factura.getFechaEmision());
         facturaDto.setItemsFactura(itemDto);
         facturaDto.setId(factura.getId());
         facturaDto.setNumeroFactura(factura.getNumeroFactura());
-        facturaDto.setPedido(factura.getPedido());
+        facturaDto.setPedido(factura.getPedido().getId());
         facturaDto.setTotal_factura(factura.getTotal_factura());
         return facturaDto;
 

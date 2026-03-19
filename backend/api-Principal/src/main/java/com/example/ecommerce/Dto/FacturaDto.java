@@ -21,12 +21,12 @@ public class FacturaDto {
 
     private LocalDate fechaEmision;
 
-    private Usuario comprador;
+    private Long comprador;
     
     private List<ItemFacturaDto> itemsFactura = new ArrayList<>();
 
     private int total_factura;
 
-    private Pedido pedido;
+    private Long pedido;
 
 }

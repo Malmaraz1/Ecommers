@@ -15,6 +15,7 @@ import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Repository.RepositorioPago;
 import com.example.ecommerce.Repository.RepositorioPedido;
 import com.example.ecommerce.Service.ServiceImp.ServicioPago;
+import com.example.ecommerce.exceptions.ConflictException;
 import com.example.ecommerce.exceptions.NotFoundException;
 
 import com.stripe.exception.StripeException;
@@ -97,6 +98,10 @@ public class ServicioPagoImp implements ServicioPago {
 
                 Pedido pedido = repositorioPedido.findById(pedidoIdReal).orElseThrow(
                                 () -> new NotFoundException("no se encontro el pedido con id  " + pedidoIdReal));
+                 
+                                if(pedido.getEstadoPedido().equals(EstadoPedido.PAGADO)){
+                                        throw new ConflictException(" El pedido ya fue pagado");
+                                }
 
                 Pago pago = new Pago();
                 pago.setPedido(pedido);

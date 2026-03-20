@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.example.ecommerce.Dto.ItemPedidoDto;
 import com.example.ecommerce.Dto.PedidoDto;
 import com.example.ecommerce.Model.Carrito;
@@ -15,6 +14,7 @@ import com.example.ecommerce.Model.ItemPedido;
 import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Repository.RepositorioCarrito;
 import com.example.ecommerce.Service.ServiceImp.ServicioPedido;
+import com.example.ecommerce.exceptions.NotFoundException;
 
 @Service
 public class ServicioPedidoImp implements ServicioPedido {
@@ -30,7 +30,8 @@ public class ServicioPedidoImp implements ServicioPedido {
     @Override
     public PedidoDto generarPedido(Long carritoId) {
 
-        Carrito carrito = repositorioCarrito.findById(carritoId).orElseThrow();
+        Carrito carrito = repositorioCarrito.findById(carritoId).orElseThrow(
+                () -> new NotFoundException("No se encontro el carrito con id  " + carritoId));
 
         Pedido pedido = new Pedido();
         List<ItemPedido> itemDtos = carrito.getItemsCarrito().stream().map(item -> {
@@ -39,8 +40,7 @@ public class ServicioPedidoImp implements ServicioPedido {
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
             dto.setPedido(pedido);
-            
-            
+
             return dto;
         }).toList();
 
@@ -49,7 +49,7 @@ public class ServicioPedidoImp implements ServicioPedido {
         pedido.setEstadoPedido(EstadoPedido.PENDIENTE);
 
         Pedido pedido2 = repositorioPedido.save(pedido);
-        
+
         repositorioCarrito.deleteById(carritoId);
         PedidoDto pedidoDto = new PedidoDto();
 
@@ -60,7 +60,7 @@ public class ServicioPedidoImp implements ServicioPedido {
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
             dto.setPedido_id(item.getPedido().getId());
-            
+
             return dto;
         }).toList();
 
@@ -73,8 +73,10 @@ public class ServicioPedidoImp implements ServicioPedido {
     }
 
     public PedidoDto getPedido(Long pedido_id) {
-        
-       Pedido pedido = repositorioPedido.findById(pedido_id).orElseThrow();
+
+        Pedido pedido = repositorioPedido.findById(pedido_id).orElseThrow(
+            () -> new NotFoundException("No se encontro el pedido con id " + pedido_id)
+        );
 
         PedidoDto pedidoDto = new PedidoDto();
 
@@ -87,14 +89,11 @@ public class ServicioPedidoImp implements ServicioPedido {
             return dto;
         }).toList();
 
-
         pedidoDto.setId(pedido_id);
         pedidoDto.setItemPedidoDto(itemDto);
         pedidoDto.setUsuario_id(pedido.getComprador().getId());
         return pedidoDto;
 
     }
-
-   
 
 }

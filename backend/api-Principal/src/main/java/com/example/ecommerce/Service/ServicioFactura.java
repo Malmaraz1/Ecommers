@@ -33,7 +33,7 @@ public class ServicioFactura {
 
         Factura factura = repositorioFactura.findByPedidoId(pedidoId);
          if(factura == null){
-            new NotFoundException("n o se encontro factura para este pedido con id "+ pedidoId);
+            new NotFoundException("no se encontro factura para este pedido con id "+ pedidoId);
          }
           
          

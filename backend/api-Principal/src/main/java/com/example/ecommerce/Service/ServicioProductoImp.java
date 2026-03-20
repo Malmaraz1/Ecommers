@@ -21,6 +21,7 @@ import com.example.ecommerce.Repository.RepositorioProducto;
 import com.example.ecommerce.Service.ServiceImp.ServicioProducto;
 import com.example.ecommerce.clients.StockClientRest;
 import com.example.ecommerce.exceptions.AlreadyExistsException;
+import com.example.ecommerce.exceptions.ConflictException;
 import com.example.ecommerce.exceptions.NotFoundException;
 
 import jakarta.persistence.criteria.Join;
@@ -84,6 +85,9 @@ public class ServicioProductoImp implements ServicioProducto {
         producto.setMarca(productoDto.getMarca());
 
         Producto productoDb = repositorioProducto.save(producto);
+        if(productoDb == null){
+            throw new ConflictException("no se puedo guardar el producto");
+        }
 
         StockDto stockDto = new StockDto();
         stockDto.setProducto_id(productoDb.getId());

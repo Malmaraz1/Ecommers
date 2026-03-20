@@ -23,6 +23,7 @@ public class StockConsumer {
    System.out.println("📬 Mensaje recibido para el pedido: " + datos.getId());
     
     datos.getItemPedidoDto().forEach(item -> {
+        System.out.println("DEBUG: Procesando Producto ID: " + item.getProductoId() + " - Cantidad: " + item.getCantidad());
         servicioStock.descontarStock(item.getProductoId(), item.getCantidad());
     });
     }

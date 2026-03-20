@@ -81,7 +81,7 @@ public class ServicioPedidoImp implements ServicioPedido {
         List<ItemPedidoDto> itemDto = pedido.getItems_pedido().stream().map(item -> {
             ItemPedidoDto dto = new ItemPedidoDto();
             dto.setId(item.getId());
-            dto.setProductoId(item.getId());
+            dto.setProductoId(item.getProducto().getId());
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
             return dto;

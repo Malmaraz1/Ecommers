@@ -75,8 +75,7 @@ public class ServicioPedidoImp implements ServicioPedido {
     public PedidoDto getPedido(Long pedido_id) {
 
         Pedido pedido = repositorioPedido.findById(pedido_id).orElseThrow(
-            () -> new NotFoundException("No se encontro el pedido con id " + pedido_id)
-        );
+                () -> new NotFoundException("No se encontro el pedido con id " + pedido_id));
 
         PedidoDto pedidoDto = new PedidoDto();
 

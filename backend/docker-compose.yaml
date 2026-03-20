@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  # --- INFRAESTRUCTURA ---
+
   mysql8:
     image: mysql:8
     ports:
@@ -35,8 +35,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_USER=${RABIT_USER} 
+      - RABBITMQ_DEFAULT_PASS=${RABIT_PASSWORD}
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit vm_memory_high_watermark 0.6
     networks:
       - spring
@@ -44,7 +44,7 @@ services:
 
   
 
-  # --- MICROSERVICIOS ---
+
   api-principal:
     build:
       context: ./api-Principal
@@ -62,7 +62,7 @@ services:
     restart: always
     environment:
       - JAVA_OPTS=-Xmx256m -Xms128m
-    # EL DEPLOY VA AQUÍ DENTRO
+
     deploy:
       resources:
         limits:
@@ -86,7 +86,7 @@ services:
     restart: always
     environment:
       - JAVA_OPTS=-Xmx256m -Xms128m
-    # Y AQUÍ TAMBIÉN
+  
     deploy:
       resources:
         limits:

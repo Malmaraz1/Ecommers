@@ -35,6 +35,7 @@ public class SpringSecurityConfig {
         return http.authorizeHttpRequests((authz) -> authz
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/usuarios/registro").permitAll()
+                .requestMatchers("/api/payments/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/productos/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/payments/success").permitAll()
                 .requestMatchers(HttpMethod.POST, "/productos").hasRole("ADMIN")

@@ -85,7 +85,7 @@ public class ServicioProductoImp implements ServicioProducto {
         producto.setMarca(productoDto.getMarca());
 
         Producto productoDb = repositorioProducto.save(producto);
-        if(productoDb == null){
+        if (productoDb == null) {
             throw new ConflictException("no se puedo guardar el producto");
         }
 

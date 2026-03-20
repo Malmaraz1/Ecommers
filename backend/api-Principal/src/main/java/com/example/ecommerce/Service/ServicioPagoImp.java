@@ -43,6 +43,10 @@ public class ServicioPagoImp implements ServicioPago {
                 Pedido pedidoDb = repositorioPedido.findById(pedidoId).orElseThrow(
                                 () -> new NotFoundException("No se encontro el pedido con id " + pedidoId));
 
+                                if(pedidoDb.getEstadoPedido().equals(EstadoPedido.PAGADO)){
+                                        throw new ConflictException(" El pedido ya fue pagado");
+                                }
+
                 List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
 
                 for (ItemPedido item : pedidoDb.getItems_pedido()) {
@@ -99,9 +103,7 @@ public class ServicioPagoImp implements ServicioPago {
                 Pedido pedido = repositorioPedido.findById(pedidoIdReal).orElseThrow(
                                 () -> new NotFoundException("no se encontro el pedido con id  " + pedidoIdReal));
                  
-                                if(pedido.getEstadoPedido().equals(EstadoPedido.PAGADO)){
-                                        throw new ConflictException(" El pedido ya fue pagado");
-                                }
+                                
 
                 Pago pago = new Pago();
                 pago.setPedido(pedido);

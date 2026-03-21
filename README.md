@@ -14,7 +14,6 @@ El ecosistema se basa en una arquitectura de **Microservicios** para garantizar 
 
 * **Main API (MySQL):** 🧠 Orquestador de ventas, gestión de usuarios y procesamiento de órdenes.
 * **Stock Service (PostgreSQL):** 📦 Especializado en el control de inventario con alta integridad referencial.
-* **API Gateway:** 🚪 Punto de entrada único (Puerto 8080) que centraliza el tráfico, seguridad y ruteo.
 * **Comunicación Sincrónica:** Implementada con **OpenFeign** para validaciones de stock en tiempo real.
 * **Mensajería Asíncrona:** Uso de **RabbitMQ** para desacoplar procesos críticos y garantizar la consistencia eventual.
 
@@ -26,8 +25,7 @@ Explorá y testeá los endpoints directamente a través de las interfaces de **S
 | Servicio | Documentación Interactiva |
 | :--- | :--- |
 | **Servicio Principal** | [🔗 Ver Docs Principal](http://68.211.161.210:8001/swagger-ui/index.html) |
-| **Servicio Stock** | [🔗 Ver Docs Stock](http://68.211.161.210:8002/swagger-ui/index.html) |
-| **Gateway (Consolidado)** | [🔗 Ver Docs Gateway](http://68.211.161.210:8080/swagger-ui/index.html) |
+| **Servicio Stock** | [🔗 Ver Docs Stock](http://68.211.161.210:8002/swagger-ui/index.html) | 
 
 ---
 

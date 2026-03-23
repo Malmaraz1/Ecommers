@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Dto.ItemPedidoDto;
 import com.example.ecommerce.Dto.PedidoDto;
@@ -28,6 +29,7 @@ public class ServicioPedidoImp implements ServicioPedido {
     }
 
     @Override
+    @Transactional
     public PedidoDto generarPedido(Long carritoId) {
 
         Carrito carrito = repositorioCarrito.findById(carritoId).orElseThrow(
@@ -71,7 +73,7 @@ public class ServicioPedidoImp implements ServicioPedido {
         return pedidoDto;
 
     }
-
+     @Transactional(readOnly = true)  
     public PedidoDto getPedido(Long pedido_id) {
 
         Pedido pedido = repositorioPedido.findById(pedido_id).orElseThrow(

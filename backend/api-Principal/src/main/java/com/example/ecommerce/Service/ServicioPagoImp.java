@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce.Model.EstadoPedido;
 import com.example.ecommerce.Model.ItemPedido;
@@ -38,6 +39,7 @@ public class ServicioPagoImp implements ServicioPago {
         private String frontendUrl;
 
         @Override
+       
         public String realizarPago(Long pedidoId) throws StripeException {
 
                 Pedido pedidoDb = repositorioPedido.findById(pedidoId).orElseThrow(
@@ -97,7 +99,7 @@ public class ServicioPagoImp implements ServicioPago {
                 // TODO Auto-generated method stub
                 throw new UnsupportedOperationException("Unimplemented method 'cancelarPago'");
         }
-
+        @Transactional  
         public void marcarComoPagado(Long pedidoIdReal) {
 
                 Pedido pedido = repositorioPedido.findById(pedidoIdReal).orElseThrow(

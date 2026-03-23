@@ -12,7 +12,7 @@ import com.example.ecommerce.Service.ServiceImp.ServicioConversorMonedas;
 @Service
 public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
 
-    private double exchangeRate = 0.0; // Valor por defecto
+    private double exchangeRate = 0.0;
 
     @Value("${api.fastforex.key}")
     private String apiKey;
@@ -22,7 +22,7 @@ public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
 
     // Helper para construir la URL dinámicamente
     private String getFullUrl() {
-        return "https://api.fastforex.io/fetch-one?from=ARS&to=BRL&api_key=" + apiKey;
+        return "https://economia.awesomeapi.com.br/json/last/ARS-BRL";
     }
 
     @Override
@@ -31,8 +31,9 @@ public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
         try {
             // Usamos el método para obtener la URL con la Key ya inyectada
             ExchangeResponse response = restTemplate.getForObject(getFullUrl(), ExchangeResponse.class);
-            if (response != null) {
-                this.exchangeRate = response.getRateFor("BRL");
+            if (response != null && response.datos() != null) {
+
+                this.exchangeRate = response.datos().bid();
                 System.out.println("Tasa ARS -> BRL actualizada: " + exchangeRate);
             }
         } catch (Exception e) {

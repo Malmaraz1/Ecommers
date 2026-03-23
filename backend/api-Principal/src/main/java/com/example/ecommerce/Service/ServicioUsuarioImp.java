@@ -1,6 +1,5 @@
 package com.example.ecommerce.Service;
 
-
 import java.util.HashSet;
 
 import java.util.Optional;
@@ -19,8 +18,6 @@ import com.example.ecommerce.Repository.RepositorioRol;
 import com.example.ecommerce.Repository.RepositorioUsuario;
 import com.example.ecommerce.Service.ServiceImp.ServicioUsuario;
 import com.example.ecommerce.exceptions.NotFoundException;
-
-
 
 @Service
 public class ServicioUsuarioImp implements ServicioUsuario {
@@ -75,6 +72,7 @@ public class ServicioUsuarioImp implements ServicioUsuario {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UsuarioDto usuarioActual(Long usuarioId) {
 
         Optional<Usuario> usuario = repositorioUsuario.findById(usuarioId);

@@ -3,6 +3,7 @@ package com.example.ecommerce.Repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.example.ecommerce.Dto.UsuarioDto;
 import com.example.ecommerce.Dto.Request.UsuarioRequestDto;
@@ -13,7 +14,9 @@ public interface RepositorioUsuario extends JpaRepository<Usuario,Long> {
     UsuarioDto save(UsuarioRequestDto usuario);
     boolean existsByNombre(String nombre);
     boolean existsByCorreo(String email);
+    @Query("SELECT u from Usuario u join fetch u.roles where usuario.nombre = :nombre ")
     Optional<Usuario> findByNombre(String nombre);
+
    
 
 

@@ -1,14 +1,8 @@
 package com.example.ecommerce.Record;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record ExchangeResponse(Map<String, Double> result) {
-
-    public Double getRateFor(String currency) {
-        if (result != null && result.containsKey(currency)) {
-            return result.get(currency);
-        }
-        return 0.0;
-    }
-
-}
+public record ExchangeResponse(
+                @JsonProperty("ARSBRL") 
+                ModenaDetalle datos
+) {}

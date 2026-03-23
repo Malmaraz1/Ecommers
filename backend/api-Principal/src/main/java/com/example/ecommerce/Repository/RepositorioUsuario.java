@@ -15,7 +15,7 @@ public interface RepositorioUsuario extends JpaRepository<Usuario,Long> {
     UsuarioDto save(UsuarioRequestDto usuario);
     boolean existsByNombre(String nombre);
     boolean existsByCorreo(String email);
-    @Query("SELECT u from Usuario u join fetch u.roles where usuario.nombre = :nombre ")
+    @Query("SELECT u from Usuario u join fetch u.roles where u.nombre = :nombre ")
     Optional<Usuario> findByNombre(@Param("nombre") String nombre);
 
    

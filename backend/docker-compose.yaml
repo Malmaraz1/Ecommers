@@ -1,4 +1,4 @@
-version: "3.9"
+
 
 services:
 
@@ -67,7 +67,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 350M
+          memory: 450M
         reservations:
           memory: 128M
 

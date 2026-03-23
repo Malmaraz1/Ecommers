@@ -2,6 +2,7 @@ package com.example.ecommerce.Model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +22,7 @@ public class ItemFactura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id")
     private Producto producto;
     @Column(name = "precio_congelado")
@@ -30,7 +31,7 @@ public class ItemFactura {
     private int cantidad;
     @Column(name = "total_factura")
     private int total_factura;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="factura_id")
     private Factura factura;
 

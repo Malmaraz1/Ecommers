@@ -8,6 +8,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ public class Pedido {
   private Long id;
   @Enumerated(EnumType.STRING)
   private EstadoPedido estadoPedido;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "usuario_id")
   private Usuario comprador;
   @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -9,6 +9,7 @@ import com.example.ecommerce.utils.GeneradorCodigo;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,14 +34,14 @@ public class Factura {
   private String numeroFactura;
   @Column(name = "fecha_emision")
   private LocalDate fechaEmision;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "usuario_id")
   private Usuario comprador;
   @Transient
   private MedioPago metodoPago;
   @Column(name = "total_factura")
   private int total_factura;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "pedido_id")
   private Pedido pedido;
 

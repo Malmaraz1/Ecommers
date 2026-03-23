@@ -1,6 +1,7 @@
 package com.example.ecommerce.Model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,7 +21,7 @@ public class Pago {
   private Long id;
   @Transient
   private MedioPago medioPago;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "pedido_id")
   private Pedido pedido;
 

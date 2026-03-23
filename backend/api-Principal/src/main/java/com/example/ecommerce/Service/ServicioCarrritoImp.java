@@ -3,6 +3,7 @@ package com.example.ecommerce.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import com.example.ecommerce.Dto.ItemCarritoDto;
 import com.example.ecommerce.Dto.StockDto;
 import com.example.ecommerce.Dto.Request.CarritoRequestDto;
 import com.example.ecommerce.Model.Carrito;
-
+import com.example.ecommerce.Model.Pedido;
 import com.example.ecommerce.Model.Usuario;
 import com.example.ecommerce.Repository.RepositorioCarrito;
 
@@ -83,7 +84,7 @@ public class ServicioCarrritoImp implements ServicioCarrito {
 
         StockDto stockDto = stockClientRest.detalle(idProducto);
 
-        if(stockDto.getCantidad() < cantidad){
+        if (stockDto.getCantidad() < cantidad) {
             throw new RuntimeException("no hay stock sufiente para este producto");
         }
 
@@ -95,7 +96,7 @@ public class ServicioCarrritoImp implements ServicioCarrito {
             dto.setCantidad(item.getCantidad());
             dto.setPrecioUnitario(item.getPrecioUnitario());
             dto.setProductoId(item.getProducto().getId());
-        
+
             return dto;
         }).toList();
 
@@ -107,8 +108,16 @@ public class ServicioCarrritoImp implements ServicioCarrito {
 
     }
 
-    
+    @Override
+    @Transactional
+    public void deleteById(Long carritoId) {
+        repositorioCarrito.deleteById(carritoId);
+    }
 
-    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Pedido> findById(Long carritoId) {
+       return repositorioCarrito.findById(carritoId).orElseThrow();
+    }
 
 }

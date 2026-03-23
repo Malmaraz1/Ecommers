@@ -14,8 +14,7 @@ public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
 
     private double exchangeRate = 0.0;
 
-    @Value("${api.fastforex.key}")
-    private String apiKey;
+    
 
     @Autowired
     private RestTemplate restTemplate;

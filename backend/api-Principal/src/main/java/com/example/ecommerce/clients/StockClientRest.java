@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.ecommerce.Dto.StockDto;
 
-@FeignClient(name = "servicio-control-stock", url = "${servidor.stock.url}")
+@FeignClient(name = "servicio-control-stock")
 public interface StockClientRest {
 
 

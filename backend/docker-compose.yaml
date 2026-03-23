@@ -71,12 +71,12 @@ services:
         reservations:
           memory: 128M
 
-  servidor-stock:
+  servicio-control-stock:
     build:
       context: ./servicio-control-stock
       dockerfile: Dockerfile
     ports:
-      - "8002:8002"
+      - "8002"
     env_file:
       - ./servicio-control-stock/.env
     networks:

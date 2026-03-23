@@ -1,4 +1,4 @@
-
+version: "3.9"
 
 services:
 
@@ -36,8 +36,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=${RABIT_USER} 
-      - RABBITMQ_DEFAULT_PASS=${RABIT_PASSWORD}
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USER} 
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PASSWORD}
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit vm_memory_high_watermark 0.6
     networks:
       - spring
@@ -57,7 +57,7 @@ services:
       - spring
     depends_on:
       - mysql8
-      - servicio-control-stock
+      - servidor-stock
       - rabbitmq
       
     restart: always
@@ -71,12 +71,12 @@ services:
         reservations:
           memory: 128M
 
-  servicio-control-stock:
+  servidor-stock:
     build:
       context: ./servicio-control-stock
       dockerfile: Dockerfile
     ports:
-      - "8002"
+      - "8002:8002"
     env_file:
       - ./servicio-control-stock/.env
     networks:
@@ -89,7 +89,6 @@ services:
       - JAVA_OPTS=-Xmx256m -Xms128m
   
     deploy:
-      replicas: 2
       resources:
         limits:
           memory: 350M

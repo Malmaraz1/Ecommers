@@ -116,8 +116,8 @@ public class ServicioCarrritoImp implements ServicioCarrito {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Pedido> findById(Long carritoId) {
-       return repositorioCarrito.findById(carritoId).orElseThrow();
+    public Optional<Carrito> findById(Long carritoId) {
+        return repositorioCarrito.findById(carritoId);
     }
 
 }

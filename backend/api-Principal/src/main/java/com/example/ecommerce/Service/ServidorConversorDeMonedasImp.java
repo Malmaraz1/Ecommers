@@ -20,16 +20,13 @@ public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
     private RestTemplate restTemplate;
 
     // Helper para construir la URL dinámicamente
-    private String getFullUrl() {
-        return "https://economia.awesomeapi.com.br/json/last/ARS-BRL";
-    }
 
     @Override
     @Scheduled(fixedRate = 3600000)
     public void updateExchangeRate() {
         try {
             // Usamos el método para obtener la URL con la Key ya inyectada
-            ExchangeResponse response = restTemplate.getForObject(getFullUrl(), ExchangeResponse.class);
+            ExchangeResponse response = restTemplate.getForObject("https://economia.awesomeapi.com.br/json/last/ARS-BRL", ExchangeResponse.class);
             if (response != null && response.datos() != null) {
 
                 this.exchangeRate = response.datos().bid();

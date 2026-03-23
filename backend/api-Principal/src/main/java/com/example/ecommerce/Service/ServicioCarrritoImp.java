@@ -37,8 +37,7 @@ public class ServicioCarrritoImp implements ServicioCarrito {
     @Transactional
     public CarritoDto crear(CarritoRequestDto carritoRequestDto) {
 
-        Usuario usuario = repositorioUsuario.findById(carritoRequestDto.getUsuario_id())
-                .orElseThrow(() -> new NotFoundException("No se encontro al usuario"));
+        Usuario usuario = repositorioUsuario.getReferenceById(carritoRequestDto.getUsuario_id());
 
         Carrito carrito = new Carrito();
         carrito.setComprador(usuario);

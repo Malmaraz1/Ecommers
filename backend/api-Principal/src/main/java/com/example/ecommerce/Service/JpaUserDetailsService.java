@@ -1,6 +1,5 @@
 package com.example.ecommerce.Service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +15,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import com.example.ecommerce.Model.Usuario;
 import com.example.ecommerce.Repository.RepositorioUsuario;
 import com.example.ecommerce.exceptions.NotFoundException;
+
 @Service
 public class JpaUserDetailsService implements UserDetailsService {
 
@@ -36,15 +35,13 @@ public class JpaUserDetailsService implements UserDetailsService {
             throw new NotFoundException("el usuario no esta registrado");
         }
 
-        Usuario usuarioNuevo = usuario.orElseThrow();
-
-        List<GrantedAuthority> authorities = usuarioNuevo.getRoles()
+        List<GrantedAuthority> authorities = usuario.get().getRoles()
                 .stream().map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
         ;
 
-        return new org.springframework.security.core.userdetails.User(usuarioNuevo.getNombre(),
-                usuarioNuevo.getContrasenia(), usuarioNuevo.isEnabled(), true, true, true, authorities);
+        return new org.springframework.security.core.userdetails.User(usuario.get().getNombre(),
+                usuario.get().getContrasenia(), usuario.get().isEnabled(), true, true, true, authorities);
 
     }
 }

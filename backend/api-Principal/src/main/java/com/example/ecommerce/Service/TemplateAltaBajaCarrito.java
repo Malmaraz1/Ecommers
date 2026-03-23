@@ -16,7 +16,7 @@ public abstract class TemplateAltaBajaCarrito {
 
         public final Carrito ejecutar(Long idCarrito, Long idProducto, Integer cantidad) {
 
-                Carrito carrito = repositorioCarrito.findById(idCarrito).orElseThrow(
+                Carrito carrito = repositorioCarrito.findCarritoFull(idCarrito).orElseThrow(
                                 () -> new NotFoundException("no se encontro el carrito"));
 
                 Producto producto = repositorioProducto.findById(idProducto).orElseThrow(

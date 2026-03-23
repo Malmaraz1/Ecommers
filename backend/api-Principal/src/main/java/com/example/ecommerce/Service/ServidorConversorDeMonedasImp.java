@@ -14,8 +14,6 @@ public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
 
     private double exchangeRate = 0.0;
 
-    
-
     @Autowired
     private RestTemplate restTemplate;
 
@@ -26,7 +24,8 @@ public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
     public void updateExchangeRate() {
         try {
             // Usamos el método para obtener la URL con la Key ya inyectada
-            ExchangeResponse response = restTemplate.getForObject("https://economia.awesomeapi.com.br/json/last/ARS-BRL", ExchangeResponse.class);
+            ExchangeResponse response = restTemplate
+                    .getForObject("https://economia.awesomeapi.com.br/json/last/ARS-BRL", ExchangeResponse.class);
             if (response != null && response.datos() != null) {
 
                 this.exchangeRate = response.datos().bid();
@@ -38,6 +37,9 @@ public class ServidorConversorDeMonedasImp implements ServicioConversorMonedas {
     }
 
     public double getExchangeRate() {
-        return (this.exchangeRate > 0) ? this.exchangeRate : 1.0;
+
+        return (this.exchangeRate > 0) ? this.exchangeRate : 0.0038;
+
     }
+
 }

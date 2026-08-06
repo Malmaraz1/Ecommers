@@ -1,4 +1,4 @@
-version: "3.9"
+
 
 services:
 
@@ -14,6 +14,11 @@ services:
     restart: always
     networks:
       - spring
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5  
 
   postgres14:
     image: postgres:14-alpine
@@ -27,6 +32,11 @@ services:
     restart: always
     networks:
       - spring
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -41,10 +51,12 @@ services:
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit vm_memory_high_watermark 0.6
     networks:
       - spring
-    restart: always  
-
-  
-
+    restart: always
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5  
 
   api-principal:
     build:
@@ -56,20 +68,19 @@ services:
     networks:
       - spring
     depends_on:
-      - mysql8
-      - servidor-stock
-      - rabbitmq
-      
+      mysql8:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      servidor-stock:
+        condition: service_healthy
     restart: always
     environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql8:3306/${DB_DATABASE}?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - JAVA_OPTS=-Xmx256m -Xms128m
-
-    deploy:
-      resources:
-        limits:
-          memory: 450M
-        reservations:
-          memory: 128M
+    
 
   servidor-stock:
     build:
@@ -82,18 +93,23 @@ services:
     networks:
       - spring
     depends_on:
-      - postgres14
-      - rabbitmq
+      postgres14:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'nc -z localhost 8002' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
     environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_POSTGRES}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_POSTGRES}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
       - JAVA_OPTS=-Xmx256m -Xms128m
-  
-    deploy:
-      resources:
-        limits:
-          memory: 350M
-        reservations:
-          memory: 128M
+    
 
 volumes:
   data-mysql:    
@@ -101,4 +117,3 @@ volumes:
 
 networks:
   spring:
-

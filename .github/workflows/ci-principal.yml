@@ -17,7 +17,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./api-Principal
+        working-directory: ./backend/api-Principal
 
     steps:
       # 1. Clonar el repositorio

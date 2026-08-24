@@ -36,6 +36,7 @@ public class SpringSecurityConfig {
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/usuarios/registro").permitAll()
                 .requestMatchers("/api/payments/**").permitAll()
+                .requestMatchers("/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/productos/**").permitAll()
                 .requestMatchers(HttpMethod.PATCH, "/carritos/{idCarrito}/productos/{idProducto}/item_carrito")
                 .permitAll()

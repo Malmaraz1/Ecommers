@@ -11,4 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RepositorioRol extends JpaRepository<Rol, Long> {
    
     Optional<Rol> findByName(String nombre);
+    boolean existsByName(String nombre);
 }

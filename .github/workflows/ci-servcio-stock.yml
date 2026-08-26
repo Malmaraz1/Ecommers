@@ -64,5 +64,5 @@ jobs:
             push: true
             tags: |
               ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-servicio-stock:latest
-              ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-aservicio-stock:${{ github.sha }}
+              ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-servicio-stock:${{ github.sha }}
     

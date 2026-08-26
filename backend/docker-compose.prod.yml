@@ -1,0 +1,123 @@
+services:
+
+  mysql8:
+    image: mysql:8
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    volumes:
+      - data-mysql:/var/lib/mysql
+    restart: always
+    networks:
+      - spring
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5  
+
+  postgres14:
+    image: postgres:14-alpine
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB} 
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - spring
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    env_file: .env
+    container_name: rabbitmq-ecommerce
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USER} 
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit vm_memory_high_watermark 0.6
+    networks:
+      - spring
+    restart: always
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5  
+
+  api-principal:
+    image: mat98/ecommerce-api-principal:latest
+    pull_policy: always
+    ports:
+      - "8001:8001"
+    env_file: 
+      - .env
+    networks:
+      - spring
+    depends_on:
+      mysql8:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      servidor-stock:
+        condition: service_healthy
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_MYSQL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_MYSQL}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_MYSQL}
+      - SERVIDOR_STOCK_URL=${SERVIDOR_STOCK_URL}
+      - SPRING_RABBITMQ_HOST=${RABBITMQ_HOST}
+      - SPRING_RABBITMQ_PORT=${RABBITMQ_PORT}
+      - SPRING_RABBITMQ_USERNAME=${RABBIT_USER}
+      - SPRING_RABBITMQ_PASSWORD=${RABBITMQ_DEFAULT_PASS}
+      - JAVA_OPTS=-Xmx256m -Xms128m
+
+  servidor-stock:
+    image: mat98/ecommerce-servicio-stock:latest
+    pull_policy: always
+    ports:
+      - "8002:8002"
+    env_file: 
+      - .env
+    networks:
+      - spring
+    depends_on:
+      postgres14:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'nc -z localhost 8002' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_POSTGRES}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_POSTGRES}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_POSTGRES}
+      - JAVA_OPTS=-Xmx256m -Xms128m
+      - SPRING_RABBITMQ_HOST=${RABBITMQ_HOST}
+      - SPRING_RABBITMQ_PORT=${RABBITMQ_PORT}
+      - SPRING_RABBITMQ_USERNAME=${RABBIT_USER}
+      - SPRING_RABBITMQ_PASSWORD=${RABBITMQ_DEFAULT_PASS}
+
+volumes:
+  data-mysql:    
+  data-postgres: 
+
+networks:
+  spring:

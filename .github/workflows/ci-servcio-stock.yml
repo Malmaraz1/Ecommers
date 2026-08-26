@@ -60,7 +60,7 @@ jobs:
         - name: Build and Push Docker Image
           uses: docker/build-push-action@v6
           with:
-            context: ./backend/api-Principal
+            context: ./backend/servicio-control-stock
             push: true
             tags: |
               ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-servicio-stock:latest

@@ -1,5 +1,4 @@
 services:
-
   mysql8:
     image: mysql:8
     ports:
@@ -16,7 +15,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
       timeout: 5s
-      retries: 5  
+      retries: 5
 
   postgres14:
     image: postgres:14-alpine
@@ -24,7 +23,7 @@ services:
       - "5434:5432"
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB} 
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - data-postgres:/var/lib/postgresql/data
     restart: always
@@ -44,7 +43,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=${RABBIT_USER} 
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit vm_memory_high_watermark 0.6
     networks:
@@ -54,14 +53,14 @@ services:
       test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       interval: 5s
       timeout: 5s
-      retries: 5  
+      retries: 5
 
   api-principal:
     image: mat98/ecommerce-api-principal:latest
     pull_policy: always
     ports:
       - "8001:8001"
-    env_file: 
+    env_file:
       - .env
     networks:
       - spring
@@ -74,6 +73,7 @@ services:
         condition: service_healthy
     restart: always
     environment:
+      - SERVER_PORT=${PORT_API_PRINCIPAL}
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_MYSQL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_MYSQL}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_MYSQL}
@@ -89,7 +89,7 @@ services:
     pull_policy: always
     ports:
       - "8002:8002"
-    env_file: 
+    env_file:
       - .env
     networks:
       - spring
@@ -106,6 +106,7 @@ services:
       retries: 5
       start_period: 40s
     environment:
+      - SERVER_PORT=${PORT_SERVICIO_STOCK}
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_POSTGRES}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_POSTGRES}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_POSTGRES}
@@ -114,10 +115,19 @@ services:
       - SPRING_RABBITMQ_PORT=${RABBITMQ_PORT}
       - SPRING_RABBITMQ_USERNAME=${RABBIT_USER}
       - SPRING_RABBITMQ_PASSWORD=${RABBITMQ_DEFAULT_PASS}
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower-autodeploy
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup --include-stopped
+    restart: always 
 
 volumes:
-  data-mysql:    
-  data-postgres: 
+  data-mysql:
+  data-postgres:
 
 networks:
   spring:
+
+

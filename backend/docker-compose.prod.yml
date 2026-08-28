@@ -118,7 +118,10 @@ services:
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower-autodeploy
-    volumes: 
+    environment:
+      - DOCKER_API_VERSION=1.44
+    volumes:
+
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup --include-stopped
     restart: always 

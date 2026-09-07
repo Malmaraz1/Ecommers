@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'servidor-stock'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['servidor-stock:8002']
+
+  - job_name: 'api-principal'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['api-principal:8001']

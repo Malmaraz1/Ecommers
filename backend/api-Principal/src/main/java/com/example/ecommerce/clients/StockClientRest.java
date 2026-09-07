@@ -11,25 +11,6 @@ import com.example.ecommerce.Dto.StockDto;
 
 @FeignClient(name = "servicio-control-stock", url = "${servidor.stock.url}")
 public interface StockClientRest {
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     @GetMapping("/stock/{idProducto}")
     StockDto detalle(@PathVariable Long idProducto);

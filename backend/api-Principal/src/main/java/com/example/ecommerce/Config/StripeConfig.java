@@ -8,6 +8,7 @@ import com.stripe.Stripe;
 import jakarta.annotation.PostConstruct;
 @Configuration
 public class StripeConfig {
+    
     @Value("${stripe.api.key}")
     private String key;
 

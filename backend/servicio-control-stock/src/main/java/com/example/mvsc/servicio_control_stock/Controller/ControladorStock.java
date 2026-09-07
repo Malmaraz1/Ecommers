@@ -18,7 +18,7 @@ import com.example.mvsc.servicio_control_stock.Dto.RequestDto.RequestStock;
 import com.example.mvsc.servicio_control_stock.Service.ServicioStock;
 
 @RestController
-@RequestMapping("stock")
+@RequestMapping("/stock")
 public class ControladorStock {
 
     @Autowired

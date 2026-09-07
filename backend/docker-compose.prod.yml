@@ -1,4 +1,6 @@
 services:
+  
+
   mysql8:
     image: mysql:8
     ports:
@@ -56,10 +58,10 @@ services:
       retries: 5
 
   api-principal:
-    image: mat98/ecommerce-api-principal:latest
+    image: ${DOCKERHUB_USERNAME}/ecommerce-api-principal:latest
     pull_policy: always
-    ports:
-      - "8001:8001"
+    expose:
+      - "8001"
     env_file:
       - .env
     networks:
@@ -73,7 +75,11 @@ services:
         condition: service_healthy
     restart: always
     environment:
+      - API_KEY=${API_KEY}
+      - STRIPE_API_KEY=${STRIPE_SECRET_KEY}
       - SERVER_PORT=${PORT_API_PRINCIPAL}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - APP_FRONTEND_URL=${APP_FRONTEND_URL}
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_MYSQL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_MYSQL}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_MYSQL}
@@ -85,10 +91,10 @@ services:
       - JAVA_OPTS=-Xmx256m -Xms128m
 
   servidor-stock:
-    image: mat98/ecommerce-servicio-stock:latest
+    image: ${DOCKERHUB_USERNAME}/ecommerce-servicio-stock:latest
     pull_policy: always
-    ports:
-      - "8002:8002"
+    expose:
+      - "8002"
     env_file:
       - .env
     networks:
@@ -107,6 +113,7 @@ services:
       start_period: 40s
     environment:
       - SERVER_PORT=${PORT_SERVICIO_STOCK}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_POSTGRES}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_POSTGRES}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_POSTGRES}
@@ -121,10 +128,31 @@ services:
     environment:
       - DOCKER_API_VERSION=1.44
     volumes:
-
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup --include-stopped
-    restart: always 
+    restart: always
+  nginx:
+    image: nginx:alpine
+    container_name: ecommerce-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - servidor-stock
+      - api-principal
+    networks:
+      - spring
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ecommerce-prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    networks:
+      - spring  
 
 volumes:
   data-mysql:
@@ -132,5 +160,3 @@ volumes:
 
 networks:
   spring:
-
-

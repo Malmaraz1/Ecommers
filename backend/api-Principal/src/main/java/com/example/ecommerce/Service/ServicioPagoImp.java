@@ -26,13 +26,21 @@ import com.stripe.param.checkout.SessionCreateParams;
 @Service
 public class ServicioPagoImp implements ServicioPago {
 
-        @Autowired
+     
         RepositorioPedido repositorioPedido;
-        @Autowired
+     
+        public ServicioPagoImp(RepositorioPedido repositorioPedido,
+                        ServidorConversorDeMonedasImp servidorConversorDeMonedasImp, RepositorioPago repositorioPago,
+                        ServicioFactura servicioFactura) {
+                this.repositorioPedido = repositorioPedido;
+                this.servidorConversorDeMonedasImp = servidorConversorDeMonedasImp;
+                this.repositorioPago = repositorioPago;
+                this.servicioFactura = servicioFactura;
+        }
         ServidorConversorDeMonedasImp servidorConversorDeMonedasImp;
-        @Autowired
+    
         RepositorioPago repositorioPago;
-        @Autowired
+  
         ServicioFactura servicioFactura;
 
         @Value("${app.frontend.url}")

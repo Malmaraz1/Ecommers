@@ -13,6 +13,7 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 
 import java.util.List;
 
@@ -24,7 +25,10 @@ public class SwaggerConfig {
 
    @Bean
     public OpenAPI customOpenAPI() {
-        return new OpenAPI()
+        return new OpenAPI().
+        servers(List.of(
+                        new Server().url("/api/v1").description("Nginx Gateway")
+                ))
                 .info(new Info()
                         .title("E-commerce API")
                         .version("1.0")

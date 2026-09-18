@@ -1,0 +1,66 @@
+name: CI/CD Pipeline - E-commerce Backend
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Clonar el repositorio
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    # 2. Configurar Java 17
+    - name: Configurar JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    # 3. Compilar y empaquetar API Principal
+    - name: Build con Maven (API Principal)
+      working-directory: ./api-Principal
+      run: mvn clean package -DskipTests
+
+    # 4. Compilar y empaquetar Servicio Stock
+    - name: Build con Maven (Servicio Stock)
+      working-directory: ./servicio-control-stock
+      run: mvn clean package -DskipTests
+
+    # 5. Iniciar sesión en Docker Hub
+    - name: Login en Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # 6. Configurar Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # 7. Construir y pushear imagen: API Principal
+    - name: Build y Push Docker Image (API Principal)
+      uses: docker/build-push-action@v5
+      with:
+        context: ./api-Principal
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-api-principal:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-api-principal:${{ github.sha }}
+
+    # 8. Construir y pushear imagen: Servicio Stock
+    - name: Build y Push Docker Image (Servicio Stock)
+      uses: docker/build-push-action@v5
+      with:
+        context: ./servicio-control-stock
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-servicio-stock:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-servicio-stock:${{ github.sha }}
+

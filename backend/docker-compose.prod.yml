@@ -40,7 +40,7 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     env_file: .env
-    container_name: rabbitmq-ecommerce
+    
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -59,7 +59,10 @@ services:
 
   api-principal:
     image: ${DOCKERHUB_USERNAME}/ecommerce-api-principal:latest
-    pull_policy: always
+    build:
+      context: ./api-Principal
+      dockerfile: Dockerfile
+    pull_policy: build
     expose:
       - "8001"
     env_file:
@@ -80,6 +83,8 @@ services:
       - SERVER_PORT=${PORT_API_PRINCIPAL}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - APP_FRONTEND_URL=${APP_FRONTEND_URL}
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
+      - MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS=always
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_MYSQL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_MYSQL}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_MYSQL}
@@ -88,11 +93,15 @@ services:
       - SPRING_RABBITMQ_PORT=${RABBITMQ_PORT}
       - SPRING_RABBITMQ_USERNAME=${RABBIT_USER}
       - SPRING_RABBITMQ_PASSWORD=${RABBITMQ_DEFAULT_PASS}
-      - JAVA_OPTS=-Xmx256m -Xms128m
+      - SERVER_FORWARD_HEADERS_STRATEGY=framework
+      
 
   servidor-stock:
     image: ${DOCKERHUB_USERNAME}/ecommerce-servicio-stock:latest
-    pull_policy: always
+    build:
+      context: ./servicio-control-stock
+      dockerfile: Dockerfile
+    pull_policy: build
     expose:
       - "8002"
     env_file:
@@ -117,14 +126,19 @@ services:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL_POSTGRES}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME_POSTGRES}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD_POSTGRES}
-      - JAVA_OPTS=-Xmx256m -Xms128m
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
+      - MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS=always
+      - SPRINGDOC_SWAGGER_UI_CONFIG_URL=/stock/v3/api-docs/swagger-config
+      - SPRINGDOC_SWAGGER_UI_URL=/stock/v3/api-docs
+      - SPRINGDOC_API_DOCS_PATH=/v3/api-docs
       - SPRING_RABBITMQ_HOST=${RABBITMQ_HOST}
       - SPRING_RABBITMQ_PORT=${RABBITMQ_PORT}
       - SPRING_RABBITMQ_USERNAME=${RABBIT_USER}
       - SPRING_RABBITMQ_PASSWORD=${RABBITMQ_DEFAULT_PASS}
+      - SERVER_FORWARD_HEADERS_STRATEGY=framework
   watchtower:
     image: containrrr/watchtower
-    container_name: watchtower-autodeploy
+    
     environment:
       - DOCKER_API_VERSION=1.44
     volumes:
@@ -133,7 +147,7 @@ services:
     restart: always
   nginx:
     image: nginx:alpine
-    container_name: ecommerce-nginx
+  
     restart: always
     ports:
       - "80:80"
@@ -147,16 +161,30 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: ecommerce-prometheus
+   
     restart: always
     ports:
       - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro  
     networks:
-      - spring  
+      - spring 
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - data-grafana:/var/lib/grafana
+    networks:
+      - spring     
 
 volumes:
   data-mysql:
   data-postgres:
-
+  data-grafana: 
 networks:
   spring:
